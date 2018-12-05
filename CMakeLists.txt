@@ -105,6 +105,10 @@ set(
 include_directories( ${INC_DIR}/noise )
 
 add_library( libnoise ${LIB_TYPE} ${SOURCES} )
+target_include_directories(libnoise PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/noise>
+	$<INSTALL_INTERFACE:include>
+)
 
 # GCC will automatically add the prefix lib
 if( CMAKE_COMPILER_IS_GNUCXX )
@@ -118,9 +122,15 @@ endif()
 if( NOT LIBNOISE_SKIP_INSTALL )
 	install(
 		TARGETS libnoise
+		EXPORT libnoise-targets
 		RUNTIME DESTINATION bin COMPONENT bin
 		LIBRARY DESTINATION lib COMPONENT bin
 		ARCHIVE DESTINATION lib COMPONENT dev
+	)
+
+	install(EXPORT libnoise-targets
+		FILE libnoise-config.cmake
+		DESTINATION lib/cmake/libnoise
 	)
 
 	install(
