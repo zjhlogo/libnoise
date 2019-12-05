@@ -16,6 +16,8 @@ int main(int argc, char** argv)
 {
     Perlin perlin;
 
+    Gradient gradient(0.0, 1.0, 0.0, 0.0);
+
     Const low(-1.0);
     Const high(1.0);
     Select select(low, high, perlin, 0.0);
@@ -23,7 +25,7 @@ int main(int argc, char** argv)
     utils::NoiseMap heightMap;
 
     utils::NoiseMapBuilderPlane heightMapBuilder;
-    heightMapBuilder.SetSourceModule(select);
+    heightMapBuilder.SetSourceModule(gradient);
     heightMapBuilder.SetDestNoiseMap(heightMap);
     heightMapBuilder.SetDestSize(512, 128);
     heightMapBuilder.SetBounds(0.0, 4.0, 0.0, 1.0);

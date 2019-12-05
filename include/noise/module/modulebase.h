@@ -23,12 +23,13 @@
 #ifndef NOISE_MODULEBASE_H
 #define NOISE_MODULEBASE_H
 
-#include <stdlib.h>
-#include <assert.h>
-#include <math.h>
 #include "../basictypes.h"
 #include "../exception.h"
 #include "../noisegen.h"
+
+#include <assert.h>
+#include <math.h>
+#include <stdlib.h>
 
 namespace noise
 {
@@ -314,14 +315,13 @@ namespace noise
             /// all source modules assigned to this noise module would need to be
             /// copied as well.
             const ModuleBase& operator=(const ModuleBase& m);
-
         };
 
         /// @}
 
         /// @}
 
-    }
-}
+    } // namespace module
+} // namespace noise
 
 #endif

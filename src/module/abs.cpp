@@ -24,14 +24,14 @@
 
 using namespace noise::module;
 
-Abs::Abs ():
-  ModuleBase (getSourceModuleCount ())
+Abs::Abs()
+    : ModuleBase(getSourceModuleCount())
 {
 }
 
-double Abs::getValue (double x, double y, double z) const
+double Abs::getValue(double x, double y, double z) const
 {
-  assert (m_pSourceModule[0] != NULL);
+    assert(m_pSourceModule[0] != NULL);
 
-  return fabs (m_pSourceModule[0]->getValue (x, y, z));
+    return fabs(m_pSourceModule[0]->getValue(x, y, z));
 }

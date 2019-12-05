@@ -24,22 +24,23 @@
 
 using namespace noise::module;
 
-Cache::Cache ():
-  ModuleBase (getSourceModuleCount ()),
-  m_isCached (false)
+Cache::Cache()
+    : ModuleBase(getSourceModuleCount())
+    , m_isCached(false)
 {
 }
 
-double Cache::getValue (double x, double y, double z) const
+double Cache::getValue(double x, double y, double z) const
 {
-  assert (m_pSourceModule[0] != NULL);
+    assert(m_pSourceModule[0] != NULL);
 
-  if (!(m_isCached && x == m_xCache && y == m_yCache && z == m_zCache)) {
-    m_cachedValue = m_pSourceModule[0]->getValue (x, y, z);
-    m_xCache = x;
-    m_yCache = y;
-    m_zCache = z;
-  }
-  m_isCached = true;
-  return m_cachedValue;
+    if (!(m_isCached && x == m_xCache && y == m_yCache && z == m_zCache))
+    {
+        m_cachedValue = m_pSourceModule[0]->getValue(x, y, z);
+        m_xCache = x;
+        m_yCache = y;
+        m_zCache = z;
+    }
+    m_isCached = true;
+    return m_cachedValue;
 }

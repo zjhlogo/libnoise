@@ -20,28 +20,30 @@
 // off every 'zig'.)
 //
 
-#include "mathconsts.h"
 #include "model/cylinder.h"
+
+#include "mathconsts.h"
 
 using namespace noise;
 using namespace noise::model;
 
-Cylinder::Cylinder (): m_pModule (NULL)
+Cylinder::Cylinder()
+    : m_pModule(NULL)
 {
 }
 
-Cylinder::Cylinder (const module::ModuleBase& module):
-  m_pModule (&module)
+Cylinder::Cylinder(const module::ModuleBase& module)
+    : m_pModule(&module)
 {
 }
 
-double Cylinder::GetValue (double angle, double height) const
+double Cylinder::GetValue(double angle, double height) const
 {
-  assert (m_pModule != NULL);
+    assert(m_pModule != NULL);
 
-  double x, y, z;
-  x = cos (angle * DEG_TO_RAD);
-  y = height;
-  z = sin (angle * DEG_TO_RAD);
-  return m_pModule->getValue (x, y, z);
+    double x, y, z;
+    x = cos(angle * DEG_TO_RAD);
+    y = height;
+    z = sin(angle * DEG_TO_RAD);
+    return m_pModule->getValue(x, y, z);
 }

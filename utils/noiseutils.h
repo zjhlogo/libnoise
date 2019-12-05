@@ -216,7 +216,7 @@ namespace noise
             ///
             /// It does not matter which order these gradient points are added.
             void AddGradientPoint(double gradientPos,
-                                  const Color &gradientColor);
+                                  const Color& gradientColor);
 
             /// Deletes all the gradient points from this gradient object.
             ///
@@ -228,7 +228,7 @@ namespace noise
             /// @param gradientPos The specified position.
             ///
             /// @returns The color at that position.
-            const Color &GetColor(double gradientPos) const;
+            const Color& GetColor(double gradientPos) const;
 
             /// Returns a pointer to the array of gradient points in this object.
             ///
@@ -240,7 +240,7 @@ namespace noise
             /// It is recommended that an application does not store this pointer
             /// for later use since the pointer to the array may change if the
             /// application calls another method of this object.
-            const GradientPoint *GetGradientPointArray() const
+            const GradientPoint* GetGradientPointArray() const
             {
                 return m_pGradientPoints;
             }
@@ -286,13 +286,13 @@ namespace noise
             /// Because this object requires that all gradient points in the array
             /// must be sorted by the position, the new gradient point should be
             /// inserted at the position in which the order is still preserved.
-            void InsertAtPos(int insertionPos, double gradientPos, const Color &gradientColor);
+            void InsertAtPos(int insertionPos, double gradientPos, const Color& gradientColor);
 
             /// Number of gradient points.
             int m_gradientPointCount;
 
             /// Array that stores the gradient points.
-            GradientPoint *m_pGradientPoints;
+            GradientPoint* m_pGradientPoints;
 
             /// A color object that is used by a gradient object to store a
             /// temporary value.
@@ -377,7 +377,7 @@ namespace noise
             /// Copy constructor.
             ///
             /// @throw noise::ExceptionOutOfMemory Out of memory.
-            NoiseMap(const NoiseMap &rhs);
+            NoiseMap(const NoiseMap& rhs);
 
             /// Destructor.
             ///
@@ -391,7 +391,7 @@ namespace noise
             /// @returns Reference to self.
             ///
             /// Creates a copy of the noise map.
-            NoiseMap &operator=(const NoiseMap &rhs);
+            NoiseMap& operator=(const NoiseMap& rhs);
 
             /// Clears the noise map to a specified value.
             ///
@@ -415,7 +415,7 @@ namespace noise
             ///
             /// @returns A const pointer to a slab at the position (0, 0), or
             /// @a NULL if the noise map is empty.
-            const float *GetConstSlabPtr() const
+            const float* GetConstSlabPtr() const
             {
                 return m_pNoiseMap;
             }
@@ -432,7 +432,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            const float *GetConstSlabPtr(int row) const
+            const float* GetConstSlabPtr(int row) const
             {
                 return GetConstSlabPtr(0, row);
             }
@@ -450,7 +450,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            const float *GetConstSlabPtr(int x, int y) const
+            const float* GetConstSlabPtr(int x, int y) const
             {
                 return m_pNoiseMap + (size_t)x + (size_t)m_stride * (size_t)y;
             }
@@ -477,7 +477,7 @@ namespace noise
             ///
             /// @returns A pointer to a slab at the position (0, 0), or @a NULL if
             /// the noise map is empty.
-            float *GetSlabPtr()
+            float* GetSlabPtr()
             {
                 return m_pNoiseMap;
             }
@@ -494,7 +494,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            float *GetSlabPtr(int row)
+            float* GetSlabPtr(int row)
             {
                 return GetSlabPtr(0, row);
             }
@@ -512,7 +512,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            float *GetSlabPtr(int x, int y)
+            float* GetSlabPtr(int x, int y)
             {
                 return m_pNoiseMap + (size_t)x + (size_t)m_stride * (size_t)y;
             }
@@ -609,7 +609,7 @@ namespace noise
             ///
             /// This method only moves the buffer pointer so this method is very
             /// quick.
-            void TakeOwnership(NoiseMap &source);
+            void TakeOwnership(NoiseMap& source);
 
         private:
             /// Returns the minimum amount of memory required to store a noise map
@@ -657,7 +657,7 @@ namespace noise
             /// @a memcpy, which probably violates the DMCA because it can be used
             //. to make a bitwise copy of anything, like, say, a DVD.  Don't call
             /// this method if you live in the USA.
-            void CopyNoiseMap(const NoiseMap &source);
+            void CopyNoiseMap(const NoiseMap& source);
 
             /// Resets the noise map object.
             ///
@@ -684,7 +684,7 @@ namespace noise
             size_t m_memUsed;
 
             /// A pointer to the noise map buffer.
-            float *m_pNoiseMap;
+            float* m_pNoiseMap;
 
             /// The stride amount of the noise map.
             int m_stride;
@@ -770,7 +770,7 @@ namespace noise
             /// Copy constructor.
             ///
             /// @throw noise::ExceptionOutOfMemory Out of memory.
-            Image(const Image &rhs);
+            Image(const Image& rhs);
 
             /// Destructor.
             ///
@@ -784,13 +784,13 @@ namespace noise
             /// @returns Reference to self.
             ///
             /// Creates a copy of the image.
-            Image &operator=(const Image &rhs);
+            Image& operator=(const Image& rhs);
 
             /// Clears the image to a specified color value.
             ///
             /// @param value The color value that all positions within the image
             /// are cleared to.
-            void Clear(const Color &value);
+            void Clear(const Color& value);
 
             /// Returns the color value used for all positions outside of the
             /// image.
@@ -809,7 +809,7 @@ namespace noise
             ///
             /// @returns A const pointer to a slab at the position (0, 0), or
             /// @a NULL if the image is empty.
-            const Color *GetConstSlabPtr() const
+            const Color* GetConstSlabPtr() const
             {
                 return m_pImage;
             }
@@ -825,7 +825,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            const Color *GetConstSlabPtr(int row) const
+            const Color* GetConstSlabPtr(int row) const
             {
                 return GetConstSlabPtr(0, row);
             }
@@ -842,7 +842,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            const Color *GetConstSlabPtr(int x, int y) const
+            const Color* GetConstSlabPtr(int x, int y) const
             {
                 return m_pImage + (size_t)x + (size_t)m_stride * (size_t)y;
             }
@@ -869,7 +869,7 @@ namespace noise
             ///
             /// @returns A pointer to a slab at the position (0, 0), or @a NULL if
             /// the image is empty.
-            Color *GetSlabPtr()
+            Color* GetSlabPtr()
             {
                 return m_pImage;
             }
@@ -885,7 +885,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            Color *GetSlabPtr(int row)
+            Color* GetSlabPtr(int row)
             {
                 return GetSlabPtr(0, row);
             }
@@ -902,7 +902,7 @@ namespace noise
             ///
             /// This method does not perform bounds checking so be careful when
             /// calling it.
-            Color *GetSlabPtr(int x, int y)
+            Color* GetSlabPtr(int x, int y)
             {
                 return m_pImage + (size_t)x + (size_t)m_stride * (size_t)y;
             }
@@ -956,7 +956,7 @@ namespace noise
             ///
             /// All positions outside of the image are assumed to have a common
             /// color value known as the <i>border value</i>.
-            void SetBorderValue(const Color &borderValue)
+            void SetBorderValue(const Color& borderValue)
             {
                 m_borderValue = borderValue;
             }
@@ -989,7 +989,7 @@ namespace noise
             ///
             /// This method does nothing if the image is empty or the position is
             /// outside the bounds of the image.
-            void SetValue(int x, int y, const Color &value);
+            void SetValue(int x, int y, const Color& value);
 
             /// Takes ownership of the buffer within the source image.
             ///
@@ -999,7 +999,7 @@ namespace noise
             ///
             /// This method only moves the buffer pointer so this method is very
             /// quick.
-            void TakeOwnership(Image &source);
+            void TakeOwnership(Image& source);
 
         private:
             /// Returns the minimum amount of memory required to store an image of
@@ -1046,7 +1046,7 @@ namespace noise
             /// @a memcpy, which probably violates the DMCA because it can be used
             /// to make a bitwise copy of anything, like, say, a DVD.  Don't call
             /// this method if you live in the USA.
-            void CopyImage(const Image &source);
+            void CopyImage(const Image& source);
 
             /// Resets the image object.
             ///
@@ -1073,7 +1073,7 @@ namespace noise
             size_t m_memUsed;
 
             /// A pointer to the image buffer.
-            Color *m_pImage;
+            Color* m_pImage;
 
             /// The stride amount of the image.
             int m_stride;
@@ -1119,7 +1119,7 @@ namespace noise
             /// @param filename The name of the file to write.
             ///
             /// Call this method before calling the WriteDestFile() method.
-            void SetDestFilename(const std::string &filename)
+            void SetDestFilename(const std::string& filename)
             {
                 m_destFilename = filename;
             }
@@ -1130,7 +1130,7 @@ namespace noise
             ///
             /// This object only stores a pointer to an image object, so make sure
             /// this object exists before calling the WriteDestFile() method.
-            void SetSourceImage(Image &sourceImage)
+            void SetSourceImage(Image& sourceImage)
             {
                 m_pSourceImage = &sourceImage;
             }
@@ -1166,7 +1166,7 @@ namespace noise
             std::string m_destFilename;
 
             /// A pointer to the image object that will be written to the file.
-            Image *m_pSourceImage;
+            Image* m_pSourceImage;
         };
 
         /// Terragen Terrain writer class.
@@ -1222,7 +1222,7 @@ namespace noise
             /// @param filename The name of the file to write.
             ///
             /// Call this method before calling the WriteDestFile() method.
-            void SetDestFilename(const std::string &filename)
+            void SetDestFilename(const std::string& filename)
             {
                 m_destFilename = filename;
             }
@@ -1243,7 +1243,7 @@ namespace noise
             ///
             /// This object only stores a pointer to a noise map object, so make
             /// sure this object exists before calling the WriteDestFile() method.
-            void SetSourceNoiseMap(NoiseMap &sourceNoiseMap)
+            void SetSourceNoiseMap(NoiseMap& sourceNoiseMap)
             {
                 m_pSourceNoiseMap = &sourceNoiseMap;
             }
@@ -1283,7 +1283,7 @@ namespace noise
             float m_metersPerPoint;
 
             /// A pointer to the noise map that will be written to the file.
-            NoiseMap *m_pSourceNoiseMap;
+            NoiseMap* m_pSourceNoiseMap;
         };
 
         /// Abstract base class for a noise-map builder
@@ -1388,7 +1388,7 @@ namespace noise
             ///
             /// The destination noise map must exist throughout the lifetime of
             /// this object unless another noise map replaces that noise map.
-            void SetDestNoiseMap(NoiseMap &destNoiseMap)
+            void SetDestNoiseMap(NoiseMap& destNoiseMap)
             {
                 m_pDestNoiseMap = &destNoiseMap;
             }
@@ -1402,7 +1402,7 @@ namespace noise
             ///
             /// The source module must exist throughout the lifetime of this
             /// object unless another noise module replaces that noise module.
-            void SetSourceModule(const module::ModuleBase &sourceModule)
+            void SetSourceModule(const module::ModuleBase& sourceModule)
             {
                 m_pSourceModule = &sourceModule;
             }
@@ -1439,10 +1439,10 @@ namespace noise
             int m_destWidth;
 
             /// Destination noise map that will contain the coherent-noise values.
-            NoiseMap *m_pDestNoiseMap;
+            NoiseMap* m_pDestNoiseMap;
 
             /// Source noise module that will generate the coherent-noise values.
-            const module::ModuleBase *m_pSourceModule;
+            const module::ModuleBase* m_pSourceModule;
         };
 
         /// Builds a cylindrical noise map.
@@ -1910,7 +1910,7 @@ namespace noise
             /// object weighs the blend towards the color from the corresponding
             /// pixel in the background image.
             void AddGradientPoint(double gradientPos,
-                                  const Color &gradientColor);
+                                  const Color& gradientColor);
 
             /// Builds a grayscale gradient.
             ///
@@ -2097,7 +2097,7 @@ namespace noise
             ///
             /// The destination image must exist throughout the lifetime of this
             /// object unless another image replaces that image.
-            void SetBackgroundImage(const Image &backgroundImage)
+            void SetBackgroundImage(const Image& backgroundImage)
             {
                 m_pBackgroundImage = &backgroundImage;
             }
@@ -2111,7 +2111,7 @@ namespace noise
             ///
             /// The destination image must exist throughout the lifetime of this
             /// object unless another image replaces that image.
-            void SetDestImage(Image &destImage)
+            void SetDestImage(Image& destImage)
             {
                 m_pDestImage = &destImage;
             }
@@ -2153,7 +2153,7 @@ namespace noise
             ///
             /// Make sure the light source is enabled via a call to the
             /// EnableLight() method before calling the Render() method.
-            void SetLightColor(const Color &lightColor)
+            void SetLightColor(const Color& lightColor)
             {
                 m_lightColor = lightColor;
             }
@@ -2230,7 +2230,7 @@ namespace noise
             ///
             /// The destination image must exist throughout the lifetime of this
             /// object unless another image replaces that image.
-            void SetSourceNoiseMap(const NoiseMap &sourceNoiseMap)
+            void SetSourceNoiseMap(const NoiseMap& sourceNoiseMap)
             {
                 m_pSourceNoiseMap = &sourceNoiseMap;
             }
@@ -2245,8 +2245,8 @@ namespace noise
             /// @param lightValue The intensity of the light at that position.
             ///
             /// @returns The destination color.
-            Color CalcDestColor(const Color &sourceColor,
-                                const Color &backgroundColor, double lightValue) const;
+            Color CalcDestColor(const Color& sourceColor,
+                                const Color& backgroundColor, double lightValue) const;
 
             /// Calculates the intensity of the light given some elevation values.
             ///
@@ -2297,13 +2297,13 @@ namespace noise
             double m_lightIntensity;
 
             /// A pointer to the background image.
-            const Image *m_pBackgroundImage;
+            const Image* m_pBackgroundImage;
 
             /// A pointer to the destination image.
-            Image *m_pDestImage;
+            Image* m_pDestImage;
 
             /// A pointer to the source noise map.
-            const NoiseMap *m_pSourceNoiseMap;
+            const NoiseMap* m_pSourceNoiseMap;
 
             /// Used by the CalcLightIntensity() method to recalculate the light
             /// values only if the light parameters change.
@@ -2443,7 +2443,7 @@ namespace noise
             ///
             /// The destination image must exist throughout the lifetime of this
             /// object unless another image replaces that image.
-            void SetDestImage(Image &destImage)
+            void SetDestImage(Image& destImage)
             {
                 m_pDestImage = &destImage;
             }
@@ -2454,7 +2454,7 @@ namespace noise
             ///
             /// The destination image must exist throughout the lifetime of this
             /// object unless another image replaces that image.
-            void SetSourceNoiseMap(const NoiseMap &sourceNoiseMap)
+            void SetSourceNoiseMap(const NoiseMap& sourceNoiseMap)
             {
                 m_pSourceNoiseMap = &sourceNoiseMap;
             }
@@ -2491,10 +2491,10 @@ namespace noise
             bool m_isWrapEnabled;
 
             /// A pointer to the destination image.
-            Image *m_pDestImage;
+            Image* m_pDestImage;
 
             /// A pointer to the source noise map.
-            const NoiseMap *m_pSourceNoiseMap;
+            const NoiseMap* m_pSourceNoiseMap;
         };
 
     } // namespace utils

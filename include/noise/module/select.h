@@ -225,7 +225,6 @@ namespace noise
 
             /// Upper bound of the selection range.
             double m_upperBound;
-
         };
 
         /// @}
@@ -234,8 +233,8 @@ namespace noise
 
         /// @}
 
-    }
+    } // namespace module
 
-}
+} // namespace noise
 
 #endif

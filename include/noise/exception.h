@@ -26,49 +26,49 @@
 namespace noise
 {
 
-  /// @addtogroup libnoise
-  /// @{
+    /// @addtogroup libnoise
+    /// @{
 
-  /// Abstract base class for libnoise exceptions
-  class Exception
-  {
-  };
+    /// Abstract base class for libnoise exceptions
+    class Exception
+    {
+    };
 
-  /// Invalid parameter exception
-  ///
-  /// An invalid parameter was passed to a libnoise function or method.
-  class ExceptionInvalidParam: public Exception
-  {
-  };
+    /// Invalid parameter exception
+    ///
+    /// An invalid parameter was passed to a libnoise function or method.
+    class ExceptionInvalidParam : public Exception
+    {
+    };
 
-  /// No module exception
-  ///
-  /// Could not retrieve a source module from a noise module.
-  ///
-  /// @note If one or more required source modules were not connected to a
-  /// specific noise module, and its GetValue() method was called, that
-  /// method will raise a debug assertion instead of this exception.  This
-  /// is done for performance reasons.
-  class ExceptionNoModule: public Exception
-  {
-  };
+    /// No module exception
+    ///
+    /// Could not retrieve a source module from a noise module.
+    ///
+    /// @note If one or more required source modules were not connected to a
+    /// specific noise module, and its GetValue() method was called, that
+    /// method will raise a debug assertion instead of this exception.  This
+    /// is done for performance reasons.
+    class ExceptionNoModule : public Exception
+    {
+    };
 
-  /// Out of memory exception
-  ///
-  /// There was not enough memory to perform an action.
-  class ExceptionOutOfMemory: public Exception
-  {
-  };
+    /// Out of memory exception
+    ///
+    /// There was not enough memory to perform an action.
+    class ExceptionOutOfMemory : public Exception
+    {
+    };
 
-  /// Unknown exception
-  ///
-  /// libnoise raised an unknown exception.
-  class ExceptionUnknown: public Exception
-  {
-  };
+    /// Unknown exception
+    ///
+    /// libnoise raised an unknown exception.
+    class ExceptionUnknown : public Exception
+    {
+    };
 
-  /// @}
+    /// @}
 
-}
+} // namespace noise
 
 #endif

@@ -28,49 +28,48 @@
 namespace noise
 {
 
-  namespace module {
-
-    /// @addtogroup libnoise
-    /// @{
-
-    /// @addtogroup modules
-    /// @{
-
-    /// @defgroup modifiermodules Modifier Modules
-    /// @addtogroup modifiermodules
-    /// @{
-
-    /// Noise module that outputs the absolute value of the output value from
-    /// a source module.
-    ///
-    /// @image html moduleabs.png
-    ///
-    /// This noise module requires one source module.
-    class Abs: public ModuleBase
+    namespace module
     {
 
-      public:
+        /// @addtogroup libnoise
+        /// @{
 
-        /// Constructor.
-        Abs ();
+        /// @addtogroup modules
+        /// @{
 
-        virtual int getSourceModuleCount () const
+        /// @defgroup modifiermodules Modifier Modules
+        /// @addtogroup modifiermodules
+        /// @{
+
+        /// Noise module that outputs the absolute value of the output value from
+        /// a source module.
+        ///
+        /// @image html moduleabs.png
+        ///
+        /// This noise module requires one source module.
+        class Abs : public ModuleBase
         {
-          return 1;
-        }
 
-        virtual double getValue (double x, double y, double z) const;
+        public:
+            /// Constructor.
+            Abs();
 
-    };
+            virtual int getSourceModuleCount() const
+            {
+                return 1;
+            }
 
-    /// @}
+            virtual double getValue(double x, double y, double z) const;
+        };
 
-    /// @}
+        /// @}
 
-    /// @}
+        /// @}
 
-  }
+        /// @}
 
-}
+    } // namespace module
+
+} // namespace noise
 
 #endif

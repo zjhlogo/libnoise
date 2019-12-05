@@ -24,16 +24,16 @@
 
 using namespace noise::module;
 
-ScaleBias::ScaleBias ():
-  ModuleBase (getSourceModuleCount ()),
-  m_bias  (DEFAULT_BIAS ),
-  m_scale (DEFAULT_SCALE)
+ScaleBias::ScaleBias()
+    : ModuleBase(getSourceModuleCount())
+    , m_bias(DEFAULT_BIAS)
+    , m_scale(DEFAULT_SCALE)
 {
 }
 
-double ScaleBias::getValue (double x, double y, double z) const
+double ScaleBias::getValue(double x, double y, double z) const
 {
-  assert (m_pSourceModule[0] != NULL);
+    assert(m_pSourceModule[0] != NULL);
 
-  return m_pSourceModule[0]->getValue (x, y, z) * m_scale + m_bias;
+    return m_pSourceModule[0]->getValue(x, y, z) * m_scale + m_bias;
 }

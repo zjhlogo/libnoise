@@ -20,8 +20,9 @@
 // off every 'zig'.)
 //
 
-#include "interp.h"
 #include "module/select.h"
+
+#include "interp.h"
 
 using namespace noise::module;
 
@@ -31,7 +32,6 @@ Select::Select()
     , m_lowerBound(DEFAULT_SELECT_LOWER_BOUND)
     , m_upperBound(DEFAULT_SELECT_UPPER_BOUND)
 {
-
 }
 
 Select::Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double edgeFalloff)

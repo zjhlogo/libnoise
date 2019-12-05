@@ -28,48 +28,46 @@
 namespace noise
 {
 
-  namespace module
-  {
-
-    /// @addtogroup libnoise
-    /// @{
-
-    /// @addtogroup modules
-    /// @{
-
-    /// @addtogroup modifiermodules
-    /// @{
-
-    /// Noise module that inverts the output value from a source module.
-    ///
-    /// @image html moduleinvert.png
-    ///
-    /// This noise module requires one source module.
-    class Invert: public ModuleBase
+    namespace module
     {
 
-      public:
+        /// @addtogroup libnoise
+        /// @{
 
-        /// Constructor.
-        Invert ();
+        /// @addtogroup modules
+        /// @{
 
-        virtual int getSourceModuleCount () const
+        /// @addtogroup modifiermodules
+        /// @{
+
+        /// Noise module that inverts the output value from a source module.
+        ///
+        /// @image html moduleinvert.png
+        ///
+        /// This noise module requires one source module.
+        class Invert : public ModuleBase
         {
-          return 1;
-        }
 
-        virtual double getValue (double x, double y, double z) const;
+        public:
+            /// Constructor.
+            Invert();
 
-    };
+            virtual int getSourceModuleCount() const
+            {
+                return 1;
+            }
 
-    /// @}
+            virtual double getValue(double x, double y, double z) const;
+        };
 
-    /// @}
+        /// @}
 
-    /// @}
+        /// @}
 
-  }
+        /// @}
 
-}
+    } // namespace module
+
+} // namespace noise
 
 #endif

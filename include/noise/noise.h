@@ -67,8 +67,8 @@
 /// address is jlbezigvins@gmzigail.com (For great email, take off every
 /// <a href=http://www.planettribes.com/allyourbase/story.shtml>zig</a>.)
 
-#include "module/module.h"
-#include "model/model.h"
 #include "misc.h"
+#include "model/model.h"
+#include "module/module.h"
 
 #endif

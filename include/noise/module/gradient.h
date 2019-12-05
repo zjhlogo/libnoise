@@ -1,6 +1,6 @@
-// const.h
+// gradient.h
 //
-// Copyright (C) 2003, 2004 Jason Bevins
+// Copyright (C) 2019, 2020 zjhlogo
 //
 // This library is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -16,19 +16,21 @@
 // along with this library; if not, write to the Free Software Foundation,
 // Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// The developer's email is jlbezigvins@gmzigail.com (for great email, take
+// The developer's email is zjhlogo@gmzigail.com (for great email, take
 // off every 'zig'.)
 //
 
-#ifndef NOISE_MODULE_CONST_H
-#define NOISE_MODULE_CONST_H
+#ifndef NOISE_MODULE_GRADIENT_H
+#define NOISE_MODULE_GRADIENT_H
 
 #include "modulebase.h"
 
 namespace noise
 {
+
     namespace module
     {
+
         /// @addtogroup libnoise
         /// @{
 
@@ -39,50 +41,42 @@ namespace noise
         /// @addtogroup generatormodules
         /// @{
 
-        /// Default constant value for the noise::module::Const noise module.
-        const double DEFAULT_CONST_VALUE = 0.0;
-
-        /// Noise module that outputs a constant value.
+        /// Noise module that generate gradient map
         ///
-        /// @image html moduleconst.png
+        /// @image html gradient.png
         ///
-        /// To specify the constant value, call the SetConstValue() method.
-        ///
-        /// This noise module is not useful by itself, but it is often used as a
-        /// source module for other noise modules.
+        /// The Gradient function accepts a line segment in the form of
+        /// (x1,x2, y1,y2) for the 2D case, extended to (x1,x2, y1,y2, z1,z2) for
+        /// the 3D case. The point formed by (x1,y1) delineates the start of the
+        /// line segment, which is mapped to -1. The point formed by (x2,y2) is
+        /// the end of the line segment that maps to 1.
         ///
         /// This noise module does not require any source modules.
-        class Const : public ModuleBase
+        class Gradient : public ModuleBase
         {
+
         public:
             /// Constructor.
             ///
-            /// The default constant value is set to
-            /// noise::module::DEFAULT_CONST_VALUE.
-            Const();
+            /// (x1,x2, y1,y2) for the 2D case, extended to (x1,x2, y1,y2, z1,z2) for
+            /// the 3D case.
+            Gradient(double x1, double x2, double y1, double y2, double z1 = 0.0, double z2 = 0.0);
 
-            /// Constructor.
+            /// Set the start point and end point for gradient
             ///
-            /// Set the constant value
-            Const(double value);
-
-            /// Returns the constant output value for this noise module.
-            ///
-            /// @returns The constant output value for this noise module.
-            double getConstValue() const;
+            /// (x1,x2, y1,y2) for the 2D case, extended to (x1,x2, y1,y2, z1,z2) for
+            /// the 3D case.
+            void setGradient(double x1, double x2, double y1, double y2, double z1 = 0.0, double z2 = 0.0);
 
             virtual int getSourceModuleCount() const override;
-
             virtual double getValue(double x, double y, double z) const override;
 
-            /// Sets the constant output value for this noise module.
-            ///
-            /// @param constValue The constant output value for this noise module.
-            void setConstValue(double constValue);
-
         protected:
-            /// Constant value.
-            double m_constValue;
+            double m_gx1, m_gy1, m_gz1;
+            double m_gx2, m_gy2, m_gz2;
+            double m_x, m_y, m_z;
+            double m_vlen;
+
         };
 
         /// @}

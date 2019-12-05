@@ -28,49 +28,47 @@
 namespace noise
 {
 
-  namespace module
-  {
-
-    /// @addtogroup libnoise
-    /// @{
-
-    /// @addtogroup modules
-    /// @{
-
-    /// @addtogroup combinermodules
-    /// @{
-
-    /// Noise module that outputs the larger of the two output values from two
-    /// source modules.
-    ///
-    /// @image html modulemax.png
-    ///
-    /// This noise module requires two source modules.
-    class Max: public ModuleBase
+    namespace module
     {
 
-      public:
+        /// @addtogroup libnoise
+        /// @{
 
-        /// Constructor.
-        Max ();
+        /// @addtogroup modules
+        /// @{
 
-        virtual int getSourceModuleCount () const
+        /// @addtogroup combinermodules
+        /// @{
+
+        /// Noise module that outputs the larger of the two output values from two
+        /// source modules.
+        ///
+        /// @image html modulemax.png
+        ///
+        /// This noise module requires two source modules.
+        class Max : public ModuleBase
         {
-          return 2;
-        }
 
-        virtual double getValue (double x, double y, double z) const;
+        public:
+            /// Constructor.
+            Max();
 
-    };
+            virtual int getSourceModuleCount() const
+            {
+                return 2;
+            }
 
-    /// @}
+            virtual double getValue(double x, double y, double z) const;
+        };
 
-    /// @}
+        /// @}
 
-    /// @}
+        /// @}
 
-  }
+        /// @}
 
-}
+    } // namespace module
+
+} // namespace noise
 
 #endif

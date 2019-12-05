@@ -20,12 +20,11 @@
 // off every 'zig'.)
 //
 
-#include <fstream>
+#include "noiseutils.h"
 
+#include <fstream>
 #include <noise/interp.h>
 #include <noise/mathconsts.h>
-
-#include "noiseutils.h"
 
 using namespace noise;
 using namespace noise::model;
@@ -50,57 +49,57 @@ const double DEFAULT_LIGHT_ELEVATION = 45.0;
 
 namespace noise
 {
-namespace utils
-{
-// Performs linear interpolation between two 8-bit channel values.
-inline noise::uint8 BlendChannel(const uint8 channel0, const uint8 channel1, float alpha)
-{
-    float c0 = static_cast<float>(channel0) / 255.0f;
-    float c1 = static_cast<float>(channel1) / 255.0f;
-    return (noise::uint8)(((c1 * alpha) + (c0 * (1.0f - alpha))) * 255.0f);
-}
+    namespace utils
+    {
+        // Performs linear interpolation between two 8-bit channel values.
+        inline noise::uint8 BlendChannel(const uint8 channel0, const uint8 channel1, float alpha)
+        {
+            float c0 = static_cast<float>(channel0) / 255.0f;
+            float c1 = static_cast<float>(channel1) / 255.0f;
+            return (noise::uint8)(((c1 * alpha) + (c0 * (1.0f - alpha))) * 255.0f);
+        }
 
-// Performs linear interpolation between two colors and stores the result
-// in out.
-inline void LinearInterpColor(const Color &color0, const Color &color1, float alpha, Color &out)
-{
-    out.alpha = BlendChannel(color0.alpha, color1.alpha, alpha);
-    out.blue = BlendChannel(color0.blue, color1.blue, alpha);
-    out.green = BlendChannel(color0.green, color1.green, alpha);
-    out.red = BlendChannel(color0.red, color1.red, alpha);
-}
+        // Performs linear interpolation between two colors and stores the result
+        // in out.
+        inline void LinearInterpColor(const Color& color0, const Color& color1, float alpha, Color& out)
+        {
+            out.alpha = BlendChannel(color0.alpha, color1.alpha, alpha);
+            out.blue = BlendChannel(color0.blue, color1.blue, alpha);
+            out.green = BlendChannel(color0.green, color1.green, alpha);
+            out.red = BlendChannel(color0.red, color1.red, alpha);
+        }
 
-// Unpacks a floating-point value into four bytes.  This function is
-// specific to Intel machines.  A portable version will come soon (I
-// hope.)
-inline noise::uint8 *UnpackFloat(noise::uint8 *bytes, float value)
-{
-    noise::uint8 *pBytes = (noise::uint8 *)(&value);
-    bytes[0] = *pBytes++;
-    bytes[1] = *pBytes++;
-    bytes[2] = *pBytes++;
-    bytes[3] = *pBytes++;
-    return bytes;
-}
+        // Unpacks a floating-point value into four bytes.  This function is
+        // specific to Intel machines.  A portable version will come soon (I
+        // hope.)
+        inline noise::uint8* UnpackFloat(noise::uint8* bytes, float value)
+        {
+            noise::uint8* pBytes = (noise::uint8*)(&value);
+            bytes[0] = *pBytes++;
+            bytes[1] = *pBytes++;
+            bytes[2] = *pBytes++;
+            bytes[3] = *pBytes++;
+            return bytes;
+        }
 
-// Unpacks a 16-bit integer value into two bytes in little endian format.
-inline noise::uint8 *UnpackLittle16(noise::uint8 *bytes, noise::uint16 integer)
-{
-    bytes[0] = (noise::uint8)((integer & 0x00ff));
-    bytes[1] = (noise::uint8)((integer & 0xff00) >> 8);
-    return bytes;
-}
+        // Unpacks a 16-bit integer value into two bytes in little endian format.
+        inline noise::uint8* UnpackLittle16(noise::uint8* bytes, noise::uint16 integer)
+        {
+            bytes[0] = (noise::uint8)((integer & 0x00ff));
+            bytes[1] = (noise::uint8)((integer & 0xff00) >> 8);
+            return bytes;
+        }
 
-// Unpacks a 32-bit integer value into four bytes in little endian format.
-inline noise::uint8 *UnpackLittle32(noise::uint8 *bytes, noise::uint32 integer)
-{
-    bytes[0] = (noise::uint8)((integer & 0x000000ff));
-    bytes[1] = (noise::uint8)((integer & 0x0000ff00) >> 8);
-    bytes[2] = (noise::uint8)((integer & 0x00ff0000) >> 16);
-    bytes[3] = (noise::uint8)((integer & 0xff000000) >> 24);
-    return bytes;
-}
-} // namespace utils
+        // Unpacks a 32-bit integer value into four bytes in little endian format.
+        inline noise::uint8* UnpackLittle32(noise::uint8* bytes, noise::uint32 integer)
+        {
+            bytes[0] = (noise::uint8)((integer & 0x000000ff));
+            bytes[1] = (noise::uint8)((integer & 0x0000ff00) >> 8);
+            bytes[2] = (noise::uint8)((integer & 0x00ff0000) >> 16);
+            bytes[3] = (noise::uint8)((integer & 0xff000000) >> 24);
+            return bytes;
+        }
+    } // namespace utils
 } // namespace noise
 
 using namespace noise;
@@ -119,7 +118,7 @@ GradientColor::~GradientColor()
     delete[] m_pGradientPoints;
 }
 
-void GradientColor::AddGradientPoint(double gradientPos, const Color &gradientColor)
+void GradientColor::AddGradientPoint(double gradientPos, const Color& gradientColor)
 {
     // Find the insertion point for the new gradient point and insert the new
     // gradient point at that insertion point.  The gradient point array will
@@ -156,7 +155,7 @@ int GradientColor::FindInsertionPos(double gradientPos)
     return insertionPos;
 }
 
-const Color &GradientColor::GetColor(double gradientPos) const
+const Color& GradientColor::GetColor(double gradientPos) const
 {
     assert(m_gradientPointCount >= 2);
 
@@ -193,20 +192,20 @@ const Color &GradientColor::GetColor(double gradientPos) const
     double alpha = (gradientPos - input0) / (input1 - input0);
 
     // Now perform the linear interpolation given the alpha value.
-    const Color &color0 = m_pGradientPoints[index0].color;
-    const Color &color1 = m_pGradientPoints[index1].color;
+    const Color& color0 = m_pGradientPoints[index0].color;
+    const Color& color1 = m_pGradientPoints[index1].color;
     LinearInterpColor(color0, color1, (float)alpha, m_workingColor);
     return m_workingColor;
 }
 
 void GradientColor::InsertAtPos(int insertionPos, double gradientPos,
-                                const Color &gradientColor)
+                                const Color& gradientColor)
 {
     // Make room for the new gradient point at the specified insertion position
     // within the gradient point array.  The insertion position is determined by
     // the gradient point's position; the gradient points must be sorted by
     // gradient position within that array.
-    GradientPoint *newGradientPoints;
+    GradientPoint* newGradientPoints;
     newGradientPoints = new GradientPoint[m_gradientPointCount + 1];
     for (int i = 0; i < m_gradientPointCount; i++)
     {
@@ -243,7 +242,7 @@ NoiseMap::NoiseMap(int width, int height)
     SetSize(width, height);
 }
 
-NoiseMap::NoiseMap(const NoiseMap &rhs)
+NoiseMap::NoiseMap(const NoiseMap& rhs)
 {
     InitObj();
     CopyNoiseMap(rhs);
@@ -254,7 +253,7 @@ NoiseMap::~NoiseMap()
     delete[] m_pNoiseMap;
 }
 
-NoiseMap &NoiseMap::operator=(const NoiseMap &rhs)
+NoiseMap& NoiseMap::operator=(const NoiseMap& rhs)
 {
     CopyNoiseMap(rhs);
 
@@ -267,7 +266,7 @@ void NoiseMap::Clear(float value)
     {
         for (int y = 0; y < m_height; y++)
         {
-            float *pDest = GetSlabPtr(0, y);
+            float* pDest = GetSlabPtr(0, y);
             for (int x = 0; x < m_width; x++)
             {
                 *pDest++ = value;
@@ -276,15 +275,15 @@ void NoiseMap::Clear(float value)
     }
 }
 
-void NoiseMap::CopyNoiseMap(const NoiseMap &source)
+void NoiseMap::CopyNoiseMap(const NoiseMap& source)
 {
     // Resize the noise map buffer, then copy the slabs from the source noise
     // map buffer to this noise map buffer.
     SetSize(source.GetWidth(), source.GetHeight());
     for (int y = 0; y < source.GetHeight(); y++)
     {
-        const float *pSource = source.GetConstSlabPtr(0, y);
-        float *pDest = GetSlabPtr(0, y);
+        const float* pSource = source.GetConstSlabPtr(0, y);
+        float* pDest = GetSlabPtr(0, y);
         memcpy(pDest, pSource, (size_t)source.GetWidth() * sizeof(float));
     }
 
@@ -329,7 +328,7 @@ void NoiseMap::ReclaimMem()
     {
         // There is wasted memory.  Create the smallest buffer that can fit the
         // data and copy the data to it.
-        float *pNewNoiseMap = NULL;
+        float* pNewNoiseMap = NULL;
         try
         {
             pNewNoiseMap = new float[newMemUsage];
@@ -396,7 +395,7 @@ void NoiseMap::SetValue(int x, int y, float value)
     }
 }
 
-void NoiseMap::TakeOwnership(NoiseMap &source)
+void NoiseMap::TakeOwnership(NoiseMap& source)
 {
     // Copy the values and the noise map buffer from the source noise map to
     // this noise map.  Now this noise map pwnz the source buffer.
@@ -426,7 +425,7 @@ Image::Image(int width, int height)
     SetSize(width, height);
 }
 
-Image::Image(const Image &rhs)
+Image::Image(const Image& rhs)
 {
     InitObj();
     CopyImage(rhs);
@@ -437,20 +436,20 @@ Image::~Image()
     delete[] m_pImage;
 }
 
-Image &Image::operator=(const Image &rhs)
+Image& Image::operator=(const Image& rhs)
 {
     CopyImage(rhs);
 
     return *this;
 }
 
-void Image::Clear(const Color &value)
+void Image::Clear(const Color& value)
 {
     if (m_pImage != NULL)
     {
         for (int y = 0; y < m_height; y++)
         {
-            Color *pDest = GetSlabPtr(0, y);
+            Color* pDest = GetSlabPtr(0, y);
             for (int x = 0; x < m_width; x++)
             {
                 *pDest++ = value;
@@ -459,15 +458,15 @@ void Image::Clear(const Color &value)
     }
 }
 
-void Image::CopyImage(const Image &source)
+void Image::CopyImage(const Image& source)
 {
     // Resize the image buffer, then copy the slabs from the source image
     // buffer to this image buffer.
     SetSize(source.GetWidth(), source.GetHeight());
     for (int y = 0; y < source.GetHeight(); y++)
     {
-        const Color *pSource = source.GetConstSlabPtr(0, y);
-        Color *pDest = GetSlabPtr(0, y);
+        const Color* pSource = source.GetConstSlabPtr(0, y);
+        Color* pDest = GetSlabPtr(0, y);
         memcpy(pDest, pSource, (size_t)source.GetWidth() * sizeof(float));
     }
 
@@ -512,7 +511,7 @@ void Image::ReclaimMem()
     {
         // There is wasted memory.  Create the smallest buffer that can fit the
         // data and copy the data to it.
-        Color *pNewImage = NULL;
+        Color* pNewImage = NULL;
         try
         {
             pNewImage = new Color[newMemUsage];
@@ -568,7 +567,7 @@ void Image::SetSize(int width, int height)
     }
 }
 
-void Image::SetValue(int x, int y, const Color &value)
+void Image::SetValue(int x, int y, const Color& value)
 {
     if (m_pImage != NULL)
     {
@@ -579,7 +578,7 @@ void Image::SetValue(int x, int y, const Color &value)
     }
 }
 
-void Image::TakeOwnership(Image &source)
+void Image::TakeOwnership(Image& source)
 {
     // Copy the values and the image buffer from the source image to this image.
     // Now this image pwnz the source buffer.
@@ -618,7 +617,7 @@ void WriterBMP::WriteDestFile()
     int destSize = bufferSize * height;
 
     // This buffer holds one horizontal line in the destination file.
-    noise::uint8 *pLineBuffer = NULL;
+    noise::uint8* pLineBuffer = NULL;
 
     // File object used to write the file.
     std::ofstream os;
@@ -645,18 +644,18 @@ void WriterBMP::WriteDestFile()
     // Build the header.
     noise::uint8 d[4];
     os.write("BM", 2);
-    os.write((char *)UnpackLittle32(d, destSize + BMP_HEADER_SIZE), 4);
+    os.write((char*)UnpackLittle32(d, destSize + BMP_HEADER_SIZE), 4);
     os.write("\0\0\0\0", 4);
-    os.write((char *)UnpackLittle32(d, (noise::uint32)BMP_HEADER_SIZE), 4);
-    os.write((char *)UnpackLittle32(d, 40), 4); // Palette offset
-    os.write((char *)UnpackLittle32(d, (noise::uint32)width), 4);
-    os.write((char *)UnpackLittle32(d, (noise::uint32)height), 4);
-    os.write((char *)UnpackLittle16(d, 1), 2);  // Planes per pixel
-    os.write((char *)UnpackLittle16(d, 24), 2); // Bits per plane
-    os.write("\0\0\0\0", 4);                    // Compression (0 = none)
-    os.write((char *)UnpackLittle32(d, (noise::uint32)destSize), 4);
-    os.write((char *)UnpackLittle32(d, 2834), 4); // X pixels per meter
-    os.write((char *)UnpackLittle32(d, 2834), 4); // Y pixels per meter
+    os.write((char*)UnpackLittle32(d, (noise::uint32)BMP_HEADER_SIZE), 4);
+    os.write((char*)UnpackLittle32(d, 40), 4); // Palette offset
+    os.write((char*)UnpackLittle32(d, (noise::uint32)width), 4);
+    os.write((char*)UnpackLittle32(d, (noise::uint32)height), 4);
+    os.write((char*)UnpackLittle16(d, 1), 2);  // Planes per pixel
+    os.write((char*)UnpackLittle16(d, 24), 2); // Bits per plane
+    os.write("\0\0\0\0", 4);                   // Compression (0 = none)
+    os.write((char*)UnpackLittle32(d, (noise::uint32)destSize), 4);
+    os.write((char*)UnpackLittle32(d, 2834), 4); // X pixels per meter
+    os.write((char*)UnpackLittle32(d, 2834), 4); // Y pixels per meter
     os.write("\0\0\0\0", 4);
     os.write("\0\0\0\0", 4);
     if (os.fail() || os.bad())
@@ -672,8 +671,8 @@ void WriterBMP::WriteDestFile()
     for (int y = 0; y < height; y++)
     {
         memset(pLineBuffer, 0, bufferSize);
-        Color *pSource = m_pSourceImage->GetSlabPtr(y);
-        noise::uint8 *pDest = pLineBuffer;
+        Color* pSource = m_pSourceImage->GetSlabPtr(y);
+        noise::uint8* pDest = pLineBuffer;
         for (int x = 0; x < width; x++)
         {
             *pDest++ = pSource->blue;
@@ -681,7 +680,7 @@ void WriterBMP::WriteDestFile()
             *pDest++ = pSource->red;
             ++pSource;
         }
-        os.write((char *)pLineBuffer, (size_t)bufferSize);
+        os.write((char*)pLineBuffer, (size_t)bufferSize);
         if (os.fail() || os.bad())
         {
             os.clear();
@@ -719,7 +718,7 @@ void WriterTER::WriteDestFile()
     int destSize = bufferSize * height;
 
     // This buffer holds one horizontal line in the destination file.
-    noise::uint8 *pLineBuffer = NULL;
+    noise::uint8* pLineBuffer = NULL;
 
     // File object used to write the file.
     std::ofstream os;
@@ -749,20 +748,20 @@ void WriterTER::WriteDestFile()
     int16 heightScale = (int16)(floor(32768.0 / (double)m_metersPerPoint));
     os.write("TERRAGENTERRAIN ", 16);
     os.write("SIZE", 4);
-    os.write((char *)UnpackLittle16(d, GetMin(width, height) - 1), 2);
+    os.write((char*)UnpackLittle16(d, GetMin(width, height) - 1), 2);
     os.write("\0\0", 2);
     os.write("XPTS", 4);
-    os.write((char *)UnpackLittle16(d, width), 2);
+    os.write((char*)UnpackLittle16(d, width), 2);
     os.write("\0\0", 2);
     os.write("YPTS", 4);
-    os.write((char *)UnpackLittle16(d, height), 2);
+    os.write((char*)UnpackLittle16(d, height), 2);
     os.write("\0\0", 2);
     os.write("SCAL", 4);
-    os.write((char *)UnpackFloat(d, m_metersPerPoint), 4);
-    os.write((char *)UnpackFloat(d, m_metersPerPoint), 4);
-    os.write((char *)UnpackFloat(d, m_metersPerPoint), 4);
+    os.write((char*)UnpackFloat(d, m_metersPerPoint), 4);
+    os.write((char*)UnpackFloat(d, m_metersPerPoint), 4);
+    os.write((char*)UnpackFloat(d, m_metersPerPoint), 4);
     os.write("ALTW", 4);
-    os.write((char *)UnpackLittle16(d, heightScale), 2);
+    os.write((char*)UnpackLittle16(d, heightScale), 2);
     os.write("\0\0", 2);
     if (os.fail() || os.bad())
     {
@@ -776,8 +775,8 @@ void WriterTER::WriteDestFile()
     // Build and write each horizontal line to the file.
     for (int y = 0; y < height; y++)
     {
-        float *pSource = m_pSourceNoiseMap->GetSlabPtr(y);
-        noise::uint8 *pDest = pLineBuffer;
+        float* pSource = m_pSourceNoiseMap->GetSlabPtr(y);
+        noise::uint8* pDest = pLineBuffer;
         for (int x = 0; x < width; x++)
         {
             int16 scaledHeight = (int16)(floor(*pSource * 2.0));
@@ -785,7 +784,7 @@ void WriterTER::WriteDestFile()
             pDest += 2;
             ++pSource;
         }
-        os.write((char *)pLineBuffer, (size_t)bufferSize);
+        os.write((char*)pLineBuffer, (size_t)bufferSize);
         if (os.fail() || os.bad())
         {
             os.clear();
@@ -804,11 +803,12 @@ void WriterTER::WriteDestFile()
 /////////////////////////////////////////////////////////////////////////////
 // NoiseMapBuilder class
 
-NoiseMapBuilder::NoiseMapBuilder() : m_pCallback(NULL),
-                                     m_destHeight(0),
-                                     m_destWidth(0),
-                                     m_pDestNoiseMap(NULL),
-                                     m_pSourceModule(NULL)
+NoiseMapBuilder::NoiseMapBuilder()
+    : m_pCallback(NULL)
+    , m_destHeight(0)
+    , m_destWidth(0)
+    , m_pDestNoiseMap(NULL)
+    , m_pSourceModule(NULL)
 {
 }
 
@@ -820,10 +820,11 @@ void NoiseMapBuilder::SetCallback(NoiseMapCallback pCallback)
 /////////////////////////////////////////////////////////////////////////////
 // NoiseMapBuilderCylinder class
 
-NoiseMapBuilderCylinder::NoiseMapBuilderCylinder() : m_lowerAngleBound(0.0),
-                                                     m_lowerHeightBound(0.0),
-                                                     m_upperAngleBound(0.0),
-                                                     m_upperHeightBound(0.0)
+NoiseMapBuilderCylinder::NoiseMapBuilderCylinder()
+    : m_lowerAngleBound(0.0)
+    , m_lowerHeightBound(0.0)
+    , m_upperAngleBound(0.0)
+    , m_upperHeightBound(0.0)
 {
 }
 
@@ -852,7 +853,7 @@ void NoiseMapBuilderCylinder::Build()
     // Fill every point in the noise map with the output values from the model.
     for (int y = 0; y < m_destHeight; y++)
     {
-        float *pDest = m_pDestNoiseMap->GetSlabPtr(y);
+        float* pDest = m_pDestNoiseMap->GetSlabPtr(y);
         curAngle = m_lowerAngleBound;
         for (int x = 0; x < m_destWidth; x++)
         {
@@ -871,11 +872,12 @@ void NoiseMapBuilderCylinder::Build()
 /////////////////////////////////////////////////////////////////////////////
 // NoiseMapBuilderPlane class
 
-NoiseMapBuilderPlane::NoiseMapBuilderPlane() : m_isSeamlessEnabled(false),
-                                               m_lowerXBound(0.0),
-                                               m_lowerZBound(0.0),
-                                               m_upperXBound(0.0),
-                                               m_upperZBound(0.0)
+NoiseMapBuilderPlane::NoiseMapBuilderPlane()
+    : m_isSeamlessEnabled(false)
+    , m_lowerXBound(0.0)
+    , m_lowerZBound(0.0)
+    , m_upperXBound(0.0)
+    , m_upperZBound(0.0)
 {
 }
 
@@ -904,7 +906,7 @@ void NoiseMapBuilderPlane::Build()
     // Fill every point in the noise map with the output values from the model.
     for (int z = 0; z < m_destHeight; z++)
     {
-        float *pDest = m_pDestNoiseMap->GetSlabPtr(z);
+        float* pDest = m_pDestNoiseMap->GetSlabPtr(z);
         xCur = m_lowerXBound;
         for (int x = 0; x < m_destWidth; x++)
         {
@@ -940,10 +942,11 @@ void NoiseMapBuilderPlane::Build()
 /////////////////////////////////////////////////////////////////////////////
 // NoiseMapBuilderSphere class
 
-NoiseMapBuilderSphere::NoiseMapBuilderSphere() : m_eastLonBound(0.0),
-                                                 m_northLatBound(0.0),
-                                                 m_southLatBound(0.0),
-                                                 m_westLonBound(0.0)
+NoiseMapBuilderSphere::NoiseMapBuilderSphere()
+    : m_eastLonBound(0.0)
+    , m_northLatBound(0.0)
+    , m_southLatBound(0.0)
+    , m_westLonBound(0.0)
 {
 }
 
@@ -972,7 +975,7 @@ void NoiseMapBuilderSphere::Build()
     // Fill every point in the noise map with the output values from the model.
     for (int y = 0; y < m_destHeight; y++)
     {
-        float *pDest = m_pDestNoiseMap->GetSlabPtr(y);
+        float* pDest = m_pDestNoiseMap->GetSlabPtr(y);
         curLon = m_westLonBound;
         for (int x = 0; x < m_destWidth; x++)
         {
@@ -991,24 +994,25 @@ void NoiseMapBuilderSphere::Build()
 //////////////////////////////////////////////////////////////////////////////
 // RendererImage class
 
-RendererImage::RendererImage() : m_isLightEnabled(false),
-                                 m_isWrapEnabled(false),
-                                 m_lightAzimuth(45.0),
-                                 m_lightBrightness(1.0),
-                                 m_lightColor(255, 255, 255, 255),
-                                 m_lightContrast(1.0),
-                                 m_lightElev(45.0),
-                                 m_lightIntensity(1.0),
-                                 m_pBackgroundImage(NULL),
-                                 m_pDestImage(NULL),
-                                 m_pSourceNoiseMap(NULL),
-                                 m_recalcLightValues(true)
+RendererImage::RendererImage()
+    : m_isLightEnabled(false)
+    , m_isWrapEnabled(false)
+    , m_lightAzimuth(45.0)
+    , m_lightBrightness(1.0)
+    , m_lightColor(255, 255, 255, 255)
+    , m_lightContrast(1.0)
+    , m_lightElev(45.0)
+    , m_lightIntensity(1.0)
+    , m_pBackgroundImage(NULL)
+    , m_pDestImage(NULL)
+    , m_pSourceNoiseMap(NULL)
+    , m_recalcLightValues(true)
 {
     BuildGrayscaleGradient();
 };
 
 void RendererImage::AddGradientPoint(double gradientPos,
-                                     const Color &gradientColor)
+                                     const Color& gradientColor)
 {
     m_gradient.AddGradientPoint(gradientPos, gradientColor);
 }
@@ -1034,8 +1038,8 @@ void RendererImage::BuildTerrainGradient()
     m_gradient.AddGradientPoint(1.00, Color(255, 255, 255, 255));
 }
 
-Color RendererImage::CalcDestColor(const Color &sourceColor,
-                                   const Color &backgroundColor, double lightValue) const
+Color RendererImage::CalcDestColor(const Color& sourceColor,
+                                   const Color& backgroundColor, double lightValue) const
 {
     double sourceRed = (double)sourceColor.red / 255.0;
     double sourceGreen = (double)sourceColor.green / 255.0;
@@ -1145,13 +1149,13 @@ void RendererImage::Render()
 
     for (int y = 0; y < height; y++)
     {
-        const Color *pBackground = NULL;
+        const Color* pBackground = NULL;
         if (m_pBackgroundImage != NULL)
         {
             pBackground = m_pBackgroundImage->GetConstSlabPtr(y);
         }
-        const float *pSource = m_pSourceNoiseMap->GetConstSlabPtr(y);
-        Color *pDest = m_pDestImage->GetSlabPtr(y);
+        const float* pSource = m_pSourceNoiseMap->GetConstSlabPtr(y);
+        Color* pDest = m_pDestImage->GetSlabPtr(y);
         for (int x = 0; x < width; x++)
         {
 
@@ -1282,10 +1286,11 @@ void RendererImage::Render()
 //////////////////////////////////////////////////////////////////////////////
 // RendererNormalMap class
 
-RendererNormalMap::RendererNormalMap() : m_bumpHeight(1.0),
-                                         m_isWrapEnabled(false),
-                                         m_pDestImage(NULL),
-                                         m_pSourceNoiseMap(NULL){};
+RendererNormalMap::RendererNormalMap()
+    : m_bumpHeight(1.0)
+    , m_isWrapEnabled(false)
+    , m_pDestImage(NULL)
+    , m_pSourceNoiseMap(NULL){};
 
 Color RendererNormalMap::CalcNormalColor(double nc, double nr, double nu,
                                          double bumpHeight) const
@@ -1323,8 +1328,8 @@ void RendererNormalMap::Render()
 
     for (int y = 0; y < height; y++)
     {
-        const float *pSource = m_pSourceNoiseMap->GetConstSlabPtr(y);
-        Color *pDest = m_pDestImage->GetSlabPtr(y);
+        const float* pSource = m_pSourceNoiseMap->GetConstSlabPtr(y);
+        Color* pDest = m_pDestImage->GetSlabPtr(y);
         for (int x = 0; x < width; x++)
         {
 

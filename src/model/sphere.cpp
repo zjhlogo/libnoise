@@ -20,27 +20,28 @@
 // off every 'zig'.)
 //
 
-#include "latlon.h"
 #include "model/sphere.h"
+
+#include "latlon.h"
 
 using namespace noise;
 using namespace noise::model;
 
-Sphere::Sphere ():
-  m_pModule (NULL)
+Sphere::Sphere()
+    : m_pModule(NULL)
 {
 }
 
-Sphere::Sphere (const module::ModuleBase& module):
-  m_pModule (&module)
+Sphere::Sphere(const module::ModuleBase& module)
+    : m_pModule(&module)
 {
 }
 
-double Sphere::GetValue (double lat, double lon) const
+double Sphere::GetValue(double lat, double lon) const
 {
-  assert (m_pModule != NULL);
+    assert(m_pModule != NULL);
 
-  double x, y, z;
-  LatLonToXYZ (lat, lon, x, y, z);
-  return m_pModule->getValue (x, y, z);
+    double x, y, z;
+    LatLonToXYZ(lat, lon, x, y, z);
+    return m_pModule->getValue(x, y, z);
 }

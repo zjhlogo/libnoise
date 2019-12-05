@@ -24,31 +24,36 @@
 
 using namespace noise::module;
 
-Clamp::Clamp ():
-  ModuleBase (getSourceModuleCount ()),
-  m_lowerBound (DEFAULT_CLAMP_LOWER_BOUND),
-  m_upperBound (DEFAULT_CLAMP_UPPER_BOUND)
+Clamp::Clamp()
+    : ModuleBase(getSourceModuleCount())
+    , m_lowerBound(DEFAULT_CLAMP_LOWER_BOUND)
+    , m_upperBound(DEFAULT_CLAMP_UPPER_BOUND)
 {
 }
 
-double Clamp::getValue (double x, double y, double z) const
+double Clamp::getValue(double x, double y, double z) const
 {
-  assert (m_pSourceModule[0] != NULL);
+    assert(m_pSourceModule[0] != NULL);
 
-  double value = m_pSourceModule[0]->getValue (x, y, z);
-  if (value < m_lowerBound) {
-    return m_lowerBound;
-  } else if (value > m_upperBound) {
-    return m_upperBound;
-  } else {
-    return value;
-  }
+    double value = m_pSourceModule[0]->getValue(x, y, z);
+    if (value < m_lowerBound)
+    {
+        return m_lowerBound;
+    }
+    else if (value > m_upperBound)
+    {
+        return m_upperBound;
+    }
+    else
+    {
+        return value;
+    }
 }
 
-void Clamp::SetBounds (double lowerBound, double upperBound)
+void Clamp::SetBounds(double lowerBound, double upperBound)
 {
-  assert (lowerBound < upperBound);
+    assert(lowerBound < upperBound);
 
-  m_lowerBound = lowerBound;
-  m_upperBound = upperBound;
+    m_lowerBound = lowerBound;
+    m_upperBound = upperBound;
 }

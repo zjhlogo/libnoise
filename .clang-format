@@ -14,3 +14,4 @@ NamespaceIndentation: All
 SpaceBeforeParens: ControlStatements
 SpacesInContainerLiterals: true
 AccessModifierOffset: -4
+PointerAlignment: Left

@@ -28,50 +28,48 @@
 namespace noise
 {
 
-  namespace module
-  {
-
-    /// @addtogroup libnoise
-    /// @{
-    
-    /// @addtogroup modules
-    /// @{
-    
-    /// @defgroup combinermodules Combiner Modules
-    /// @addtogroup combinermodules
-    /// @{
-    
-    /// Noise module that outputs the sum of the two output values from two
-    /// source modules.
-    ///
-    /// @image html moduleadd.png
-    ///
-    /// This noise module requires two source modules.
-    class Add: public ModuleBase
+    namespace module
     {
 
-      public:
+        /// @addtogroup libnoise
+        /// @{
 
-        /// Constructor.
-        Add ();
+        /// @addtogroup modules
+        /// @{
 
-        virtual int getSourceModuleCount () const
+        /// @defgroup combinermodules Combiner Modules
+        /// @addtogroup combinermodules
+        /// @{
+
+        /// Noise module that outputs the sum of the two output values from two
+        /// source modules.
+        ///
+        /// @image html moduleadd.png
+        ///
+        /// This noise module requires two source modules.
+        class Add : public ModuleBase
         {
-          return 2;
-        }
 
-        virtual double getValue (double x, double y, double z) const;
+        public:
+            /// Constructor.
+            Add();
 
-    };
+            virtual int getSourceModuleCount() const
+            {
+                return 2;
+            }
 
-    /// @}
+            virtual double getValue(double x, double y, double z) const;
+        };
 
-    /// @}
+        /// @}
 
-    /// @}
+        /// @}
 
-  }
+        /// @}
 
-}
+    } // namespace module
+
+} // namespace noise
 
 #endif

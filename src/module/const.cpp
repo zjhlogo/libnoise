@@ -28,14 +28,12 @@ Const::Const()
     : ModuleBase(getSourceModuleCount())
     , m_constValue(DEFAULT_CONST_VALUE)
 {
-
 }
 
 Const::Const(double value)
     : ModuleBase(getSourceModuleCount())
     , m_constValue(value)
 {
-
 }
 
 double Const::getConstValue() const

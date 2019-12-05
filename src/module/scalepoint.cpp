@@ -24,18 +24,17 @@
 
 using namespace noise::module;
 
-ScalePoint::ScalePoint ():
-  ModuleBase (getSourceModuleCount ()),
-  m_xScale (DEFAULT_SCALE_POINT_X),
-  m_yScale (DEFAULT_SCALE_POINT_Y),
-  m_zScale (DEFAULT_SCALE_POINT_Z)
+ScalePoint::ScalePoint()
+    : ModuleBase(getSourceModuleCount())
+    , m_xScale(DEFAULT_SCALE_POINT_X)
+    , m_yScale(DEFAULT_SCALE_POINT_Y)
+    , m_zScale(DEFAULT_SCALE_POINT_Z)
 {
 }
 
-double ScalePoint::getValue (double x, double y, double z) const
+double ScalePoint::getValue(double x, double y, double z) const
 {
-  assert (m_pSourceModule[0] != NULL);
+    assert(m_pSourceModule[0] != NULL);
 
-  return m_pSourceModule[0]->getValue (x * m_xScale, y * m_yScale,
-    z * m_zScale);
+    return m_pSourceModule[0]->getValue(x * m_xScale, y * m_yScale, z * m_zScale);
 }

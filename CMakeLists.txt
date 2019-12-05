@@ -56,6 +56,7 @@ set(
 	${INC_DIR}/noise/module/cylinders.h
 	${INC_DIR}/noise/module/displace.h
 	${INC_DIR}/noise/module/exponent.h
+	${INC_DIR}/noise/module/gradient.h
 	${INC_DIR}/noise/module/invert.h
 	${INC_DIR}/noise/module/max.h
 	${INC_DIR}/noise/module/min.h
@@ -92,6 +93,7 @@ set(
 	${SRC_DIR}/module/cylinders.cpp
 	${SRC_DIR}/module/displace.cpp
 	${SRC_DIR}/module/exponent.cpp
+	${SRC_DIR}/module/gradient.cpp
 	${SRC_DIR}/module/invert.cpp
 	${SRC_DIR}/module/max.cpp
 	${SRC_DIR}/module/min.cpp

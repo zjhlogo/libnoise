@@ -24,15 +24,15 @@
 
 using namespace noise::module;
 
-Checkerboard::Checkerboard ():
-  ModuleBase (getSourceModuleCount ())
+Checkerboard::Checkerboard()
+    : ModuleBase(getSourceModuleCount())
 {
 }
 
-double Checkerboard::getValue (double x, double y, double z) const
+double Checkerboard::getValue(double x, double y, double z) const
 {
-  int ix = (int)(floor (MakeInt32Range (x)));
-  int iy = (int)(floor (MakeInt32Range (y)));
-  int iz = (int)(floor (MakeInt32Range (z)));
-  return (ix & 1 ^ iy & 1 ^ iz & 1)? -1.0: 1.0;
+    int ix = (int)(floor(MakeInt32Range(x)));
+    int iy = (int)(floor(MakeInt32Range(y)));
+    int iz = (int)(floor(MakeInt32Range(z)));
+    return (ix & 1 ^ iy & 1 ^ iz & 1) ? -1.0 : 1.0;
 }
