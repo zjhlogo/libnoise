@@ -25,11 +25,11 @@
 using namespace noise::module;
 
 Displace::Displace ():
-  Module (GetSourceModuleCount ())
+  ModuleBase (getSourceModuleCount ())
 {
 }
 
-double Displace::GetValue (double x, double y, double z) const
+double Displace::getValue (double x, double y, double z) const
 {
   assert (m_pSourceModule[0] != NULL);
   assert (m_pSourceModule[1] != NULL);
@@ -38,11 +38,11 @@ double Displace::GetValue (double x, double y, double z) const
 
   // Get the output values from the three displacement modules.  Add each
   // value to the corresponding coordinate in the input value.
-  double xDisplace = x + (m_pSourceModule[1]->GetValue (x, y, z));
-  double yDisplace = y + (m_pSourceModule[2]->GetValue (x, y, z));
-  double zDisplace = z + (m_pSourceModule[3]->GetValue (x, y, z));
+  double xDisplace = x + (m_pSourceModule[1]->getValue (x, y, z));
+  double yDisplace = y + (m_pSourceModule[2]->getValue (x, y, z));
+  double zDisplace = z + (m_pSourceModule[3]->getValue (x, y, z));
 
   // Retrieve the output value using the offsetted input value instead of
   // the original input value.
-  return m_pSourceModule[0]->GetValue (xDisplace, yDisplace, zDisplace);
+  return m_pSourceModule[0]->getValue (xDisplace, yDisplace, zDisplace);
 }

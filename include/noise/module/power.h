@@ -50,7 +50,7 @@ namespace noise
     /// The second source module must have an index value of 1.
     ///
     /// This noise module requires two source modules.
-    class Power: public Module
+    class Power: public ModuleBase
     {
 
       public:
@@ -58,12 +58,12 @@ namespace noise
         /// Constructor.
         Power ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 2;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
     };
 

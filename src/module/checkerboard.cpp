@@ -25,11 +25,11 @@
 using namespace noise::module;
 
 Checkerboard::Checkerboard ():
-  Module (GetSourceModuleCount ())
+  ModuleBase (getSourceModuleCount ())
 {
 }
 
-double Checkerboard::GetValue (double x, double y, double z) const
+double Checkerboard::getValue (double x, double y, double z) const
 {
   int ix = (int)(floor (MakeInt32Range (x)));
   int iy = (int)(floor (MakeInt32Range (y)));

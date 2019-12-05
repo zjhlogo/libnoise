@@ -70,7 +70,7 @@ namespace noise
     /// your stereotypical desert canyon.
     ///
     /// This noise module requires one source module.
-    class Terrace: public Module
+    class Terrace: public ModuleBase
     {
 
 	    public:
@@ -132,7 +132,7 @@ namespace noise
 	        return m_controlPointCount;
 	      }
 
-    	  virtual int GetSourceModuleCount () const
+    	  virtual int getSourceModuleCount () const
 	      {
 	        return 1;
 	      }
@@ -159,7 +159,7 @@ namespace noise
 	        return m_invertTerraces;
         }
 
-    	  virtual double GetValue (double x, double y, double z) const;
+    	  virtual double getValue (double x, double y, double z) const;
 
 	      /// Creates a number of equally-spaced control points that range from
         /// -1 to +1.

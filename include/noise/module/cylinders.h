@@ -69,7 +69,7 @@ namespace noise
     /// turbulence, is useful for generating wood-like textures.
     ///
     /// This noise module does not require any source modules.
-    class Cylinders: public Module
+    class Cylinders: public ModuleBase
     {
 
       public:
@@ -91,12 +91,12 @@ namespace noise
           return m_frequency;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 0;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the frequenct of the concentric cylinders.
         ///

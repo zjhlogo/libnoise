@@ -39,13 +39,13 @@ void CreateTextureColor (utils::RendererImage& renderer);
 // writes it to a Windows bitmap (*.bmp) file.  Because the texture map is
 // square, its width is equal to its height.  The texture map can be seamless
 // (tileable) or non-seamless.
-void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
+void CreatePlanarTexture (const module::ModuleBase& noiseModule, bool seamless,
   int height, const char* filename);
 
 // Given a noise module, this function renders a spherical texture map and
 // writes it to a Windows bitmap (*.bmp) file.  The texture map's width is
 // double its height.
-void CreateSphericalTexture (const module::Module& noiseModule, int height,
+void CreateSphericalTexture (const module::ModuleBase& noiseModule, int height,
   const char* filename);
 
 // Given a noise map, this function renders a texture map and writes it to a
@@ -73,7 +73,7 @@ int main ()
 
   // Scale and lower the small slime bubble values.
   module::ScaleBias smallSlime;
-  smallSlime.SetSourceModule (0, smallSlimeBase);
+  smallSlime.setSourceModule (0, smallSlimeBase);
   smallSlime.SetScale (0.5);
   smallSlime.SetBias (-0.5);
 
@@ -92,15 +92,15 @@ int main ()
   // otherwise choose the large slime bubble texture.  The edge falloff is
   // non-zero so that there is a smooth transition between the two textures.
   module::Select slimeChooser;
-  slimeChooser.SetSourceModule (0, largeSlime);
-  slimeChooser.SetSourceModule (1, smallSlime);
-  slimeChooser.SetControlModule (slimeMap);
-  slimeChooser.SetBounds (-0.375, 0.375);
-  slimeChooser.SetEdgeFalloff (0.5);
+  slimeChooser.setSourceModule (0, largeSlime);
+  slimeChooser.setSourceModule (1, smallSlime);
+  slimeChooser.setControlModule (slimeMap);
+  slimeChooser.setBounds (-0.375, 0.375);
+  slimeChooser.setEdgeFalloff (0.5);
 
   // Finally, perturb the slime texture to add realism.
   module::Turbulence finalSlime;
-  finalSlime.SetSourceModule (0, slimeChooser);
+  finalSlime.setSourceModule (0, slimeChooser);
   finalSlime.SetSeed (2);
   finalSlime.SetFrequency (8.0);
   finalSlime.SetPower (1.0 / 32.0);
@@ -128,7 +128,7 @@ void CreateTextureColor (utils::RendererImage& renderer)
   renderer.AddGradientPoint ( 1.0000, utils::Color (128, 255, 128, 255));
 }
 
-void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
+void CreatePlanarTexture (const module::ModuleBase& noiseModule, bool seamless,
   int height, const char* filename)
 {
   // Map the output values from the noise module onto a plane.  This will
@@ -146,7 +146,7 @@ void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
   RenderTexture (noiseMap, filename);
 }
 
-void CreateSphericalTexture (const module::Module& noiseModule, int height,
+void CreateSphericalTexture (const module::ModuleBase& noiseModule, int height,
   const char* filename)
 {
   // Map the output values from the noise module onto a sphere.  This will

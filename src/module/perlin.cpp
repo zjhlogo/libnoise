@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Perlin::Perlin ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_frequency    (DEFAULT_PERLIN_FREQUENCY   ),
   m_lacunarity   (DEFAULT_PERLIN_LACUNARITY  ),
   m_noiseQuality (DEFAULT_PERLIN_QUALITY     ),
@@ -35,7 +35,7 @@ Perlin::Perlin ():
 {
 }
 
-double Perlin::GetValue (double x, double y, double z) const
+double Perlin::getValue (double x, double y, double z) const
 {
   double value = 0.0;
   double signal = 0.0;

@@ -39,13 +39,13 @@ void CreateTextureColor (utils::RendererImage& renderer);
 // writes it to a Windows bitmap (*.bmp) file.  Because the texture map is
 // square, its width is equal to its height.  The texture map can be seamless
 // (tileable) or non-seamless. 
-void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
+void CreatePlanarTexture (const module::ModuleBase& noiseModule, bool seamless,
   int height, const char* filename);
 
 // Given a noise module, this function renders a spherical texture map and
 // writes it to a Windows bitmap (*.bmp) file.  The texture map's width is
 // double its height.
-void CreateSphericalTexture (const module::Module& noiseModule, int height,
+void CreateSphericalTexture (const module::ModuleBase& noiseModule, int height,
   const char* filename);
 
 // Given a noise map, this function renders a texture map and writes it to a
@@ -75,18 +75,18 @@ int main ()
   // granite texture.  Voronoi polygons normally generate pits, so apply a
   // negative scaling factor to produce bumps instead.
   module::ScaleBias scaledGrains;
-  scaledGrains.SetSourceModule (0, baseGrains);
+  scaledGrains.setSourceModule (0, baseGrains);
   scaledGrains.SetScale (-0.5);
   scaledGrains.SetBias (0.0);
 
   // Combine the primary granite texture with the small grain texture.
   module::Add combinedGranite;
-  combinedGranite.SetSourceModule (0, primaryGranite);
-  combinedGranite.SetSourceModule (1, scaledGrains);
+  combinedGranite.setSourceModule (0, primaryGranite);
+  combinedGranite.setSourceModule (1, scaledGrains);
 
   // Finally, perturb the granite texture to add realism.
   module::Turbulence finalGranite;
-  finalGranite.SetSourceModule (0, combinedGranite);
+  finalGranite.setSourceModule (0, combinedGranite);
   finalGranite.SetSeed (2);
   finalGranite.SetFrequency (4.0);
   finalGranite.SetPower (1.0 / 8.0);
@@ -119,7 +119,7 @@ void CreateTextureColor (utils::RendererImage& renderer)
   renderer.AddGradientPoint ( 1.0000, utils::Color (255, 176, 192, 255));
 }
 
-void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
+void CreatePlanarTexture (const module::ModuleBase& noiseModule, bool seamless,
   int height, const char* filename)
 {
   // Map the output values from the noise module onto a plane.  This will
@@ -137,7 +137,7 @@ void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
   RenderTexture (noiseMap, filename);
 }
 
-void CreateSphericalTexture (const module::Module& noiseModule, int height,
+void CreateSphericalTexture (const module::ModuleBase& noiseModule, int height,
   const char* filename)
 {
   // Map the output values from the noise module onto a sphere.  This will

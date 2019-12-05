@@ -87,7 +87,7 @@ namespace noise
     /// formations or crystal-like textures
     ///
     /// This noise module requires no source modules.
-    class Voronoi: public Module
+    class Voronoi: public ModuleBase
     {
 
       public:
@@ -145,7 +145,7 @@ namespace noise
           return m_frequency;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 0;
         }
@@ -177,7 +177,7 @@ namespace noise
           return m_enableDistance;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the displacement value of the Voronoi cells.
         ///

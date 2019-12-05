@@ -69,7 +69,7 @@ namespace noise
     /// and @a z increases inward.)
     ///
     /// This noise module requires one source module.
-    class RotatePoint: public Module
+    class RotatePoint: public ModuleBase
     {
 
       public:
@@ -86,12 +86,12 @@ namespace noise
         /// set to noise::module::DEFAULT_ROTATE_Z.
         RotatePoint ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Returns the rotation angle around the @a x axis to apply to the
         /// input value.

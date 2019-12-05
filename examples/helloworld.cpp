@@ -10,16 +10,23 @@
 #include <noise/noise.h>
 #include <noiseutils.h>
 
+using namespace noise::module;
+
 int main(int argc, char** argv)
 {
-    noise::module::Perlin myModule;
+    Perlin perlin;
+
+    Const low(-1.0);
+    Const high(1.0);
+    Select select(low, high, perlin, 0.0);
+
     utils::NoiseMap heightMap;
 
     utils::NoiseMapBuilderPlane heightMapBuilder;
-    heightMapBuilder.SetSourceModule(myModule);
+    heightMapBuilder.SetSourceModule(select);
     heightMapBuilder.SetDestNoiseMap(heightMap);
-    heightMapBuilder.SetDestSize(512, 512);
-    heightMapBuilder.SetBounds(2.0, 6.0, 1.0, 5.0);
+    heightMapBuilder.SetDestSize(512, 128);
+    heightMapBuilder.SetBounds(0.0, 4.0, 0.0, 1.0);
     heightMapBuilder.Build();
 
     utils::RendererImage renderer;

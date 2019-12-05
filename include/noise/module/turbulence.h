@@ -110,7 +110,7 @@ namespace noise
     /// and one for the @a z coordinate.
     ///
     /// This noise module requires one source module.
-    class Turbulence: public Module
+    class Turbulence: public ModuleBase
     {
 
       public:
@@ -172,12 +172,12 @@ namespace noise
         /// and one for the @a z coordinate.  
         int GetSeed () const;
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the frequency of the turbulence.
         ///

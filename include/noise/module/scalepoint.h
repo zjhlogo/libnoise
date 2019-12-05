@@ -65,7 +65,7 @@ namespace noise
     /// SetYScale() or SetZScale() methods, respectively.
     ///
     /// This noise module requires one source module.
-    class ScalePoint: public Module
+    class ScalePoint: public ModuleBase
     {
 
       public:
@@ -82,12 +82,12 @@ namespace noise
         /// to noise::module::DEFAULT_SCALE_POINT_Z.
         ScalePoint ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Returns the scaling factor applied to the @a x coordinate of the
         /// input value.

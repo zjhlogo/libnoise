@@ -54,7 +54,7 @@ namespace noise
     /// rescales that value back to the original range.
     ///
     /// This noise module requires one source module.
-    class Exponent: public Module
+    class Exponent: public ModuleBase
     {
 
       public:
@@ -78,12 +78,12 @@ namespace noise
           return m_exponent;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the exponent value to apply to the output value from the
         /// source module.

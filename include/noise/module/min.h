@@ -46,7 +46,7 @@ namespace noise
     /// @image html modulemin.png
     ///
     /// This noise module requires two source modules.
-    class Min: public Module
+    class Min: public ModuleBase
     {
 
       public:
@@ -54,12 +54,12 @@ namespace noise
         /// Constructor.
         Min ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 2;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
     };
 

@@ -1,0 +1,16 @@
+BasedOnStyle: LLVM
+Language: Cpp
+UseTab: Never
+IndentWidth: 4
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: true
+IndentCaseLabels: false
+ColumnLimit: 0
+BreakConstructorInitializers: BeforeComma
+Cpp11BracedListStyle: false
+IncludeBlocks: Regroup
+IndentPPDirectives: AfterHash
+NamespaceIndentation: All
+SpaceBeforeParens: ControlStatements
+SpacesInContainerLiterals: true
+AccessModifierOffset: -4

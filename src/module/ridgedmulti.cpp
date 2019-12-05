@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 RidgedMulti::RidgedMulti ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_frequency    (DEFAULT_RIDGED_FREQUENCY   ),
   m_lacunarity   (DEFAULT_RIDGED_LACUNARITY  ),
   m_noiseQuality (DEFAULT_RIDGED_QUALITY     ),
@@ -52,7 +52,7 @@ void RidgedMulti::CalcSpectralWeights ()
 
 // Multifractal code originally written by F. Kenton "Doc Mojo" Musgrave,
 // 1998.  Modified by jas for use with libnoise.
-double RidgedMulti::GetValue (double x, double y, double z) const
+double RidgedMulti::getValue (double x, double y, double z) const
 {
   x *= m_frequency;
   y *= m_frequency;

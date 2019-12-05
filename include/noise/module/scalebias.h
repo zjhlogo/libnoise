@@ -56,7 +56,7 @@ namespace noise
     /// outputs the value.
     ///
     /// This noise module requires one source module.
-    class ScaleBias: public Module
+    class ScaleBias: public ModuleBase
     {
 
       public:
@@ -94,12 +94,12 @@ namespace noise
           return m_scale;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the bias to apply to the scaled output value from the source
         /// module.

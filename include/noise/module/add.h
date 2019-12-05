@@ -47,7 +47,7 @@ namespace noise
     /// @image html moduleadd.png
     ///
     /// This noise module requires two source modules.
-    class Add: public Module
+    class Add: public ModuleBase
     {
 
       public:
@@ -55,12 +55,12 @@ namespace noise
         /// Constructor.
         Add ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 2;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
     };
 

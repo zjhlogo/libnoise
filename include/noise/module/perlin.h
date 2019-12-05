@@ -157,7 +157,7 @@ namespace noise
     /// better coherent-noise function called <i>gradient noise</i>.  This
     /// version of noise::module::Perlin uses gradient coherent noise to
     /// generate Perlin noise.
-    class Perlin: public Module
+    class Perlin: public ModuleBase
     {
 
       public:
@@ -239,12 +239,12 @@ namespace noise
           return m_seed;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 0;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the frequency of the first octave.
         ///

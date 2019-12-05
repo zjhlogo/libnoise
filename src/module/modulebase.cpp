@@ -24,23 +24,44 @@
 
 using namespace noise::module;
 
-Module::Module (int sourceModuleCount)
+ModuleBase::ModuleBase(int sourceModuleCount)
 {
-  m_pSourceModule = NULL;
-
-  // Create an array of pointers to all source modules required by this
-  // noise module.  Set these pointers to NULL.
-  if (sourceModuleCount > 0) {
-    m_pSourceModule = new const Module*[sourceModuleCount];
-    for (int i = 0; i < sourceModuleCount; i++) {
-      m_pSourceModule[i] = NULL;
+    // Create an array of pointers to all source modules required by this
+    // noise module.  Set these pointers to nullptr.
+    if (sourceModuleCount > 0)
+    {
+        m_pSourceModule = new const ModuleBase*[sourceModuleCount];
+        for (int i = 0; i < sourceModuleCount; i++)
+        {
+            m_pSourceModule[i] = nullptr;
+        }
     }
-  } else {
-    m_pSourceModule = NULL;
-  }
 }
 
-Module::~Module ()
+ModuleBase::~ModuleBase()
 {
-  delete[] m_pSourceModule;
+    if (m_pSourceModule)
+    {
+        delete[] m_pSourceModule;
+        m_pSourceModule = nullptr;
+    }
+}
+
+const ModuleBase& ModuleBase::getSourceModule(int index) const
+{
+    assert(m_pSourceModule != nullptr);
+    assert(index >= 0 && index < getSourceModuleCount() && m_pSourceModule[index]);
+    return *(m_pSourceModule[index]);
+}
+
+void ModuleBase::setSourceModule(int index, const ModuleBase& sourceModule)
+{
+    assert(m_pSourceModule != nullptr);
+    assert(index >= 0 && index < getSourceModuleCount());
+    m_pSourceModule[index] = &sourceModule;
+}
+
+const ModuleBase& ModuleBase::operator=(const ModuleBase& m)
+{
+    return *this;
 }

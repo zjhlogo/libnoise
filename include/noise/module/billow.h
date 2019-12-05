@@ -75,7 +75,7 @@ namespace noise
     /// this noise module modifies each octave with an absolute-value
     /// function.  See the documentation of noise::module::Perlin for more
     /// information.
-    class Billow: public Module
+    class Billow: public ModuleBase
     {
 
       public:
@@ -157,12 +157,12 @@ namespace noise
           return m_seed;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 0;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the frequency of the first octave.
         ///

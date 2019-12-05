@@ -26,16 +26,16 @@
 using namespace noise::module;
 
 Max::Max ():
-  Module (GetSourceModuleCount ())
+  ModuleBase (getSourceModuleCount ())
 {
 }
 
-double Max::GetValue (double x, double y, double z) const
+double Max::getValue (double x, double y, double z) const
 {
   assert (m_pSourceModule[0] != NULL);
   assert (m_pSourceModule[1] != NULL);
 
-  double v0 = m_pSourceModule[0]->GetValue (x, y, z);
-  double v1 = m_pSourceModule[1]->GetValue (x, y, z);
+  double v0 = m_pSourceModule[0]->getValue (x, y, z);
+  double v1 = m_pSourceModule[1]->getValue (x, y, z);
   return GetMax (v0, v1);
 }

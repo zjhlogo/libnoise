@@ -66,7 +66,7 @@ namespace noise
     /// SetBounds() method.
     ///
     /// This noise module requires one source module.
-    class Clamp: public Module
+    class Clamp: public ModuleBase
     {
 
       public:
@@ -92,7 +92,7 @@ namespace noise
           return m_lowerBound;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
@@ -109,7 +109,7 @@ namespace noise
           return m_upperBound;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the lower and upper bounds of the clamping range.
         ///

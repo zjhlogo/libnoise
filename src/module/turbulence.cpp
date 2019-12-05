@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Turbulence::Turbulence ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_power (DEFAULT_TURBULENCE_POWER)
 {
   SetSeed (DEFAULT_TURBULENCE_SEED);
@@ -45,7 +45,7 @@ int Turbulence::GetSeed () const
   return m_xDistortModule.GetSeed ();
 }
 
-double Turbulence::GetValue (double x, double y, double z) const
+double Turbulence::getValue (double x, double y, double z) const
 {
   assert (m_pSourceModule[0] != NULL);
 
@@ -68,16 +68,16 @@ double Turbulence::GetValue (double x, double y, double z) const
   x2 = x + (53820.0 / 65536.0);
   y2 = y + (11213.0 / 65536.0);
   z2 = z + (44845.0 / 65536.0);
-  double xDistort = x + (m_xDistortModule.GetValue (x0, y0, z0)
+  double xDistort = x + (m_xDistortModule.getValue (x0, y0, z0)
     * m_power);
-  double yDistort = y + (m_yDistortModule.GetValue (x1, y1, z1)
+  double yDistort = y + (m_yDistortModule.getValue (x1, y1, z1)
     * m_power);
-  double zDistort = z + (m_zDistortModule.GetValue (x2, y2, z2)
+  double zDistort = z + (m_zDistortModule.getValue (x2, y2, z2)
     * m_power);
 
   // Retrieve the output value at the offsetted input value instead of the
   // original input value.
-  return m_pSourceModule[0]->GetValue (xDistort, yDistort, zDistort);
+  return m_pSourceModule[0]->getValue (xDistort, yDistort, zDistort);
 }
 
 void Turbulence::SetSeed (int seed)

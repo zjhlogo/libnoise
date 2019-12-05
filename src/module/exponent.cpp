@@ -25,15 +25,15 @@
 using namespace noise::module;
 
 Exponent::Exponent ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_exponent (DEFAULT_EXPONENT)
 {
 }
 
-double Exponent::GetValue (double x, double y, double z) const
+double Exponent::getValue (double x, double y, double z) const
 {
   assert (m_pSourceModule[0] != NULL);
 
-  double value = m_pSourceModule[0]->GetValue (x, y, z);
+  double value = m_pSourceModule[0]->getValue (x, y, z);
   return (pow (fabs ((value + 1.0) / 2.0), m_exponent) * 2.0 - 1.0);
 }

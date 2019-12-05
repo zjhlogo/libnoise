@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Billow::Billow ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_frequency    (DEFAULT_BILLOW_FREQUENCY   ),
   m_lacunarity   (DEFAULT_BILLOW_LACUNARITY  ),
   m_noiseQuality (DEFAULT_BILLOW_QUALITY     ),
@@ -35,7 +35,7 @@ Billow::Billow ():
 {
 }
 
-double Billow::GetValue (double x, double y, double z) const
+double Billow::getValue (double x, double y, double z) const
 {
   double value = 0.0;
   double signal = 0.0;

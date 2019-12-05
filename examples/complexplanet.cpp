@@ -273,7 +273,7 @@ int main ()
   //    output value from the continent module so that very high values appear
   //    near sea level.  This defines the positions of the mountain ranges.
   module::Curve baseContinentDef_cu;
-  baseContinentDef_cu.SetSourceModule (0, baseContinentDef_pe0);
+  baseContinentDef_cu.setSourceModule (0, baseContinentDef_pe0);
   baseContinentDef_cu.AddControlPoint (-2.0000 + SEA_LEVEL,-1.625 + SEA_LEVEL);
   baseContinentDef_cu.AddControlPoint (-1.0000 + SEA_LEVEL,-1.375 + SEA_LEVEL);
   baseContinentDef_cu.AddControlPoint ( 0.0000 + SEA_LEVEL,-0.375 + SEA_LEVEL);
@@ -301,7 +301,7 @@ int main ()
   //    value from the carver module such that it is usually near 1.0.  This
   //    is required for step 5.
   module::ScaleBias baseContinentDef_sb;
-  baseContinentDef_sb.SetSourceModule (0, baseContinentDef_pe1);
+  baseContinentDef_sb.setSourceModule (0, baseContinentDef_pe1);
   baseContinentDef_sb.SetScale (0.375);
   baseContinentDef_sb.SetBias (0.625);
 
@@ -317,20 +317,20 @@ int main ()
   //    in this case, the output value from the scaled-carver module is
   //    selected.
   module::Min baseContinentDef_mi;
-  baseContinentDef_mi.SetSourceModule (0, baseContinentDef_sb);
-  baseContinentDef_mi.SetSourceModule (1, baseContinentDef_cu);
+  baseContinentDef_mi.setSourceModule (0, baseContinentDef_sb);
+  baseContinentDef_mi.setSourceModule (1, baseContinentDef_cu);
 
   // 6: [Clamped-continent module]: Finally, a clamp module modifies the
   //    carved-continent module to ensure that the output value of this
   //    subgroup is between -1.0 and 1.0.
   module::Clamp baseContinentDef_cl;
-  baseContinentDef_cl.SetSourceModule (0, baseContinentDef_mi);
+  baseContinentDef_cl.setSourceModule (0, baseContinentDef_mi);
   baseContinentDef_cl.SetBounds (-1.0, 1.0);
 
   // 7: [Base-continent-definition subgroup]: Caches the output value from the
   //    clamped-continent module.
   module::Cache baseContinentDef;
-  baseContinentDef.SetSourceModule (0, baseContinentDef_cl);
+  baseContinentDef.setSourceModule (0, baseContinentDef_cl);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -350,7 +350,7 @@ int main ()
   //    value from the base-continent-definition subgroup, adding some coarse
   //    detail to it.
   module::Turbulence continentDef_tu0;
-  continentDef_tu0.SetSourceModule (0, baseContinentDef);
+  continentDef_tu0.setSourceModule (0, baseContinentDef);
   continentDef_tu0.SetSeed (CUR_SEED + 10);
   continentDef_tu0.SetFrequency (CONTINENT_FREQUENCY * 15.25);
   continentDef_tu0.SetPower (CONTINENT_FREQUENCY / 113.75);
@@ -361,7 +361,7 @@ int main ()
   //    a higher frequency, but lower power, than the coarse-turbulence
   //    module, adding some intermediate detail to it.
   module::Turbulence continentDef_tu1;
-  continentDef_tu1.SetSourceModule (0, continentDef_tu0);
+  continentDef_tu1.setSourceModule (0, continentDef_tu0);
   continentDef_tu1.SetSeed (CUR_SEED + 11);
   continentDef_tu1.SetFrequency (CONTINENT_FREQUENCY * 47.25);
   continentDef_tu1.SetPower (CONTINENT_FREQUENCY / 433.75);
@@ -372,7 +372,7 @@ int main ()
   //    turbulence has a higher frequency, but lower power, than the
   //    intermediate-turbulence module, adding some fine detail to it.
   module::Turbulence continentDef_tu2;
-  continentDef_tu2.SetSourceModule (0, continentDef_tu1);
+  continentDef_tu2.setSourceModule (0, continentDef_tu1);
   continentDef_tu2.SetSeed (CUR_SEED + 12);
   continentDef_tu2.SetFrequency (CONTINENT_FREQUENCY * 95.25);
   continentDef_tu2.SetPower (CONTINENT_FREQUENCY / 1019.75);
@@ -389,17 +389,17 @@ int main ()
   //    definition subgroup become warped; the underwater and coastal areas
   //    remain unaffected.
   module::Select continentDef_se;
-  continentDef_se.SetSourceModule (0, baseContinentDef);
-  continentDef_se.SetSourceModule (1, continentDef_tu2);
-  continentDef_se.SetControlModule (baseContinentDef);
-  continentDef_se.SetBounds (SEA_LEVEL - 0.0375, SEA_LEVEL + 1000.0375);
-  continentDef_se.SetEdgeFalloff (0.0625);
+  continentDef_se.setSourceModule (0, baseContinentDef);
+  continentDef_se.setSourceModule (1, continentDef_tu2);
+  continentDef_se.setControlModule (baseContinentDef);
+  continentDef_se.setBounds (SEA_LEVEL - 0.0375, SEA_LEVEL + 1000.0375);
+  continentDef_se.setEdgeFalloff (0.0625);
 
   // 7: [Continent-definition group]: Caches the output value from the
   //    clamped-continent module.  This is the output value for the entire
   //    continent-definition group.
   module::Cache continentDef;
-  continentDef.SetSourceModule (0, continentDef_se);
+  continentDef.setSourceModule (0, continentDef_se);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ int main ()
   //    Rough areas may now appear in the the ocean, creating rocky islands
   //    and fjords.
   module::Turbulence terrainTypeDef_tu;
-  terrainTypeDef_tu.SetSourceModule (0, continentDef);
+  terrainTypeDef_tu.setSourceModule (0, continentDef);
   terrainTypeDef_tu.SetSeed (CUR_SEED + 20);
   terrainTypeDef_tu.SetFrequency (CONTINENT_FREQUENCY * 18.125);
   terrainTypeDef_tu.SetPower (CONTINENT_FREQUENCY / 20.59375
@@ -441,7 +441,7 @@ int main ()
   //    in which the rough terrain appears, increasing the "rarity" of rough
   //    terrain.
   module::Terrace terrainTypeDef_te;
-  terrainTypeDef_te.SetSourceModule (0, terrainTypeDef_tu);
+  terrainTypeDef_te.setSourceModule (0, terrainTypeDef_tu);
   terrainTypeDef_te.AddControlPoint (-1.00);
   terrainTypeDef_te.AddControlPoint (SHELF_LEVEL + SEA_LEVEL / 2.0);
   terrainTypeDef_te.AddControlPoint (1.00);
@@ -450,7 +450,7 @@ int main ()
   //    roughness-probability-shift module.  This is the output value for
   //    the entire terrain-type-definition group.
   module::Cache terrainTypeDef;
-  terrainTypeDef.SetSourceModule (0, terrainTypeDef_te);
+  terrainTypeDef.setSourceModule (0, terrainTypeDef_te);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -481,7 +481,7 @@ int main ()
   //    too high.  The reason for this is that another subgroup adds actual
   //    mountainous terrain to these ridges.
   module::ScaleBias mountainBaseDef_sb0;
-  mountainBaseDef_sb0.SetSourceModule (0, mountainBaseDef_rm0);
+  mountainBaseDef_sb0.setSourceModule (0, mountainBaseDef_rm0);
   mountainBaseDef_sb0.SetScale (0.5);
   mountainBaseDef_sb0.SetBias (0.375);
 
@@ -506,13 +506,13 @@ int main ()
   //    factor inverts the range of the output value, turning the ridges from
   //    the river-valley module into valleys.
   module::ScaleBias mountainBaseDef_sb1;
-  mountainBaseDef_sb1.SetSourceModule (0, mountainBaseDef_rm1);
+  mountainBaseDef_sb1.setSourceModule (0, mountainBaseDef_rm1);
   mountainBaseDef_sb1.SetScale (-2.0);
   mountainBaseDef_sb1.SetBias (-0.5);
 
   // 5: [Low-flat module]: This low constant value is used by step 6.
   module::Const mountainBaseDef_co;
-  mountainBaseDef_co.SetConstValue (-1.0);
+  mountainBaseDef_co.setConstValue (-1.0);
 
   // 6: [Mountains-and-valleys module]: This blender module merges the
   //    scaled-mountain-ridge module and the scaled-river-valley module
@@ -523,15 +523,15 @@ int main ()
   //    areas and causing the scaled-mountain-ridge module to appear in the
   //    higher areas.
   module::Blend mountainBaseDef_bl;
-  mountainBaseDef_bl.SetSourceModule (0, mountainBaseDef_co);
-  mountainBaseDef_bl.SetSourceModule (1, mountainBaseDef_sb0);
+  mountainBaseDef_bl.setSourceModule (0, mountainBaseDef_co);
+  mountainBaseDef_bl.setSourceModule (1, mountainBaseDef_sb0);
   mountainBaseDef_bl.SetControlModule (mountainBaseDef_sb1);
 
   // 7: [Coarse-turbulence module]: This turbulence module warps the output
   //    value from the mountain-and-valleys module, adding some coarse detail
   //    to it.
   module::Turbulence mountainBaseDef_tu0;
-  mountainBaseDef_tu0.SetSourceModule (0, mountainBaseDef_bl);
+  mountainBaseDef_tu0.setSourceModule (0, mountainBaseDef_bl);
   mountainBaseDef_tu0.SetSeed (CUR_SEED + 32);
   mountainBaseDef_tu0.SetFrequency (1337.0);
   mountainBaseDef_tu0.SetPower (1.0 / 6730.0 * MOUNTAINS_TWIST);
@@ -542,7 +542,7 @@ int main ()
   //    has a higher frequency, but lower power, than the coarse-turbulence
   //    module, adding some fine detail to it.
   module::Turbulence mountainBaseDef_tu1;
-  mountainBaseDef_tu1.SetSourceModule (0, mountainBaseDef_tu0);
+  mountainBaseDef_tu1.setSourceModule (0, mountainBaseDef_tu0);
   mountainBaseDef_tu1.SetSeed (CUR_SEED + 33);
   mountainBaseDef_tu1.SetFrequency (21221.0);
   mountainBaseDef_tu1.SetPower (1.0 / 120157.0 * MOUNTAINS_TWIST);
@@ -551,7 +551,7 @@ int main ()
   // 9: [Mountain-base-definition subgroup]: Caches the output value from the
   //    warped-mountains-and-valleys module.
   module::Cache mountainBaseDef;
-  mountainBaseDef.SetSourceModule (0, mountainBaseDef_tu1);
+  mountainBaseDef.setSourceModule (0, mountainBaseDef_tu1);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -590,13 +590,13 @@ int main ()
   //    ridged-multifractal-noise modules contribute to the output value of
   //    this subgroup.
   module::Max mountainousHigh_ma;
-  mountainousHigh_ma.SetSourceModule (0, mountainousHigh_rm0);
-  mountainousHigh_ma.SetSourceModule (1, mountainousHigh_rm1);
+  mountainousHigh_ma.setSourceModule (0, mountainousHigh_rm0);
+  mountainousHigh_ma.setSourceModule (1, mountainousHigh_rm1);
 
   // 4: [Warped-high-mountains module]: This turbulence module warps the
   //    output value from the high-mountains module, adding some detail to it.
   module::Turbulence mountainousHigh_tu;
-  mountainousHigh_tu.SetSourceModule (0, mountainousHigh_ma);
+  mountainousHigh_tu.setSourceModule (0, mountainousHigh_ma);
   mountainousHigh_tu.SetSeed (CUR_SEED + 42);
   mountainousHigh_tu.SetFrequency (31511.0);
   mountainousHigh_tu.SetPower (1.0 / 180371.0 * MOUNTAINS_TWIST);
@@ -605,7 +605,7 @@ int main ()
   // 5: [High-mountainous-terrain subgroup]: Caches the output value from the
   //    warped-high-mountains module.
   module::Cache mountainousHigh;
-  mountainousHigh.SetSourceModule (0, mountainousHigh_tu);
+  mountainousHigh.setSourceModule (0, mountainousHigh_tu);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -648,13 +648,13 @@ int main ()
   //    - Ridges appear when two positive output values are multiplied
   //      together.
   module::Multiply mountainousLow_mu;
-  mountainousLow_mu.SetSourceModule (0, mountainousLow_rm0);
-  mountainousLow_mu.SetSourceModule (1, mountainousLow_rm1);
+  mountainousLow_mu.setSourceModule (0, mountainousLow_rm0);
+  mountainousLow_mu.setSourceModule (1, mountainousLow_rm1);
 
   // 4: [Low-mountainous-terrain subgroup]: Caches the output value from the
   //    low-moutainous-terrain module.
   module::Cache mountainousLow;
-  mountainousLow.SetSourceModule (0, mountainousLow_mu);
+  mountainousLow.setSourceModule (0, mountainousLow_mu);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -675,7 +675,7 @@ int main ()
   //    This will also result in the low mountainous areas appearing at the
   //    lowest elevations in this subgroup.
   module::ScaleBias mountainousTerrain_sb0;
-  mountainousTerrain_sb0.SetSourceModule (0, mountainousLow);
+  mountainousTerrain_sb0.setSourceModule (0, mountainousLow);
   mountainousTerrain_sb0.SetScale (0.03125);
   mountainousTerrain_sb0.SetBias (-0.96875);
 
@@ -684,7 +684,7 @@ int main ()
   //    1/4 of its initial value and biases it so that its output value is
   //    usually positive.
   module::ScaleBias mountainousTerrain_sb1;
-  mountainousTerrain_sb1.SetSourceModule (0, mountainousHigh);
+  mountainousTerrain_sb1.setSourceModule (0, mountainousHigh);
   mountainousTerrain_sb1.SetScale (0.25);
   mountainousTerrain_sb1.SetBias (0.25);
 
@@ -693,8 +693,8 @@ int main ()
   //    output value from the mountain-base-definition subgroup.  Mountains
   //    now appear all over the terrain.
   module::Add mountainousTerrain_ad;
-  mountainousTerrain_ad.SetSourceModule (0, mountainousTerrain_sb1);
-  mountainousTerrain_ad.SetSourceModule (1, mountainBaseDef);
+  mountainousTerrain_ad.setSourceModule (0, mountainousTerrain_sb1);
+  mountainousTerrain_ad.setSourceModule (1, mountainBaseDef);
 
   // 4: [Combined-mountainous-terrain module]: Note that at this point, the
   //    entire terrain is covered in high mountainous terrain, even at the low
@@ -708,17 +708,17 @@ int main ()
   //    Otherwise, this noise module selects the output value from the scaled-
   //    low-mountainous-terrain module.
   module::Select mountainousTerrain_se;
-  mountainousTerrain_se.SetSourceModule (0, mountainousTerrain_sb0);
-  mountainousTerrain_se.SetSourceModule (1, mountainousTerrain_ad);
-  mountainousTerrain_se.SetControlModule (mountainBaseDef);
-  mountainousTerrain_se.SetBounds (-0.5, 999.5);
-  mountainousTerrain_se.SetEdgeFalloff (0.5);
+  mountainousTerrain_se.setSourceModule (0, mountainousTerrain_sb0);
+  mountainousTerrain_se.setSourceModule (1, mountainousTerrain_ad);
+  mountainousTerrain_se.setControlModule (mountainBaseDef);
+  mountainousTerrain_se.setBounds (-0.5, 999.5);
+  mountainousTerrain_se.setEdgeFalloff (0.5);
 
   // 5: [Scaled-mountainous-terrain-module]: This scale/bias module slightly
   //    reduces the range of the output value from the combined-mountainous-
   //    terrain module, decreasing the heights of the mountain peaks.
   module::ScaleBias mountainousTerrain_sb2;
-  mountainousTerrain_sb2.SetSourceModule (0, mountainousTerrain_se);
+  mountainousTerrain_sb2.setSourceModule (0, mountainousTerrain_se);
   mountainousTerrain_sb2.SetScale (0.8);
   mountainousTerrain_sb2.SetBias (0.0);
 
@@ -729,14 +729,14 @@ int main ()
   //    out those mountains.  This exponential-curve module expects the output
   //    value to range from -1.0 to +1.0.
   module::Exponent mountainousTerrain_ex;
-  mountainousTerrain_ex.SetSourceModule (0, mountainousTerrain_sb2);
+  mountainousTerrain_ex.setSourceModule (0, mountainousTerrain_sb2);
   mountainousTerrain_ex.SetExponent (MOUNTAIN_GLACIATION);
 
   // 7: [Mountainous-terrain group]: Caches the output value from the
   //    glaciated-mountainous-terrain module.  This is the output value for
   //    the entire mountainous-terrain group.
   module::Cache mountainousTerrain;
-  mountainousTerrain.SetSourceModule (0, mountainousTerrain_ex);
+  mountainousTerrain.setSourceModule (0, mountainousTerrain_ex);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -766,7 +766,7 @@ int main ()
   //    The reason for this is that these hills are eventually added to the
   //    river valleys (see below.)
   module::ScaleBias hillyTerrain_sb0;
-  hillyTerrain_sb0.SetSourceModule (0, hillyTerrain_bi);
+  hillyTerrain_sb0.setSourceModule (0, hillyTerrain_bi);
   hillyTerrain_sb0.SetScale (0.5);
   hillyTerrain_sb0.SetBias (0.5);
 
@@ -790,13 +790,13 @@ int main ()
   //    factor inverts the range of the output value, turning the ridges from
   //    the river-valley module into valleys.
   module::ScaleBias hillyTerrain_sb1;
-  hillyTerrain_sb1.SetSourceModule (0, hillyTerrain_rm);
+  hillyTerrain_sb1.setSourceModule (0, hillyTerrain_rm);
   hillyTerrain_sb1.SetScale (-2.0);
   hillyTerrain_sb1.SetBias (-0.5);
 
   // 5: [Low-flat module]: This low constant value is used by step 6.
   module::Const hillyTerrain_co;
-  hillyTerrain_co.SetConstValue (-1.0);
+  hillyTerrain_co.setConstValue (-1.0);
 
   // 6: [Mountains-and-valleys module]: This blender module merges the
   //    scaled-hills module and the scaled-river-valley module together.  It
@@ -806,15 +806,15 @@ int main ()
   //    flat module to appear in the lower areas and causing the scaled-river-
   //    valley module to appear in the higher areas.
   module::Blend hillyTerrain_bl;
-  hillyTerrain_bl.SetSourceModule (0, hillyTerrain_co);
-  hillyTerrain_bl.SetSourceModule (1, hillyTerrain_sb1);
+  hillyTerrain_bl.setSourceModule (0, hillyTerrain_co);
+  hillyTerrain_bl.setSourceModule (1, hillyTerrain_sb1);
   hillyTerrain_bl.SetControlModule (hillyTerrain_sb0);
 
   // 7: [Scaled-hills-and-valleys module]: This scale/bias module slightly
   //    reduces the range of the output value from the hills-and-valleys
   //    module, decreasing the heights of the hilltops.
   module::ScaleBias hillyTerrain_sb2;
-  hillyTerrain_sb2.SetSourceModule (0, hillyTerrain_bl);
+  hillyTerrain_sb2.setSourceModule (0, hillyTerrain_bl);
   hillyTerrain_sb2.SetScale (0.75);
   hillyTerrain_sb2.SetBias (-0.25);
 
@@ -824,14 +824,14 @@ int main ()
   //    module.  This exponential-curve module expects the input value to
   //    range from -1.0 to 1.0.
   module::Exponent hillyTerrain_ex;
-  hillyTerrain_ex.SetSourceModule (0, hillyTerrain_sb2);
+  hillyTerrain_ex.setSourceModule (0, hillyTerrain_sb2);
   hillyTerrain_ex.SetExponent (1.375);
 
   // 9: [Coarse-turbulence module]: This turbulence module warps the output
   //    value from the increased-slope-hilly-terrain module, adding some
   //    coarse detail to it.
   module::Turbulence hillyTerrain_tu0;
-  hillyTerrain_tu0.SetSourceModule (0, hillyTerrain_ex);
+  hillyTerrain_tu0.setSourceModule (0, hillyTerrain_ex);
   hillyTerrain_tu0.SetSeed (CUR_SEED + 62);
   hillyTerrain_tu0.SetFrequency (1531.0);
   hillyTerrain_tu0.SetPower (1.0 / 16921.0 * HILLS_TWIST);
@@ -842,7 +842,7 @@ int main ()
   //     a higher frequency, but lower power, than the coarse-turbulence
   //     module, adding some fine detail to it.
   module::Turbulence hillyTerrain_tu1;
-  hillyTerrain_tu1.SetSourceModule (0, hillyTerrain_tu0);
+  hillyTerrain_tu1.setSourceModule (0, hillyTerrain_tu0);
   hillyTerrain_tu1.SetSeed (CUR_SEED + 63);
   hillyTerrain_tu1.SetFrequency (21617.0);
   hillyTerrain_tu1.SetPower (1.0 / 117529.0 * HILLS_TWIST);
@@ -852,7 +852,7 @@ int main ()
   //     terrain module.  This is the output value for the entire hilly-
   //     terrain group.
   module::Cache hillyTerrain;
-  hillyTerrain.SetSourceModule (0, hillyTerrain_tu1);
+  hillyTerrain.setSourceModule (0, hillyTerrain_tu1);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -887,7 +887,7 @@ int main ()
   //    value will be multiplied together with the positive-plains-basis-1
   //    module.
   module::ScaleBias plainsTerrain_sb0;
-  plainsTerrain_sb0.SetSourceModule (0, plainsTerrain_bi0);
+  plainsTerrain_sb0.setSourceModule (0, plainsTerrain_bi0);
   plainsTerrain_sb0.SetScale (0.5);
   plainsTerrain_sb0.SetBias (0.5);
 
@@ -906,21 +906,21 @@ int main ()
   //    value will be multiplied together with the positive-plains-basis-0
   //    module.
   module::ScaleBias plainsTerrain_sb1;
-  plainsTerrain_sb1.SetSourceModule (0, plainsTerrain_bi1);
+  plainsTerrain_sb1.setSourceModule (0, plainsTerrain_bi1);
   plainsTerrain_sb1.SetScale (0.5);
   plainsTerrain_sb1.SetBias (0.5);
 
   // 5: [Combined-plains-basis module]: This multiplication module combines
   //    the two plains basis modules together.
   module::Multiply plainsTerrain_mu;
-  plainsTerrain_mu.SetSourceModule (0, plainsTerrain_sb0);
-  plainsTerrain_mu.SetSourceModule (1, plainsTerrain_sb1);
+  plainsTerrain_mu.setSourceModule (0, plainsTerrain_sb0);
+  plainsTerrain_mu.setSourceModule (1, plainsTerrain_sb1);
 
   // 6: [Rescaled-plains-basis module]: This scale/bias module maps the output
   //    value that ranges from 0.0 to 1.0 back to a value that ranges from
   //    -1.0 to +1.0.
   module::ScaleBias plainsTerrain_sb2;
-  plainsTerrain_sb2.SetSourceModule (0, plainsTerrain_mu);
+  plainsTerrain_sb2.setSourceModule (0, plainsTerrain_mu);
   plainsTerrain_sb2.SetScale (2.0);
   plainsTerrain_sb2.SetBias (-1.0);
 
@@ -928,7 +928,7 @@ int main ()
   //    plains-basis module.  This is the output value for the entire plains-
   //    terrain group.
   module::Cache plainsTerrain;
-  plainsTerrain.SetSourceModule (0, plainsTerrain_sb2);
+  plainsTerrain.setSourceModule (0, plainsTerrain_sb2);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -958,7 +958,7 @@ int main ()
   //    heights by a small amount.  This is necessary so that the subsequent
   //    noise modules in this subgroup can add some detail to the dunes.
   module::ScaleBias badlandsSand_sb0;
-  badlandsSand_sb0.SetSourceModule (0, badlandsSand_rm);
+  badlandsSand_sb0.setSourceModule (0, badlandsSand_rm);
   badlandsSand_sb0.SetScale (0.875);
   badlandsSand_sb0.SetBias (0.0);
 
@@ -977,20 +977,20 @@ int main ()
   //    noise modules in this subgroup can add this detail to the sand-dunes
   //    module.
   module::ScaleBias badlandsSand_sb1;
-  badlandsSand_sb1.SetSourceModule (0, badlandsSand_vo);
+  badlandsSand_sb1.setSourceModule (0, badlandsSand_vo);
   badlandsSand_sb1.SetScale (0.25);
   badlandsSand_sb1.SetBias (0.25);
 
   // 5: [Dunes-with-detail module]: This addition module combines the scaled-
   //    sand-dunes module with the scaled-dune-detail module.
   module::Add badlandsSand_ad;
-  badlandsSand_ad.SetSourceModule (0, badlandsSand_sb0);
-  badlandsSand_ad.SetSourceModule (1, badlandsSand_sb1);
+  badlandsSand_ad.setSourceModule (0, badlandsSand_sb0);
+  badlandsSand_ad.setSourceModule (1, badlandsSand_sb1);
 
   // 6: [Badlands-sand subgroup]: Caches the output value from the dunes-with-
   //    detail module.
   module::Cache badlandsSand;
-  badlandsSand.SetSourceModule (0, badlandsSand_ad);
+  badlandsSand.setSourceModule (0, badlandsSand_ad);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1018,7 +1018,7 @@ int main ()
   //    elevations, the curve becomes very flat again.  This produces the
   //    stereotypical Utah-style desert cliffs.
   module::Curve badlandsCliffs_cu;
-  badlandsCliffs_cu.SetSourceModule (0, badlandsCliffs_pe);
+  badlandsCliffs_cu.setSourceModule (0, badlandsCliffs_pe);
   badlandsCliffs_cu.AddControlPoint (-2.0000, -2.0000);
   badlandsCliffs_cu.AddControlPoint (-1.0000, -1.2500);
   badlandsCliffs_cu.AddControlPoint (-0.0000, -0.7500);
@@ -1031,14 +1031,14 @@ int main ()
   //    cliffs very flat by clamping the output value from the cliff-shaping
   //    module so that the tops of the cliffs are very flat.
   module::Clamp badlandsCliffs_cl;
-  badlandsCliffs_cl.SetSourceModule (0, badlandsCliffs_cu);
+  badlandsCliffs_cl.setSourceModule (0, badlandsCliffs_cu);
   badlandsCliffs_cl.SetBounds (-999.125, 0.875);
 
   // 4: [Terraced-cliffs module]: Next, this terracing module applies some
   //    terraces to the clamped-cliffs module in the lower elevations before
   //    the sharp cliff transition.
   module::Terrace badlandsCliffs_te;
-  badlandsCliffs_te.SetSourceModule (0, badlandsCliffs_cl);
+  badlandsCliffs_te.setSourceModule (0, badlandsCliffs_cl);
   badlandsCliffs_te.AddControlPoint (-1.0000);
   badlandsCliffs_te.AddControlPoint (-0.8750);
   badlandsCliffs_te.AddControlPoint (-0.7500);
@@ -1051,7 +1051,7 @@ int main ()
   //    it.
   module::Turbulence badlandsCliffs_tu0;
   badlandsCliffs_tu0.SetSeed (CUR_SEED + 91);
-  badlandsCliffs_tu0.SetSourceModule (0, badlandsCliffs_te);
+  badlandsCliffs_tu0.setSourceModule (0, badlandsCliffs_te);
   badlandsCliffs_tu0.SetFrequency (16111.0);
   badlandsCliffs_tu0.SetPower (1.0 / 141539.0 * BADLANDS_TWIST);
   badlandsCliffs_tu0.SetRoughness (3);
@@ -1062,7 +1062,7 @@ int main ()
   //    some fine detail to it.
   module::Turbulence badlandsCliffs_tu1;
   badlandsCliffs_tu1.SetSeed (CUR_SEED + 92);
-  badlandsCliffs_tu1.SetSourceModule (0, badlandsCliffs_tu0);
+  badlandsCliffs_tu1.setSourceModule (0, badlandsCliffs_tu0);
   badlandsCliffs_tu1.SetFrequency (36107.0);
   badlandsCliffs_tu1.SetPower (1.0 / 211543.0 * BADLANDS_TWIST);
   badlandsCliffs_tu1.SetRoughness (3);
@@ -1070,7 +1070,7 @@ int main ()
   // 7: [Badlands-cliffs subgroup]: Caches the output value from the warped-
   //    cliffs module.
   module::Cache badlandsCliffs;
-  badlandsCliffs.SetSourceModule (0, badlandsCliffs_tu1);
+  badlandsCliffs.setSourceModule (0, badlandsCliffs_tu1);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1092,7 +1092,7 @@ int main ()
   //    flattens the output value from the badlands-sands subgroup and lowers
   //    this value to near -1.0.
   module::ScaleBias badlandsTerrain_sb;
-  badlandsTerrain_sb.SetSourceModule (0, badlandsSand);
+  badlandsTerrain_sb.setSourceModule (0, badlandsSand);
   badlandsTerrain_sb.SetScale (0.25);
   badlandsTerrain_sb.SetBias (-0.75);
 
@@ -1101,14 +1101,14 @@ int main ()
   //    It does this by selecting the maximum of the output values from the
   //    scaled-sand-dunes module and the badlands-cliffs subgroup.
   module::Max badlandsTerrain_ma;
-  badlandsTerrain_ma.SetSourceModule (0, badlandsCliffs);
-  badlandsTerrain_ma.SetSourceModule (1, badlandsTerrain_sb);
+  badlandsTerrain_ma.setSourceModule (0, badlandsCliffs);
+  badlandsTerrain_ma.setSourceModule (1, badlandsTerrain_sb);
 
   // 3: [Badlands-terrain group]: Caches the output value from the dunes-and-
   //    cliffs module.  This is the output value for the entire badlands-
   //    terrain group.
   module::Cache badlandsTerrain;
-  badlandsTerrain.SetSourceModule (0, badlandsTerrain_ma);
+  badlandsTerrain.setSourceModule (0, badlandsTerrain_ma);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1139,7 +1139,7 @@ int main ()
   //    the edge of the rivers, producing a sharp transition from the land to
   //    the river bottom.
   module::Curve riverPositions_cu0;
-  riverPositions_cu0.SetSourceModule (0, riverPositions_rm0);
+  riverPositions_cu0.setSourceModule (0, riverPositions_rm0);
   riverPositions_cu0.AddControlPoint (-2.000,  2.000);
   riverPositions_cu0.AddControlPoint (-1.000,  1.000);
   riverPositions_cu0.AddControlPoint (-0.125,  0.875);
@@ -1162,7 +1162,7 @@ int main ()
   //    the edge of the rivers, producing a sharp transition from the land to
   //    the river bottom.
   module::Curve riverPositions_cu1;
-  riverPositions_cu1.SetSourceModule (0, riverPositions_rm1);
+  riverPositions_cu1.setSourceModule (0, riverPositions_rm1);
   riverPositions_cu1.AddControlPoint (-2.000,  2.0000);
   riverPositions_cu1.AddControlPoint (-1.000,  1.5000);
   riverPositions_cu1.AddControlPoint (-0.125,  1.4375);
@@ -1175,14 +1175,14 @@ int main ()
   //    minimum output values from the large-river-curve module and the small-
   //    river-curve module.
   module::Min riverPositions_mi;
-  riverPositions_mi.SetSourceModule (0, riverPositions_cu0);
-  riverPositions_mi.SetSourceModule (1, riverPositions_cu1);
+  riverPositions_mi.setSourceModule (0, riverPositions_cu0);
+  riverPositions_mi.setSourceModule (1, riverPositions_cu1);
 
   // 6: [Warped-rivers module]: This turbulence module warps the output value
   //    from the combined-rivers module, which twists the rivers.  The high
   //    roughness produces less-smooth rivers.
   module::Turbulence riverPositions_tu;
-  riverPositions_tu.SetSourceModule (0, riverPositions_mi);
+  riverPositions_tu.setSourceModule (0, riverPositions_mi);
   riverPositions_tu.SetSeed (CUR_SEED + 102);
   riverPositions_tu.SetFrequency (9.25);
   riverPositions_tu.SetPower (1.0 / 57.75);
@@ -1192,7 +1192,7 @@ int main ()
   //    rivers module.  This is the output value for the entire river-
   //    positions group.
   module::Cache riverPositions;
-  riverPositions.SetSourceModule (0, riverPositions_tu);
+  riverPositions.setSourceModule (0, riverPositions_tu);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1220,7 +1220,7 @@ int main ()
   //    scales the output value from the mountainous-terrain group so that the
   //    output value is measured in planetary elevation units.
   module::ScaleBias scaledMountainousTerrain_sb0;
-  scaledMountainousTerrain_sb0.SetSourceModule (0, mountainousTerrain);
+  scaledMountainousTerrain_sb0.setSourceModule (0, mountainousTerrain);
   scaledMountainousTerrain_sb0.SetScale (0.125);
   scaledMountainousTerrain_sb0.SetBias (0.125);
 
@@ -1243,7 +1243,7 @@ int main ()
   //    higher elevations than the majority of the peaks, making the terrain
   //    features more varied.
   module::Exponent scaledMountainousTerrain_ex;
-  scaledMountainousTerrain_ex.SetSourceModule (0, scaledMountainousTerrain_pe);
+  scaledMountainousTerrain_ex.setSourceModule (0, scaledMountainousTerrain_pe);
   scaledMountainousTerrain_ex.SetExponent (1.25);
 
   // 4: [Scaled-peak-modulation module]: This scale/bias module modifies the
@@ -1251,7 +1251,7 @@ int main ()
   //    can be used as the modulator for the peak-height-multiplier module.
   //    It is important that this output value is not much lower than 1.0.
   module::ScaleBias scaledMountainousTerrain_sb1;
-  scaledMountainousTerrain_sb1.SetSourceModule (0,
+  scaledMountainousTerrain_sb1.setSourceModule (0,
     scaledMountainousTerrain_ex);
   scaledMountainousTerrain_sb1.SetScale (0.25);
   scaledMountainousTerrain_sb1.SetBias (1.0);
@@ -1260,16 +1260,16 @@ int main ()
   //    heights of the mountain peaks from the base-scaled-mountainous-terrain
   //    module using the output value from the scaled-peak-modulation module.
   module::Multiply scaledMountainousTerrain_mu;
-  scaledMountainousTerrain_mu.SetSourceModule (0,
+  scaledMountainousTerrain_mu.setSourceModule (0,
     scaledMountainousTerrain_sb0);
-  scaledMountainousTerrain_mu.SetSourceModule (1,
+  scaledMountainousTerrain_mu.setSourceModule (1,
     scaledMountainousTerrain_sb1);
 
   // 6: [Scaled-mountainous-terrain group]: Caches the output value from the
   //    peak-height-multiplier module.  This is the output value for the
   //    entire scaled-mountainous-terrain group.
   module::Cache scaledMountainousTerrain;
-  scaledMountainousTerrain.SetSourceModule (0, scaledMountainousTerrain_mu);
+  scaledMountainousTerrain.setSourceModule (0, scaledMountainousTerrain_mu);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1298,7 +1298,7 @@ int main ()
   //    output value from the hilly-terrain group so that this output value is
   //    measured in planetary elevation units 
   module::ScaleBias scaledHillyTerrain_sb0;
-  scaledHillyTerrain_sb0.SetSourceModule (0, hillyTerrain);
+  scaledHillyTerrain_sb0.setSourceModule (0, hillyTerrain);
   scaledHillyTerrain_sb0.SetScale (0.0625);
   scaledHillyTerrain_sb0.SetBias (0.0625);
 
@@ -1321,7 +1321,7 @@ int main ()
   //    much higher elevations than the majority of the hilltops, making the
   //    terrain features more varied.
   module::Exponent scaledHillyTerrain_ex;
-  scaledHillyTerrain_ex.SetSourceModule (0, scaledHillyTerrain_pe);
+  scaledHillyTerrain_ex.setSourceModule (0, scaledHillyTerrain_pe);
   scaledHillyTerrain_ex.SetExponent (1.25);
 
   // 4: [Scaled-hilltop-modulation module]: This scale/bias module modifies
@@ -1330,7 +1330,7 @@ int main ()
   //    module.  It is important that this output value is not much lower than
   //    1.0.
   module::ScaleBias scaledHillyTerrain_sb1;
-  scaledHillyTerrain_sb1.SetSourceModule (0, scaledHillyTerrain_ex);
+  scaledHillyTerrain_sb1.setSourceModule (0, scaledHillyTerrain_ex);
   scaledHillyTerrain_sb1.SetScale (0.5);
   scaledHillyTerrain_sb1.SetBias (1.5);
 
@@ -1338,14 +1338,14 @@ int main ()
   //    the heights of the hilltops from the base-scaled-hilly-terrain module
   //    using the output value from the scaled-hilltop-modulation module.
   module::Multiply scaledHillyTerrain_mu;
-  scaledHillyTerrain_mu.SetSourceModule (0, scaledHillyTerrain_sb0);
-  scaledHillyTerrain_mu.SetSourceModule (1, scaledHillyTerrain_sb1);
+  scaledHillyTerrain_mu.setSourceModule (0, scaledHillyTerrain_sb0);
+  scaledHillyTerrain_mu.setSourceModule (1, scaledHillyTerrain_sb1);
 
   // 6: [Scaled-hilly-terrain group]: Caches the output value from the
   //    hilltop-height-multiplier module.  This is the output value for the
   //    entire scaled-hilly-terrain group.
   module::Cache scaledHillyTerrain;
-  scaledHillyTerrain.SetSourceModule (0, scaledHillyTerrain_mu);
+  scaledHillyTerrain.setSourceModule (0, scaledHillyTerrain_mu);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1373,7 +1373,7 @@ int main ()
   //    flattens the output value from the plains terrain.  This output value
   //    is measured in planetary elevation units 
   module::ScaleBias scaledPlainsTerrain_sb;
-  scaledPlainsTerrain_sb.SetSourceModule (0, plainsTerrain);
+  scaledPlainsTerrain_sb.setSourceModule (0, plainsTerrain);
   scaledPlainsTerrain_sb.SetScale (0.00390625);
   scaledPlainsTerrain_sb.SetBias (0.0078125);
 
@@ -1381,7 +1381,7 @@ int main ()
   //    scaled-plains-terrain module.  This is the output value for the entire
   //    scaled-plains-terrain group.
   module::Cache scaledPlainsTerrain;
-  scaledPlainsTerrain.SetSourceModule (0, scaledPlainsTerrain_sb);
+  scaledPlainsTerrain.setSourceModule (0, scaledPlainsTerrain_sb);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1409,7 +1409,7 @@ int main ()
   //    output value from the badlands-terrain group so that it is measured
   //    in planetary elevation units 
   module::ScaleBias scaledBadlandsTerrain_sb;
-  scaledBadlandsTerrain_sb.SetSourceModule (0, badlandsTerrain);
+  scaledBadlandsTerrain_sb.setSourceModule (0, badlandsTerrain);
   scaledBadlandsTerrain_sb.SetScale (0.0625);
   scaledBadlandsTerrain_sb.SetBias (0.0625);
 
@@ -1417,7 +1417,7 @@ int main ()
   //    scaled-badlands-terrain module.  This is the output value for the
   //    entire scaled-badlands-terrain group.
   module::Cache scaledBadlandsTerrain;
-  scaledBadlandsTerrain.SetSourceModule (0, scaledBadlandsTerrain_sb);
+  scaledBadlandsTerrain.setSourceModule (0, scaledBadlandsTerrain_sb);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1442,7 +1442,7 @@ int main ()
   //    ocean; subsequent noise modules will later add oceanic trenches to the
   //    bottom of the ocean.
   module::Terrace continentalShelf_te;
-  continentalShelf_te.SetSourceModule (0, continentDef);
+  continentalShelf_te.setSourceModule (0, continentDef);
   continentalShelf_te.AddControlPoint (-1.0);
   continentalShelf_te.AddControlPoint (-0.75);
   continentalShelf_te.AddControlPoint (SHELF_LEVEL);
@@ -1463,7 +1463,7 @@ int main ()
   //    trenches.  This noise module also reduces the depth of the trenches so
   //    that their depths are measured in planetary elevation units.
   module::ScaleBias continentalShelf_sb;
-  continentalShelf_sb.SetSourceModule (0, continentalShelf_rm);
+  continentalShelf_sb.setSourceModule (0, continentalShelf_rm);
   continentalShelf_sb.SetScale (-0.125);
   continentalShelf_sb.SetBias (-0.125);
 
@@ -1472,19 +1472,19 @@ int main ()
   //    from the bottom of the ocean to sea level.  This is done because this
   //    subgroup is only concerned about the oceans.
   module::Clamp continentalShelf_cl;
-  continentalShelf_cl.SetSourceModule (0, continentalShelf_te);
+  continentalShelf_cl.setSourceModule (0, continentalShelf_te);
   continentalShelf_cl.SetBounds (-0.75, SEA_LEVEL);
 
   // 5: [Shelf-and-trenches module]: This addition module adds the oceanic
   //    trenches to the clamped-sea-bottom module.
   module::Add continentalShelf_ad;
-  continentalShelf_ad.SetSourceModule (0, continentalShelf_sb);
-  continentalShelf_ad.SetSourceModule (1, continentalShelf_cl);
+  continentalShelf_ad.setSourceModule (0, continentalShelf_sb);
+  continentalShelf_ad.setSourceModule (1, continentalShelf_cl);
 
   // 6: [Continental-shelf subgroup]: Caches the output value from the shelf-
   //    and-trenches module.
   module::Cache continentalShelf;
-  continentalShelf.SetSourceModule (0, continentalShelf_ad);
+  continentalShelf.setSourceModule (0, continentalShelf_ad);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1502,7 +1502,7 @@ int main ()
   //    scales the output value from the continent-definition group so that it
   //    is measured in planetary elevation units 
   module::ScaleBias baseContinentElev_sb;
-  baseContinentElev_sb.SetSourceModule (0, continentDef);
+  baseContinentElev_sb.setSourceModule (0, continentDef);
   baseContinentElev_sb.SetScale (CONTINENT_HEIGHT_SCALE);
   baseContinentElev_sb.SetBias (0.0);
 
@@ -1514,16 +1514,16 @@ int main ()
   //    selects the output value from the base-scaled-continent-elevations
   //    module.
   module::Select baseContinentElev_se;
-  baseContinentElev_se.SetSourceModule (0, baseContinentElev_sb);
-  baseContinentElev_se.SetSourceModule (1, continentalShelf);
-  baseContinentElev_se.SetControlModule (continentDef);
-  baseContinentElev_se.SetBounds (SHELF_LEVEL - 1000.0, SHELF_LEVEL);
-  baseContinentElev_se.SetEdgeFalloff (0.03125);
+  baseContinentElev_se.setSourceModule (0, baseContinentElev_sb);
+  baseContinentElev_se.setSourceModule (1, continentalShelf);
+  baseContinentElev_se.setControlModule (continentDef);
+  baseContinentElev_se.setBounds (SHELF_LEVEL - 1000.0, SHELF_LEVEL);
+  baseContinentElev_se.setEdgeFalloff (0.03125);
 
   // 3: [Base-continent-elevation subgroup]: Caches the output value from the
   //    base-continent-with-oceans module.
   module::Cache baseContinentElev;
-  baseContinentElev.SetSourceModule (0, baseContinentElev_se);
+  baseContinentElev.setSourceModule (0, baseContinentElev_se);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1540,13 +1540,13 @@ int main ()
   // 1: [Continents-with-plains module]:  This addition module adds the
   //    scaled-plains-terrain group to the base-continent-elevation subgroup.
   module::Add continentsWithPlains_ad;
-  continentsWithPlains_ad.SetSourceModule (0, baseContinentElev);
-  continentsWithPlains_ad.SetSourceModule (1, scaledPlainsTerrain);
+  continentsWithPlains_ad.setSourceModule (0, baseContinentElev);
+  continentsWithPlains_ad.setSourceModule (1, scaledPlainsTerrain);
 
   // 2: [Continents-with-plains subgroup]: Caches the output value from the
   //    continents-with-plains module.
   module::Cache continentsWithPlains;
-  continentsWithPlains.SetSourceModule (0, continentsWithPlains_ad);
+  continentsWithPlains.setSourceModule (0, continentsWithPlains_ad);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1563,8 +1563,8 @@ int main ()
   // 1: [Continents-with-hills module]:  This addition module adds the scaled-
   //    hilly-terrain group to the base-continent-elevation subgroup.
   module::Add continentsWithHills_ad;
-  continentsWithHills_ad.SetSourceModule (0, baseContinentElev);
-  continentsWithHills_ad.SetSourceModule (1, scaledHillyTerrain);
+  continentsWithHills_ad.setSourceModule (0, baseContinentElev);
+  continentsWithHills_ad.setSourceModule (1, scaledHillyTerrain);
 
   // 2: [Select-high-elevations module]: This selector module ensures that
   //    the hills only appear at higher elevations.  It does this by selecting
@@ -1573,16 +1573,16 @@ int main ()
   //    above a certain value. Otherwise, it selects the output value from the
   //    continents-with-plains subgroup.
   module::Select continentsWithHills_se;
-  continentsWithHills_se.SetSourceModule (0, continentsWithPlains);
-  continentsWithHills_se.SetSourceModule (1, continentsWithHills_ad);
-  continentsWithHills_se.SetControlModule (terrainTypeDef);
-  continentsWithHills_se.SetBounds (1.0 - HILLS_AMOUNT, 1001.0 - HILLS_AMOUNT);
-  continentsWithHills_se.SetEdgeFalloff (0.25);
+  continentsWithHills_se.setSourceModule (0, continentsWithPlains);
+  continentsWithHills_se.setSourceModule (1, continentsWithHills_ad);
+  continentsWithHills_se.setControlModule (terrainTypeDef);
+  continentsWithHills_se.setBounds (1.0 - HILLS_AMOUNT, 1001.0 - HILLS_AMOUNT);
+  continentsWithHills_se.setEdgeFalloff (0.25);
 
   // 3: [Continents-with-hills subgroup]: Caches the output value from the
   //    select-high-elevations module.
   module::Cache continentsWithHills;
-  continentsWithHills.SetSourceModule (0, continentsWithHills_se);
+  continentsWithHills.setSourceModule (0, continentsWithHills_se);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1600,8 +1600,8 @@ int main ()
   //    scaled-mountainous-terrain group to the base-continent-elevation
   //    subgroup.
   module::Add continentsWithMountains_ad0;
-  continentsWithMountains_ad0.SetSourceModule (0, baseContinentElev);
-  continentsWithMountains_ad0.SetSourceModule (1, scaledMountainousTerrain);
+  continentsWithMountains_ad0.setSourceModule (0, baseContinentElev);
+  continentsWithMountains_ad0.setSourceModule (1, scaledMountainousTerrain);
 
   // 2: [Increase-mountain-heights module]:  This curve module applies a curve
   //    to the output value from the continent-definition group.  This
@@ -1610,7 +1610,7 @@ int main ()
   //    elevation.  The higher the continent elevation, the higher the
   //    mountains.
   module::Curve continentsWithMountains_cu;
-  continentsWithMountains_cu.SetSourceModule (0, continentDef);
+  continentsWithMountains_cu.setSourceModule (0, continentDef);
   continentsWithMountains_cu.AddControlPoint (                  -1.0, -0.0625);
   continentsWithMountains_cu.AddControlPoint (                   0.0,  0.0000);
   continentsWithMountains_cu.AddControlPoint (1.0 - MOUNTAINS_AMOUNT,  0.0625);
@@ -1621,8 +1621,8 @@ int main ()
   //    mountains module.  The highest continent elevations now have the
   //    highest mountains.
   module::Add continentsWithMountains_ad1;
-  continentsWithMountains_ad1.SetSourceModule (0, continentsWithMountains_ad0);
-  continentsWithMountains_ad1.SetSourceModule (1, continentsWithMountains_cu);
+  continentsWithMountains_ad1.setSourceModule (0, continentsWithMountains_ad0);
+  continentsWithMountains_ad1.setSourceModule (1, continentsWithMountains_cu);
 
   // 4: [Select-high-elevations module]: This selector module ensures that
   //    mountains only appear at higher elevations.  It does this by selecting
@@ -1632,17 +1632,17 @@ int main ()
   //    the continents-with-hills subgroup.  Note that the continents-with-
   //    hills subgroup also contains the plains terrain.
   module::Select continentsWithMountains_se;
-  continentsWithMountains_se.SetSourceModule (0, continentsWithHills);
-  continentsWithMountains_se.SetSourceModule (1, continentsWithMountains_ad1);
-  continentsWithMountains_se.SetControlModule (terrainTypeDef);
-  continentsWithMountains_se.SetBounds (1.0 - MOUNTAINS_AMOUNT,
+  continentsWithMountains_se.setSourceModule (0, continentsWithHills);
+  continentsWithMountains_se.setSourceModule (1, continentsWithMountains_ad1);
+  continentsWithMountains_se.setControlModule (terrainTypeDef);
+  continentsWithMountains_se.setBounds (1.0 - MOUNTAINS_AMOUNT,
     1001.0 - MOUNTAINS_AMOUNT);
-  continentsWithMountains_se.SetEdgeFalloff (0.25);
+  continentsWithMountains_se.setEdgeFalloff (0.25);
 
   // 5: [Continents-with-mountains subgroup]: Caches the output value from
   //    the select-high-elevations module.
   module::Cache continentsWithMountains;
-  continentsWithMountains.SetSourceModule (0, continentsWithMountains_se);
+  continentsWithMountains.setSourceModule (0, continentsWithMountains_se);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1671,8 +1671,8 @@ int main ()
   //    scaled-badlands-terrain group to the base-continent-elevation
   //    subgroup.
   module::Add continentsWithBadlands_ad;
-  continentsWithBadlands_ad.SetSourceModule (0, baseContinentElev);
-  continentsWithBadlands_ad.SetSourceModule (1, scaledBadlandsTerrain);
+  continentsWithBadlands_ad.setSourceModule (0, baseContinentElev);
+  continentsWithBadlands_ad.setSourceModule (1, scaledBadlandsTerrain);
 
   // 3: [Select-badlands-positions module]: This selector module places
   //    badlands at random spots on the continents based on the Perlin noise
@@ -1685,12 +1685,12 @@ int main ()
   //    that the badlands can blend into the rest of the terrain on the
   //    continents.
   module::Select continentsWithBadlands_se;
-  continentsWithBadlands_se.SetSourceModule (0, continentsWithMountains);
-  continentsWithBadlands_se.SetSourceModule (1, continentsWithBadlands_ad);
-  continentsWithBadlands_se.SetControlModule (continentsWithBadlands_pe);
-  continentsWithBadlands_se.SetBounds (1.0 - BADLANDS_AMOUNT,
+  continentsWithBadlands_se.setSourceModule (0, continentsWithMountains);
+  continentsWithBadlands_se.setSourceModule (1, continentsWithBadlands_ad);
+  continentsWithBadlands_se.setControlModule (continentsWithBadlands_pe);
+  continentsWithBadlands_se.setBounds (1.0 - BADLANDS_AMOUNT,
     1001.0 - BADLANDS_AMOUNT);
-  continentsWithBadlands_se.SetEdgeFalloff (0.25);
+  continentsWithBadlands_se.setEdgeFalloff (0.25);
 
   // 4: [Apply-badlands module]: This maximum-value module causes the badlands
   //    to "poke out" from the rest of the terrain.  It does this by ensuring
@@ -1700,13 +1700,13 @@ int main ()
   //    this process is that the badlands will not appear in mountainous
   //    terrain.
   module::Max continentsWithBadlands_ma;
-  continentsWithBadlands_ma.SetSourceModule (0, continentsWithMountains);
-  continentsWithBadlands_ma.SetSourceModule (1, continentsWithBadlands_se);
+  continentsWithBadlands_ma.setSourceModule (0, continentsWithMountains);
+  continentsWithBadlands_ma.setSourceModule (1, continentsWithBadlands_se);
 
   // 5: [Continents-with-badlands subgroup]: Caches the output value from the
   //    apply-badlands module.
   module::Cache continentsWithBadlands;
-  continentsWithBadlands.SetSourceModule (0, continentsWithBadlands_ma);
+  continentsWithBadlands.setSourceModule (0, continentsWithBadlands_ma);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1724,7 +1724,7 @@ int main ()
   //    from the river-positions group so that it is measured in planetary
   //    elevation units and is negative; this is required for step 2.
   module::ScaleBias continentsWithRivers_sb;
-  continentsWithRivers_sb.SetSourceModule (0, riverPositions);
+  continentsWithRivers_sb.setSourceModule (0, riverPositions);
   continentsWithRivers_sb.SetScale (RIVER_DEPTH / 2.0);
   continentsWithRivers_sb.SetBias (-RIVER_DEPTH / 2.0);
 
@@ -1733,8 +1733,8 @@ int main ()
   //    rivers module only outputs a negative value, the scaled-rivers module
   //    carves the rivers out of the terrain.
   module::Add continentsWithRivers_ad;
-  continentsWithRivers_ad.SetSourceModule (0, continentsWithBadlands);
-  continentsWithRivers_ad.SetSourceModule (1, continentsWithRivers_sb);
+  continentsWithRivers_ad.setSourceModule (0, continentsWithBadlands);
+  continentsWithRivers_ad.setSourceModule (1, continentsWithRivers_sb);
 
   // 3: [Blended-rivers-to-continents module]: This selector module outputs
   //    deep rivers near sea level and shallower rivers in higher terrain.  It
@@ -1744,17 +1744,17 @@ int main ()
   //    this selector module selects the output value from the add-rivers-to-
   //    continents module.
   module::Select continentsWithRivers_se;
-  continentsWithRivers_se.SetSourceModule (0, continentsWithBadlands);
-  continentsWithRivers_se.SetSourceModule (1, continentsWithRivers_ad);
-  continentsWithRivers_se.SetControlModule (continentsWithBadlands);
-  continentsWithRivers_se.SetBounds (SEA_LEVEL,
+  continentsWithRivers_se.setSourceModule (0, continentsWithBadlands);
+  continentsWithRivers_se.setSourceModule (1, continentsWithRivers_ad);
+  continentsWithRivers_se.setControlModule (continentsWithBadlands);
+  continentsWithRivers_se.setBounds (SEA_LEVEL,
     CONTINENT_HEIGHT_SCALE + SEA_LEVEL);
-  continentsWithRivers_se.SetEdgeFalloff (CONTINENT_HEIGHT_SCALE - SEA_LEVEL);
+  continentsWithRivers_se.setEdgeFalloff (CONTINENT_HEIGHT_SCALE - SEA_LEVEL);
 
   // 4: [Continents-with-rivers subgroup]: Caches the output value from the
   //    blended-rivers-to-continents module.
   module::Cache continentsWithRivers;
-  continentsWithRivers.SetSourceModule (0, continentsWithRivers_se);
+  continentsWithRivers.setSourceModule (0, continentsWithRivers_se);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1767,7 +1767,7 @@ int main ()
   // 1: [Unscaled-final-planet subgroup]: Caches the output value from the
   //    continent-with-rivers subgroup.
   module::Cache unscaledFinalPlanet;
-  unscaledFinalPlanet.SetSourceModule (0, continentsWithRivers);
+  unscaledFinalPlanet.setSourceModule (0, continentsWithRivers);
 
 
   ////////////////////////////////////////////////////////////////////////////
@@ -1781,14 +1781,14 @@ int main ()
   //    output value from the unscaled-final-planet subgroup so that its
   //    output value is measured in meters.
   module::ScaleBias finalPlanet_sb;
-  finalPlanet_sb.SetSourceModule (0, unscaledFinalPlanet);
+  finalPlanet_sb.setSourceModule (0, unscaledFinalPlanet);
   finalPlanet_sb.SetScale ((MAX_ELEV - MIN_ELEV) / 2.0);
   finalPlanet_sb.SetBias (MIN_ELEV + ((MAX_ELEV - MIN_ELEV) / 2.0));
 
   // 2: [Final-planet group]: Caches the output value from the final-planet-
   //    in-meters module.  Stick a fork in it, we're done!
   module::Cache finalPlanet;
-  finalPlanet.SetSourceModule (0, finalPlanet_sb);
+  finalPlanet.setSourceModule (0, finalPlanet_sb);
 
 
   ////////////////////////////////////////////////////////////////////////////

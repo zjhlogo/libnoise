@@ -372,7 +372,7 @@ void Worm::Draw () const
     curNoisePos.x = m_headNoisePos.x + (curSegment * m_twistiness);
     curNoisePos.y = m_headNoisePos.y;
     curNoisePos.z = m_headNoisePos.z;
-    double noiseValue = m_noise.GetValue (
+    double noiseValue = m_noise.getValue (
       curNoisePos.x,
       curNoisePos.y,
       curNoisePos.z);
@@ -416,7 +416,7 @@ void Worm::Update ()
 {
   // The angle of the head segment is used to determine the direction the worm
   // moves.  The worm moves in the opposite direction.
-  double noiseValue = m_noise.GetValue (
+  double noiseValue = m_noise.getValue (
     m_headNoisePos.x,
     m_headNoisePos.y,
     m_headNoisePos.z);

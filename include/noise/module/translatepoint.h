@@ -66,7 +66,7 @@ namespace noise
     /// respectively.
     ///
     /// This noise module requires one source module.
-    class TranslatePoint: public Module
+    class TranslatePoint: public ModuleBase
     {
 
       public:
@@ -83,12 +83,12 @@ namespace noise
         /// set to noise::module::DEFAULT_TRANSLATE_POINT_Z.
         TranslatePoint ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Returns the translation amount to apply to the @a x coordinate of
         /// the input value.

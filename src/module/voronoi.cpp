@@ -26,7 +26,7 @@
 using namespace noise::module;
 
 Voronoi::Voronoi ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_displacement   (DEFAULT_VORONOI_DISPLACEMENT),
   m_enableDistance (false                       ),
   m_frequency      (DEFAULT_VORONOI_FREQUENCY   ),
@@ -34,7 +34,7 @@ Voronoi::Voronoi ():
 {
 }
 
-double Voronoi::GetValue (double x, double y, double z) const
+double Voronoi::getValue (double x, double y, double z) const
 {
   // This method could be more efficient by caching the seed values.  Fix
   // later.

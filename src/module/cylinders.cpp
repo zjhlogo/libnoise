@@ -26,12 +26,12 @@
 using namespace noise::module;
 
 Cylinders::Cylinders ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_frequency (DEFAULT_CYLINDERS_FREQUENCY)
 {
 }
 
-double Cylinders::GetValue (double x, double y, double z) const
+double Cylinders::getValue (double x, double y, double z) const
 {
   x *= m_frequency;
   z *= m_frequency;

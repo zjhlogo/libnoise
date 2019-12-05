@@ -125,7 +125,7 @@ namespace noise
     /// <a href=http://www.pandromeda.com/>MojoWorld</a>.  He is also one of
     /// the authors in <i>Texturing and Modeling: A Procedural Approach</i>
     /// (Morgan Kaufmann, 2002. ISBN 1-55860-848-6.)
-    class RidgedMulti: public Module
+    class RidgedMulti: public ModuleBase
     {
 
       public:
@@ -197,12 +197,12 @@ namespace noise
           return m_seed;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 0;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
         /// Sets the frequency of the first octave.
         ///

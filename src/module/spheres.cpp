@@ -26,12 +26,12 @@
 using namespace noise::module;
 
 Spheres::Spheres ():
-  Module (GetSourceModuleCount ()),
+  ModuleBase (getSourceModuleCount ()),
   m_frequency (DEFAULT_SPHERES_FREQUENCY)
 {
 }
 
-double Spheres::GetValue (double x, double y, double z) const
+double Spheres::getValue (double x, double y, double z) const
 {
   x *= m_frequency;
   y *= m_frequency;

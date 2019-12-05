@@ -66,7 +66,7 @@ namespace noise
     /// that perform the displacement operation.
     ///
     /// This noise module requires four source modules.
-    class Displace: public Module
+    class Displace: public ModuleBase
     {
 
       public:
@@ -74,12 +74,12 @@ namespace noise
       /// Constructor.
       Displace ();
 
-      virtual int GetSourceModuleCount () const
+      virtual int getSourceModuleCount () const
       {
         return 4;
       }
 
-      virtual double GetValue (double x, double y, double z) const;
+      virtual double getValue (double x, double y, double z) const;
 
       /// Returns the @a x displacement module.
       ///
@@ -95,7 +95,7 @@ namespace noise
       /// value from this displacement module to the @a x coordinate of the
       /// input value before returning the output value from the source
       /// module.
-      const Module& GetXDisplaceModule () const
+      const ModuleBase& GetXDisplaceModule () const
       {
         if (m_pSourceModule == NULL || m_pSourceModule[1] == NULL) {
           throw noise::ExceptionNoModule ();
@@ -117,7 +117,7 @@ namespace noise
       /// value from this displacement module to the @a y coordinate of the
       /// input value before returning the output value from the source
       /// module.
-      const Module& GetYDisplaceModule () const
+      const ModuleBase& GetYDisplaceModule () const
       {
         if (m_pSourceModule == NULL || m_pSourceModule[2] == NULL) {
           throw noise::ExceptionNoModule ();
@@ -139,7 +139,7 @@ namespace noise
       /// value from this displacement module to the @a z coordinate of the
       /// input value before returning the output value from the source
       /// module.
-      const Module& GetZDisplaceModule () const
+      const ModuleBase& GetZDisplaceModule () const
       {
         if (m_pSourceModule == NULL || m_pSourceModule[3] == NULL) {
           throw noise::ExceptionNoModule ();
@@ -167,8 +167,8 @@ namespace noise
       ///
       /// These displacement modules must exist throughout the lifetime of
       /// this noise module unless another displacement module replaces it.
-      void SetDisplaceModules (const Module& xDisplaceModule,
-        const Module& yDisplaceModule, const Module& zDisplaceModule)
+      void SetDisplaceModules (const ModuleBase& xDisplaceModule,
+        const ModuleBase& yDisplaceModule, const ModuleBase& zDisplaceModule)
       {
         SetXDisplaceModule (xDisplaceModule);
         SetYDisplaceModule (yDisplaceModule);
@@ -192,7 +192,7 @@ namespace noise
       ///
       /// This displacement module must exist throughout the lifetime of this
       /// noise module unless another displacement module replaces it.
-      void SetXDisplaceModule (const Module& xDisplaceModule)
+      void SetXDisplaceModule (const ModuleBase& xDisplaceModule)
       {
         assert (m_pSourceModule != NULL);
         m_pSourceModule[1] = &xDisplaceModule;
@@ -215,7 +215,7 @@ namespace noise
       ///
       /// This displacement module must exist throughout the lifetime of this
       /// noise module unless another displacement module replaces it.
-      void SetYDisplaceModule (const Module& yDisplaceModule)
+      void SetYDisplaceModule (const ModuleBase& yDisplaceModule)
       {
         assert (m_pSourceModule != NULL);
         m_pSourceModule[2] = &yDisplaceModule;
@@ -238,7 +238,7 @@ namespace noise
       ///
       /// This displacement module must exist throughout the lifetime of this
       /// noise module unless another displacement module replaces it.
-      void SetZDisplaceModule (const Module& zDisplaceModule)
+      void SetZDisplaceModule (const ModuleBase& zDisplaceModule)
       {
         assert (m_pSourceModule != NULL);
         m_pSourceModule[3] = &zDisplaceModule;

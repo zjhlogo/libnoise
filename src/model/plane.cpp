@@ -29,7 +29,7 @@ Plane::Plane ():
 {
 }
 
-Plane::Plane (const module::Module& module) :
+Plane::Plane (const module::ModuleBase& module) :
   m_pModule( &module)
 {
 }
@@ -39,5 +39,5 @@ double Plane::GetValue (double x, double z) const
 {
   assert (m_pModule != NULL);
   
-  return m_pModule->GetValue (x, 0, z);
+  return m_pModule->getValue (x, 0, z);
 }

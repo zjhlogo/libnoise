@@ -25,15 +25,15 @@
 using namespace noise::module;
 
 Multiply::Multiply ():
-  Module (GetSourceModuleCount ())
+  ModuleBase (getSourceModuleCount ())
 {
 }
 
-double Multiply::GetValue (double x, double y, double z) const
+double Multiply::getValue (double x, double y, double z) const
 {
   assert (m_pSourceModule[0] != NULL);
   assert (m_pSourceModule[1] != NULL);
 
-  return m_pSourceModule[0]->GetValue (x, y, z)
-       * m_pSourceModule[1]->GetValue (x, y, z);
+  return m_pSourceModule[0]->getValue (x, y, z)
+       * m_pSourceModule[1]->getValue (x, y, z);
 }

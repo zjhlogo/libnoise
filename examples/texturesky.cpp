@@ -39,15 +39,15 @@ void CreateTextureColor (utils::RendererImage& renderer);
 // and combines them to form a Windows bitmap (*.bmp) file.  Because the
 // texture map is square, its width is equal to its height.  The final texture
 // map can be seamless (tileable) or non-seamless.
-void CreatePlanarTexture (const module::Module& lowerNoiseModule,
-  const module::Module& upperNoiseModule, bool seamless, int height,
+void CreatePlanarTexture (const module::ModuleBase& lowerNoiseModule,
+  const module::ModuleBase& upperNoiseModule, bool seamless, int height,
   const char* filename);
 
 // Given two noise modules, this function renders two spherical texture maps
 // and combines them to form a Windows bitmap (*.bmp) file.  The texture map's
 // width is double its height.
-void CreateSphericalTexture (const module::Module& lowerNoiseModule,
-  const module::Module& upperNoiseModule, int height, const char* filename);
+void CreateSphericalTexture (const module::ModuleBase& lowerNoiseModule,
+  const module::ModuleBase& upperNoiseModule, int height, const char* filename);
 
 // Given two noise maps, this function renders two texture maps and combines
 // them to form a Windows bitmap (*.bmp) file.
@@ -78,12 +78,12 @@ int main ()
 
   // Stretch the waves along the z axis.
   module::ScalePoint baseStretchedWater;
-  baseStretchedWater.SetSourceModule (0, baseWater);
+  baseStretchedWater.setSourceModule (0, baseWater);
   baseStretchedWater.SetScale (1.0, 1.0, 3.0);
 
   // Smoothly perturb the water texture for more realism.
   module::Turbulence finalWater;
-  finalWater.SetSourceModule (0, baseStretchedWater);
+  finalWater.setSourceModule (0, baseStretchedWater);
   finalWater.SetSeed (1);
   finalWater.SetFrequency (8.0);
   finalWater.SetPower (1.0 / 32.0);
@@ -104,7 +104,7 @@ int main ()
 
   // Perturb the cloud texture for more realism.
   module::Turbulence finalClouds;
-  finalClouds.SetSourceModule (0, cloudBase);
+  finalClouds.setSourceModule (0, cloudBase);
   finalClouds.SetSeed (3);
   finalClouds.SetFrequency (16.0);
   finalClouds.SetPower (1.0 / 64.0);
@@ -142,8 +142,8 @@ void CreateTextureColorLayer2 (utils::RendererImage& renderer)
   renderer.AddGradientPoint ( 1.00, utils::Color (255, 255, 255, 255));
 }
 
-void CreatePlanarTexture (const module::Module& lowerNoiseModule,
-  const module::Module& upperNoiseModule, bool seamless, int height,
+void CreatePlanarTexture (const module::ModuleBase& lowerNoiseModule,
+  const module::ModuleBase& upperNoiseModule, bool seamless, int height,
   const char* filename)
 {
   // Map the output values from both noise module onto two planes.  This will
@@ -171,8 +171,8 @@ void CreatePlanarTexture (const module::Module& lowerNoiseModule,
   RenderTexture (lowerNoiseMap, upperNoiseMap, filename);
 }
 
-void CreateSphericalTexture (const module::Module& lowerNoiseModule, 
-  const module::Module& upperNoiseModule, int height, const char* filename)
+void CreateSphericalTexture (const module::ModuleBase& lowerNoiseModule, 
+  const module::ModuleBase& upperNoiseModule, int height, const char* filename)
 {
   // Map the output values from both noise module onto two spheres.  This will
   // create two two-dimensional noise maps which can be rendered as two

@@ -67,7 +67,7 @@ namespace noise
     /// operation.
     ///
     /// This noise module requires three source modules.
-    class Blend: public Module
+    class Blend: public ModuleBase
     {
 
       public:
@@ -90,7 +90,7 @@ namespace noise
         /// value from the source module with an index value of 0.  Positive
         /// values weigh the blend towards the output value from the source
         /// module with an index value of 1.
-        const Module& GetControlModule () const
+        const ModuleBase& GetControlModule () const
         {
           if (m_pSourceModule == NULL || m_pSourceModule[2] == NULL) {
             throw noise::ExceptionNoModule ();
@@ -98,12 +98,12 @@ namespace noise
           return *(m_pSourceModule[2]);
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 3;
         }
 
-	      virtual double GetValue (double x, double y, double z) const;
+	      virtual double getValue (double x, double y, double z) const;
 
         /// Sets the control module.
         ///
@@ -123,7 +123,7 @@ namespace noise
         /// This control module must exist throughout the lifetime of this
         /// noise module unless another control module replaces that control
         /// module.
-        void SetControlModule (const Module& controlModule)
+        void SetControlModule (const ModuleBase& controlModule)
         {
           assert (m_pSourceModule != NULL);
           m_pSourceModule[2] = &controlModule;

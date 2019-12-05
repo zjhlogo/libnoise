@@ -78,7 +78,7 @@ namespace noise
     /// added to the curve.  
     ///
     /// This noise module requires one source module.
-    class Curve: public Module
+    class Curve: public ModuleBase
     {
 
       public:
@@ -130,12 +130,12 @@ namespace noise
           return m_controlPointCount;
         }
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
       protected:
 

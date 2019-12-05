@@ -64,7 +64,7 @@ namespace noise
     /// noise module in which it is included.
     ///
     /// This noise module requires one source module.
-    class Cache: public Module
+    class Cache: public ModuleBase
     {
 
       public:
@@ -72,16 +72,16 @@ namespace noise
         /// Constructor.
         Cache ();
 
-        virtual int GetSourceModuleCount () const
+        virtual int getSourceModuleCount () const
         {
           return 1;
         }
 
-        virtual double GetValue (double x, double y, double z) const;
+        virtual double getValue (double x, double y, double z) const;
 
-        virtual void SetSourceModule (int index, const Module& sourceModule)
+        virtual void setSourceModule (int index, const ModuleBase& sourceModule)
         {
-          Module::SetSourceModule (index, sourceModule);
+          ModuleBase::setSourceModule (index, sourceModule);
           m_isCached = false;
         }
 

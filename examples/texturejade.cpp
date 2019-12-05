@@ -39,13 +39,13 @@ void CreateTextureColor (utils::RendererImage& renderer);
 // writes it to a Windows bitmap (*.bmp) file.  Because the texture map is
 // square, its width is equal to its height.  The texture map can be seamless
 // (tileable) or non-seamless.
-void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
+void CreatePlanarTexture (const module::ModuleBase& noiseModule, bool seamless,
   int height, const char* filename);
 
 // Given a noise module, this function renders a spherical texture map and
 // writes it to a Windows bitmap (*.bmp) file.  The texture map's width is
 // double its height.
-void CreateSphericalTexture (const module::Module& noiseModule, int height,
+void CreateSphericalTexture (const module::ModuleBase& noiseModule, int height,
   const char* filename);
 
 // Given a noise map, this function renders a texture map and writes it to a
@@ -72,12 +72,12 @@ int main ()
   // aligned with any axis.  This produces more variation in the secondary
   // jade texture since the texture is parallel to the y-axis.
   module::RotatePoint rotatedBaseSecondaryJade;
-  rotatedBaseSecondaryJade.SetSourceModule (0, baseSecondaryJade);
+  rotatedBaseSecondaryJade.setSourceModule (0, baseSecondaryJade);
   rotatedBaseSecondaryJade.SetAngles (90.0, 25.0, 5.0);
 
   // Slightly perturb the secondary jade texture for more realism.
   module::Turbulence perturbedBaseSecondaryJade;
-  perturbedBaseSecondaryJade.SetSourceModule (0, rotatedBaseSecondaryJade);
+  perturbedBaseSecondaryJade.setSourceModule (0, rotatedBaseSecondaryJade);
   perturbedBaseSecondaryJade.SetSeed (1);
   perturbedBaseSecondaryJade.SetFrequency (4.0);
   perturbedBaseSecondaryJade.SetPower (1.0 / 4.0);
@@ -86,7 +86,7 @@ int main ()
   // Scale the secondary jade texture so it contributes a small part to the
   // final jade texture.
   module::ScaleBias secondaryJade;
-  secondaryJade.SetSourceModule (0, perturbedBaseSecondaryJade);
+  secondaryJade.setSourceModule (0, perturbedBaseSecondaryJade);
   secondaryJade.SetScale (0.25);
   secondaryJade.SetBias (0.0);
 
@@ -94,13 +94,13 @@ int main ()
   // using different combinations of coherent noise, so the final texture will
   // have a lot of variation.
   module::Add combinedJade;
-  combinedJade.SetSourceModule (0, primaryJade);
-  combinedJade.SetSourceModule (1, secondaryJade);
+  combinedJade.setSourceModule (0, primaryJade);
+  combinedJade.setSourceModule (1, secondaryJade);
 
   // Finally, perturb the combined jade textures to produce the final jade
   // texture.  A low roughness produces nice veins.
   module::Turbulence finalJade;
-  finalJade.SetSourceModule (0, combinedJade);
+  finalJade.setSourceModule (0, combinedJade);
   finalJade.SetSeed (2);
   finalJade.SetFrequency (4.0);
   finalJade.SetPower (1.0 / 16.0);
@@ -129,7 +129,7 @@ void CreateTextureColor (utils::RendererImage& renderer)
   renderer.AddGradientPoint ( 1.000, utils::Color ( 29, 135, 102, 255));
 }
 
-void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
+void CreatePlanarTexture (const module::ModuleBase& noiseModule, bool seamless,
   int height, const char* filename)
 {
   // Map the output values from the noise module onto a plane.  This will
@@ -147,7 +147,7 @@ void CreatePlanarTexture (const module::Module& noiseModule, bool seamless,
   RenderTexture (noiseMap, filename);
 }
 
-void CreateSphericalTexture (const module::Module& noiseModule, int height,
+void CreateSphericalTexture (const module::ModuleBase& noiseModule, int height,
   const char* filename)
 {
   // Map the output values from the noise module onto a sphere.  This will
