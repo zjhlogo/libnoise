@@ -1,9 +1,18 @@
 cmake_minimum_required( VERSION 2.8 )
 project( libnoise )
 
+# Turn on the ability to create folders to organize projects (.vcproj)
+# It creates "CMakePredefinedTargets" folder by default and adds CMake
+# defined projects like INSTALL.vcproj and ZERO_CHECK.vcproj
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# Prevent creates default "CMakePredefinedTargets" folder
+set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "")
+
 set( CMAKE_BUILD_TYPE Release CACHE STRING "Build Type." FORCE )
 set( LIBNOISE_BUILD_SHARED_LIBS FALSE CACHE BOOL "Build shared libraries." )
 set( LIBNOISE_BUILD_DOC FALSE CACHE BOOL "Build Doxygen documentation." )
+set( LIBNOISE_BUILD_EXAMPLE TRUE CACHE BOOL "Build Examples." )
 
 set( LIBNOISE_INCLUDE_DIR_NAME "noise" CACHE STRING "Define the name of the include directory for libnoise." )
 set( LIBNOISE_SKIP_INSTALL FALSE CACHE BOOL "Don't install libnoise." )
@@ -138,3 +147,8 @@ if( NOT LIBNOISE_SKIP_INSTALL )
 		DESTINATION include/${LIBNOISE_INCLUDE_DIR_NAME}
 	)
 endif()
+
+if (LIBNOISE_BUILD_EXAMPLE)
+add_subdirectory(utils)
+add_subdirectory(examples)
+endif ()
