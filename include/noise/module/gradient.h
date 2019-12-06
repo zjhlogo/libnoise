@@ -73,7 +73,6 @@ namespace noise
 
         protected:
             double m_gx1, m_gy1, m_gz1;
-            double m_gx2, m_gy2, m_gz2;
             double m_x, m_y, m_z;
             double m_vlen;
 

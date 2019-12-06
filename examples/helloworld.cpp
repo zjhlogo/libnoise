@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 {
     Perlin perlin;
 
-    Gradient gradient(0.0, 1.0, 0.0, 0.0);
+    Gradient gradient(0.0, 4.0, 0.0, 0.0, 0.0, 1.0);
 
     Const low(-1.0);
     Const high(1.0);

@@ -33,11 +33,8 @@ Gradient::Gradient(double x1, double x2, double y1, double y2, double z1 /*= 0.0
 void Gradient::setGradient(double x1, double x2, double y1, double y2, double z1 /*= 0.0*/, double z2 /*= 0.0*/)
 {
     m_gx1 = x1;
-    m_gx2 = x2;
     m_gy1 = y1;
-    m_gy2 = y2;
     m_gz1 = z1;
-    m_gz2 = z2;
 
     m_x = x2 - x1;
     m_y = y2 - y1;

@@ -198,8 +198,7 @@ const Color& GradientColor::GetColor(double gradientPos) const
     return m_workingColor;
 }
 
-void GradientColor::InsertAtPos(int insertionPos, double gradientPos,
-                                const Color& gradientColor)
+void GradientColor::InsertAtPos(int insertionPos, double gradientPos, const Color& gradientColor)
 {
     // Make room for the new gradient point at the specified insertion position
     // within the gradient point array.  The insertion position is determined by
@@ -1011,8 +1010,7 @@ RendererImage::RendererImage()
     BuildGrayscaleGradient();
 };
 
-void RendererImage::AddGradientPoint(double gradientPos,
-                                     const Color& gradientColor)
+void RendererImage::AddGradientPoint(double gradientPos, const Color& gradientColor)
 {
     m_gradient.AddGradientPoint(gradientPos, gradientColor);
 }
@@ -1038,8 +1036,7 @@ void RendererImage::BuildTerrainGradient()
     m_gradient.AddGradientPoint(1.00, Color(255, 255, 255, 255));
 }
 
-Color RendererImage::CalcDestColor(const Color& sourceColor,
-                                   const Color& backgroundColor, double lightValue) const
+Color RendererImage::CalcDestColor(const Color& sourceColor, const Color& backgroundColor, double lightValue) const
 {
     double sourceRed = (double)sourceColor.red / 255.0;
     double sourceGreen = (double)sourceColor.green / 255.0;
@@ -1087,8 +1084,7 @@ Color RendererImage::CalcDestColor(const Color& sourceColor,
     return newColor;
 }
 
-double RendererImage::CalcLightIntensity(double center, double left,
-                                         double right, double down, double up) const
+double RendererImage::CalcLightIntensity(double center, double left, double right, double down, double up) const
 {
     // Recalculate the sine and cosine of the various light values if
     // necessary so it does not have to be calculated each time this method is
@@ -1292,8 +1288,7 @@ RendererNormalMap::RendererNormalMap()
     , m_pDestImage(NULL)
     , m_pSourceNoiseMap(NULL){};
 
-Color RendererNormalMap::CalcNormalColor(double nc, double nr, double nu,
-                                         double bumpHeight) const
+Color RendererNormalMap::CalcNormalColor(double nc, double nr, double nu, double bumpHeight) const
 {
     // Calculate the surface normal.
     nc *= bumpHeight;

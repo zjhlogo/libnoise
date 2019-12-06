@@ -215,8 +215,7 @@ namespace noise
             /// @throw noise::ExceptionInvalidParam See the precondition.
             ///
             /// It does not matter which order these gradient points are added.
-            void AddGradientPoint(double gradientPos,
-                                  const Color& gradientColor);
+            void AddGradientPoint(double gradientPos, const Color& gradientColor);
 
             /// Deletes all the gradient points from this gradient object.
             ///
@@ -1530,8 +1529,7 @@ namespace noise
             /// @throw noise::ExceptionInvalidParam See the preconditions.
             ///
             /// One unit is equal to the radius of the cylinder.
-            void SetBounds(double lowerAngleBound, double upperAngleBound,
-                           double lowerHeightBound, double upperHeightBound)
+            void SetBounds(double lowerAngleBound, double upperAngleBound, double lowerHeightBound, double upperHeightBound)
             {
                 if (lowerAngleBound >= upperAngleBound || lowerHeightBound >= upperHeightBound)
                 {
@@ -1652,8 +1650,7 @@ namespace noise
             /// @pre The lower z boundary is less than the upper z boundary.
             ///
             /// @throw noise::ExceptionInvalidParam See the preconditions.
-            void SetBounds(double lowerXBound, double upperXBound,
-                           double lowerZBound, double upperZBound)
+            void SetBounds(double lowerXBound, double upperXBound, double lowerZBound, double upperZBound)
             {
                 if (lowerXBound >= upperXBound || lowerZBound >= upperZBound)
                 {
@@ -1757,8 +1754,7 @@ namespace noise
             /// @pre The western boundary is less than the eastern boundary.
             ///
             /// @throw noise::ExceptionInvalidParam See the preconditions.
-            void SetBounds(double southLatBound, double northLatBound,
-                           double westLonBound, double eastLonBound)
+            void SetBounds(double southLatBound, double northLatBound, double westLonBound, double eastLonBound)
             {
                 if (southLatBound >= northLatBound || westLonBound >= eastLonBound)
                 {
@@ -1909,8 +1905,7 @@ namespace noise
             /// towards the calculated color, and if the alpha value is low, this
             /// object weighs the blend towards the color from the corresponding
             /// pixel in the background image.
-            void AddGradientPoint(double gradientPos,
-                                  const Color& gradientColor);
+            void AddGradientPoint(double gradientPos, const Color& gradientColor);
 
             /// Builds a grayscale gradient.
             ///
@@ -2245,8 +2240,7 @@ namespace noise
             /// @param lightValue The intensity of the light at that position.
             ///
             /// @returns The destination color.
-            Color CalcDestColor(const Color& sourceColor,
-                                const Color& backgroundColor, double lightValue) const;
+            Color CalcDestColor(const Color& sourceColor, const Color& backgroundColor, double lightValue) const;
 
             /// Calculates the intensity of the light given some elevation values.
             ///
@@ -2260,8 +2254,7 @@ namespace noise
             /// @param up Elevation of the point directly above the center point.
             ///
             /// These values come directly from the noise map.
-            double CalcLightIntensity(double center, double left, double right,
-                                      double down, double up) const;
+            double CalcLightIntensity(double center, double left, double right, double down, double up) const;
 
             /// The cosine of the azimuth of the light source.
             mutable double m_cosAzimuth;
@@ -2481,8 +2474,7 @@ namespace noise
             ///
             /// The spatial resolution and elevation resolution are determined by
             /// the application.
-            Color CalcNormalColor(double nc, double nr, double nu,
-                                  double bumpHeight) const;
+            Color CalcNormalColor(double nc, double nr, double nu, double bumpHeight) const;
 
             /// The bump height for the normal map.
             double m_bumpHeight;
