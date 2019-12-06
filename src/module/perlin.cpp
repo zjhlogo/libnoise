@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Perlin::Perlin()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(DEFAULT_PERLIN_FREQUENCY)
     , m_lacunarity(DEFAULT_PERLIN_LACUNARITY)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
@@ -36,7 +36,7 @@ Perlin::Perlin()
 }
 
 Perlin::Perlin(int octaveCount, double frequency)
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(frequency)
     , m_lacunarity(DEFAULT_PERLIN_LACUNARITY)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
@@ -47,7 +47,7 @@ Perlin::Perlin(int octaveCount, double frequency)
 }
 
 Perlin::Perlin(int octaveCount, double frequency, double persistence)
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(frequency)
     , m_lacunarity(DEFAULT_PERLIN_LACUNARITY)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
@@ -58,7 +58,7 @@ Perlin::Perlin(int octaveCount, double frequency, double persistence)
 }
 
 Perlin::Perlin(int octaveCount, double frequency, double persistence, double lacunarity)
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(frequency)
     , m_lacunarity(lacunarity)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
@@ -127,11 +127,6 @@ void Perlin::setSeed(int seed)
 int Perlin::getSeed() const
 {
     return m_seed;
-}
-
-int Perlin::getSourceModuleCount() const
-{
-    return 0;
 }
 
 double Perlin::getValue(double x, double y, double z) const

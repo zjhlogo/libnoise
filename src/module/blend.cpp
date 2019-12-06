@@ -27,7 +27,7 @@
 using namespace noise::module;
 
 Blend::Blend()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(3)
 {
 }
 

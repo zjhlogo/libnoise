@@ -58,11 +58,6 @@ namespace noise
             /// Constructor.
             Checkerboard();
 
-            virtual int getSourceModuleCount() const
-            {
-                return 0;
-            }
-
             virtual double getValue(double x, double y, double z) const;
         };
 

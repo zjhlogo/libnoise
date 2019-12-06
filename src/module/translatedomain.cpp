@@ -20,19 +20,64 @@
 // off every 'zig'.)
 //
 
-#include "module/translatepoint.h"
+#include "module/translatedomain.h"
 
 using namespace noise::module;
 
-TranslatePoint::TranslatePoint()
-    : ModuleBase(getSourceModuleCount())
+TranslateDomain::TranslateDomain()
+    : ModuleBase(1)
     , m_xTranslation(DEFAULT_TRANSLATE_POINT_X)
     , m_yTranslation(DEFAULT_TRANSLATE_POINT_Y)
     , m_zTranslation(DEFAULT_TRANSLATE_POINT_Z)
 {
 }
 
-double TranslatePoint::getValue(double x, double y, double z) const
+TranslateDomain::TranslateDomain(double xTranslation, double yTranslation, double zTranslation)
+    : ModuleBase(1)
+    , m_xTranslation(xTranslation)
+    , m_yTranslation(yTranslation)
+    , m_zTranslation(zTranslation)
+{
+}
+
+void TranslateDomain::SetXTranslation(double xTranslation)
+{
+    m_xTranslation = xTranslation;
+}
+
+double TranslateDomain::GetXTranslation() const
+{
+    return m_xTranslation;
+}
+
+void TranslateDomain::SetYTranslation(double yTranslation)
+{
+    m_yTranslation = yTranslation;
+}
+
+double TranslateDomain::GetYTranslation() const
+{
+    return m_yTranslation;
+}
+
+void TranslateDomain::SetZTranslation(double zTranslation)
+{
+    m_zTranslation = zTranslation;
+}
+
+double TranslateDomain::GetZTranslation() const
+{
+    return m_zTranslation;
+}
+
+void TranslateDomain::SetTranslation(double xTranslation, double yTranslation, double zTranslation)
+{
+    m_xTranslation = xTranslation;
+    m_yTranslation = yTranslation;
+    m_zTranslation = zTranslation;
+}
+
+double TranslateDomain::getValue(double x, double y, double z) const
 {
     assert(m_pSourceModule[0] != NULL);
 

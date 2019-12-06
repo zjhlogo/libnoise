@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Billow::Billow()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(DEFAULT_BILLOW_FREQUENCY)
     , m_lacunarity(DEFAULT_BILLOW_LACUNARITY)
     , m_noiseQuality(DEFAULT_BILLOW_QUALITY)

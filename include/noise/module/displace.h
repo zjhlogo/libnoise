@@ -57,7 +57,7 @@ namespace noise
         /// - Source module 3 (lower right in the diagram) specifies the offset
         ///   to apply to the @a z coordinate of the input value.
         ///
-        /// The GetValue() method modifies the ( @a x, @a y, @a z ) coordinates of
+        /// The getValue() method modifies the ( @a x, @a y, @a z ) coordinates of
         /// the input value using the output values from the three displacement
         /// modules before retrieving the output value from the source module.
         ///
@@ -73,11 +73,6 @@ namespace noise
             /// Constructor.
             Displace();
 
-            virtual int getSourceModuleCount() const
-            {
-                return 4;
-            }
-
             virtual double getValue(double x, double y, double z) const;
 
             /// Returns the @a x displacement module.
@@ -90,7 +85,7 @@ namespace noise
             /// @throw noise::ExceptionNoModule See the preconditions for more
             /// information.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from this displacement module to the @a x coordinate of the
             /// input value before returning the output value from the source
             /// module.
@@ -113,7 +108,7 @@ namespace noise
             /// @throw noise::ExceptionNoModule See the preconditions for more
             /// information.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from this displacement module to the @a y coordinate of the
             /// input value before returning the output value from the source
             /// module.
@@ -136,7 +131,7 @@ namespace noise
             /// @throw noise::ExceptionNoModule See the preconditions for more
             /// information.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from this displacement module to the @a z coordinate of the
             /// input value before returning the output value from the source
             /// module.
@@ -158,7 +153,7 @@ namespace noise
             /// @param zDisplaceModule Displacement module that displaces the @a z
             /// coordinate of the input value.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from each of the displacement modules to the corresponding
             /// coordinates of the input value before returning the output value
             /// from the source module.
@@ -182,7 +177,7 @@ namespace noise
             /// @param xDisplaceModule Displacement module that displaces the @a x
             /// coordinate.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from this displacement module to the @a x coordinate of the
             /// input value before returning the output value from the source
             /// module.
@@ -205,7 +200,7 @@ namespace noise
             /// @param yDisplaceModule Displacement module that displaces the @a y
             /// coordinate.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from this displacement module to the @a y coordinate of the
             /// input value before returning the output value from the source
             /// module.
@@ -228,7 +223,7 @@ namespace noise
             /// @param zDisplaceModule Displacement module that displaces the @a z
             /// coordinate.
             ///
-            /// The GetValue() method displaces the input value by adding the output
+            /// The getValue() method displaces the input value by adding the output
             /// value from this displacement module to the @a z coordinate of the
             /// input value before returning the output value from the source
             /// module.

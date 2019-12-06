@@ -69,24 +69,24 @@ int main()
     // Rotate the base secondary jade texture so that the cylinders are not
     // aligned with any axis.  This produces more variation in the secondary
     // jade texture since the texture is parallel to the y-axis.
-    module::RotatePoint rotatedBaseSecondaryJade;
+    module::RotateDomain rotatedBaseSecondaryJade;
     rotatedBaseSecondaryJade.setSourceModule(0, baseSecondaryJade);
-    rotatedBaseSecondaryJade.SetAngles(90.0, 25.0, 5.0);
+    rotatedBaseSecondaryJade.setAngles(90.0, 25.0, 5.0);
 
     // Slightly perturb the secondary jade texture for more realism.
     module::Turbulence perturbedBaseSecondaryJade;
     perturbedBaseSecondaryJade.setSourceModule(0, rotatedBaseSecondaryJade);
-    perturbedBaseSecondaryJade.SetSeed(1);
-    perturbedBaseSecondaryJade.SetFrequency(4.0);
-    perturbedBaseSecondaryJade.SetPower(1.0 / 4.0);
-    perturbedBaseSecondaryJade.SetRoughness(4);
+    perturbedBaseSecondaryJade.setSeed(1);
+    perturbedBaseSecondaryJade.setFrequency(4.0);
+    perturbedBaseSecondaryJade.setPower(1.0 / 4.0);
+    perturbedBaseSecondaryJade.setRoughness(4);
 
     // Scale the secondary jade texture so it contributes a small part to the
     // final jade texture.
     module::ScaleBias secondaryJade;
     secondaryJade.setSourceModule(0, perturbedBaseSecondaryJade);
-    secondaryJade.SetScale(0.25);
-    secondaryJade.SetBias(0.0);
+    secondaryJade.setScale(0.25);
+    secondaryJade.setBias(0.0);
 
     // Add the two jade textures together.  These two textures were produced
     // using different combinations of coherent noise, so the final texture will
@@ -99,10 +99,10 @@ int main()
     // texture.  A low roughness produces nice veins.
     module::Turbulence finalJade;
     finalJade.setSourceModule(0, combinedJade);
-    finalJade.SetSeed(2);
-    finalJade.SetFrequency(4.0);
-    finalJade.SetPower(1.0 / 16.0);
-    finalJade.SetRoughness(2);
+    finalJade.setSeed(2);
+    finalJade.setFrequency(4.0);
+    finalJade.setPower(1.0 / 16.0);
+    finalJade.setRoughness(2);
 
     // Given the jade noise module, create a non-seamless texture map, a
     // seamless texture map, and a spherical texture map.

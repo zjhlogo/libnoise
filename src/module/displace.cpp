@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Displace::Displace()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(4)
 {
 }
 

@@ -20,30 +20,55 @@
 // off every 'zig'.)
 //
 
-#include "module/rotatepoint.h"
+#include "module/rotatedomain.h"
 
 #include "mathconsts.h"
 
 using namespace noise::module;
 
-RotatePoint::RotatePoint()
-    : ModuleBase(getSourceModuleCount())
+RotateDomain::RotateDomain()
+    : ModuleBase(1)
 {
-    SetAngles(DEFAULT_ROTATE_X, DEFAULT_ROTATE_Y, DEFAULT_ROTATE_Z);
+    setAngles(DEFAULT_ROTATE_X, DEFAULT_ROTATE_Y, DEFAULT_ROTATE_Z);
 }
 
-double RotatePoint::getValue(double x, double y, double z) const
+RotateDomain::RotateDomain(double xAngle, double yAngle, double zAngle)
+    : ModuleBase(1)
 {
-    assert(m_pSourceModule[0] != NULL);
-
-    double nx = (m_x1Matrix * x) + (m_y1Matrix * y) + (m_z1Matrix * z);
-    double ny = (m_x2Matrix * x) + (m_y2Matrix * y) + (m_z2Matrix * z);
-    double nz = (m_x3Matrix * x) + (m_y3Matrix * y) + (m_z3Matrix * z);
-    return m_pSourceModule[0]->getValue(nx, ny, nz);
+    setAngles(xAngle, yAngle, zAngle);
 }
 
-void RotatePoint::SetAngles(double xAngle, double yAngle,
-                            double zAngle)
+void RotateDomain::setXAngle(double xAngle)
+{
+    setAngles(xAngle, m_yAngle, m_zAngle);
+}
+
+double RotateDomain::getXAngle() const
+{
+    return m_xAngle;
+}
+
+void RotateDomain::setYAngle(double yAngle)
+{
+    setAngles(m_xAngle, yAngle, m_zAngle);
+}
+
+double RotateDomain::getYAngle() const
+{
+    return m_yAngle;
+}
+
+void RotateDomain::setZAngle(double zAngle)
+{
+    setAngles(m_xAngle, m_yAngle, zAngle);
+}
+
+double RotateDomain::getZAngle() const
+{
+    return m_zAngle;
+}
+
+void RotateDomain::setAngles(double xAngle, double yAngle, double zAngle)
 {
     double xCos, yCos, zCos, xSin, ySin, zSin;
     xCos = cos(xAngle * DEG_TO_RAD);
@@ -66,4 +91,14 @@ void RotatePoint::SetAngles(double xAngle, double yAngle,
     m_xAngle = xAngle;
     m_yAngle = yAngle;
     m_zAngle = zAngle;
+}
+
+double RotateDomain::getValue(double x, double y, double z) const
+{
+    assert(m_pSourceModule[0] != NULL);
+
+    double nx = (m_x1Matrix * x) + (m_y1Matrix * y) + (m_z1Matrix * z);
+    double ny = (m_x2Matrix * x) + (m_y2Matrix * y) + (m_z2Matrix * z);
+    double nz = (m_x3Matrix * x) + (m_y3Matrix * y) + (m_z3Matrix * z);
+    return m_pSourceModule[0]->getValue(nx, ny, nz);
 }

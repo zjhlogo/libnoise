@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Exponent::Exponent()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
     , m_exponent(DEFAULT_EXPONENT)
 {
 }

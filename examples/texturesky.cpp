@@ -72,17 +72,17 @@ int main()
     baseWater.SetDisplacement(0.0);
 
     // Stretch the waves along the z axis.
-    module::ScalePoint baseStretchedWater;
+    module::ScaleDomain baseStretchedWater;
     baseStretchedWater.setSourceModule(0, baseWater);
     baseStretchedWater.SetScale(1.0, 1.0, 3.0);
 
     // Smoothly perturb the water texture for more realism.
     module::Turbulence finalWater;
     finalWater.setSourceModule(0, baseStretchedWater);
-    finalWater.SetSeed(1);
-    finalWater.SetFrequency(8.0);
-    finalWater.SetPower(1.0 / 32.0);
-    finalWater.SetRoughness(1);
+    finalWater.setSeed(1);
+    finalWater.setFrequency(8.0);
+    finalWater.setPower(1.0 / 32.0);
+    finalWater.setRoughness(1);
 
     // Upper layer: cloud texture
     // --------------------------
@@ -100,10 +100,10 @@ int main()
     // Perturb the cloud texture for more realism.
     module::Turbulence finalClouds;
     finalClouds.setSourceModule(0, cloudBase);
-    finalClouds.SetSeed(3);
-    finalClouds.SetFrequency(16.0);
-    finalClouds.SetPower(1.0 / 64.0);
-    finalClouds.SetRoughness(2);
+    finalClouds.setSeed(3);
+    finalClouds.setFrequency(16.0);
+    finalClouds.setPower(1.0 / 64.0);
+    finalClouds.setRoughness(2);
 
     // Given the water and cloud noise modules, create a non-seamless texture
     // map, a seamless texture map, and a spherical texture map.

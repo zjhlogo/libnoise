@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Checkerboard::Checkerboard()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
 {
 }
 

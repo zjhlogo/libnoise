@@ -57,7 +57,7 @@ namespace noise
         ///
         /// @image html modulerotatepoint.png
         ///
-        /// The GetValue() method rotates the coordinates of the input value
+        /// The getValue() method rotates the coordinates of the input value
         /// around the origin before returning the output value from the source
         /// module.  To set the rotation angles, call the SetAngles() method.  To
         /// set the rotation angle around the individual @a x, @a y, or @a z axes,
@@ -69,7 +69,7 @@ namespace noise
         /// and @a z increases inward.)
         ///
         /// This noise module requires one source module.
-        class RotatePoint : public ModuleBase
+        class RotateDomain : public ModuleBase
         {
 
         public:
@@ -83,41 +83,57 @@ namespace noise
             ///
             /// The default rotation angle around the @a z axis, in degrees, is
             /// set to noise::module::DEFAULT_ROTATE_Z.
-            RotatePoint();
+            RotateDomain();
 
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
-            }
+            RotateDomain(double xAngle, double yAngle, double zAngle);
 
-            virtual double getValue(double x, double y, double z) const;
+            /// Sets the rotation angle around the @a x axis to apply to the input
+            /// value.
+            ///
+            /// @param xAngle The rotation angle around the @a x axis, in degrees.
+            ///
+            /// The getValue() method rotates the coordinates of the input value
+            /// around the origin before returning the output value from the
+            /// source module.
+            void setXAngle(double xAngle);
 
             /// Returns the rotation angle around the @a x axis to apply to the
             /// input value.
             ///
             /// @returns The rotation angle around the @a x axis, in degrees.
-            double GetXAngle() const
-            {
-                return m_xAngle;
-            }
+            double getXAngle() const;
+
+            /// Sets the rotation angle around the @a y axis to apply to the input
+            /// value.
+            ///
+            /// @param yAngle The rotation angle around the @a y axis, in degrees.
+            ///
+            /// The getValue() method rotates the coordinates of the input value
+            /// around the origin before returning the output value from the
+            /// source module.
+            void setYAngle(double yAngle);
 
             /// Returns the rotation angle around the @a y axis to apply to the
             /// input value.
             ///
             /// @returns The rotation angle around the @a y axis, in degrees.
-            double GetYAngle() const
-            {
-                return m_yAngle;
-            }
+            double getYAngle() const;
+
+            /// Sets the rotation angle around the @a z axis to apply to the input
+            /// value.
+            ///
+            /// @param zAngle The rotation angle around the @a z axis, in degrees.
+            ///
+            /// The getValue() method rotates the coordinates of the input value
+            /// around the origin before returning the output value from the
+            /// source module.
+            void setZAngle(double zAngle);
 
             /// Returns the rotation angle around the @a z axis to apply to the
             /// input value.
             ///
             /// @returns The rotation angle around the @a z axis, in degrees.
-            double GetZAngle() const
-            {
-                return m_zAngle;
-            }
+            double getZAngle() const;
 
             /// Sets the rotation angles around all three axes to apply to the
             /// input value.
@@ -126,49 +142,12 @@ namespace noise
             /// @param yAngle The rotation angle around the @a y axis, in degrees.
             /// @param zAngle The rotation angle around the @a z axis, in degrees.
             ///
-            /// The GetValue() method rotates the coordinates of the input value
+            /// The getValue() method rotates the coordinates of the input value
             /// around the origin before returning the output value from the
             /// source module.
-            void SetAngles(double xAngle, double yAngle, double zAngle);
+            void setAngles(double xAngle, double yAngle, double zAngle);
 
-            /// Sets the rotation angle around the @a x axis to apply to the input
-            /// value.
-            ///
-            /// @param xAngle The rotation angle around the @a x axis, in degrees.
-            ///
-            /// The GetValue() method rotates the coordinates of the input value
-            /// around the origin before returning the output value from the
-            /// source module.
-            void SetXAngle(double xAngle)
-            {
-                SetAngles(xAngle, m_yAngle, m_zAngle);
-            }
-
-            /// Sets the rotation angle around the @a y axis to apply to the input
-            /// value.
-            ///
-            /// @param yAngle The rotation angle around the @a y axis, in degrees.
-            ///
-            /// The GetValue() method rotates the coordinates of the input value
-            /// around the origin before returning the output value from the
-            /// source module.
-            void SetYAngle(double yAngle)
-            {
-                SetAngles(m_xAngle, yAngle, m_zAngle);
-            }
-
-            /// Sets the rotation angle around the @a z axis to apply to the input
-            /// value.
-            ///
-            /// @param zAngle The rotation angle around the @a z axis, in degrees.
-            ///
-            /// The GetValue() method rotates the coordinates of the input value
-            /// around the origin before returning the output value from the
-            /// source module.
-            void SetZAngle(double zAngle)
-            {
-                SetAngles(m_xAngle, m_yAngle, zAngle);
-            }
+            virtual double getValue(double x, double y, double z) const override;
 
         protected:
             /// An entry within the 3x3 rotation matrix used for rotating the

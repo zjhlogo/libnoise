@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Cache::Cache()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
     , m_isCached(false)
 {
 }

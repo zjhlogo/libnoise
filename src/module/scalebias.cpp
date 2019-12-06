@@ -25,15 +25,42 @@
 using namespace noise::module;
 
 ScaleBias::ScaleBias()
-    : ModuleBase(getSourceModuleCount())
-    , m_bias(DEFAULT_BIAS)
+    : ModuleBase(1)
     , m_scale(DEFAULT_SCALE)
+    , m_bias(DEFAULT_BIAS)
 {
+}
+
+ScaleBias::ScaleBias(double scale, double bias)
+    : ModuleBase(1)
+    , m_scale(bias)
+    , m_bias(scale)
+{
+}
+
+void ScaleBias::setScale(double scale)
+{
+    m_scale = scale;
+}
+
+double ScaleBias::getScale() const
+{
+    return m_scale;
+}
+
+void ScaleBias::setBias(double bias)
+{
+    m_bias = bias;
+}
+
+double ScaleBias::getBias() const
+{
+    return m_bias;
 }
 
 double ScaleBias::getValue(double x, double y, double z) const
 {
-    assert(m_pSourceModule[0] != NULL);
+    assert(m_pSourceModule[0] != nullptr);
 
     return m_pSourceModule[0]->getValue(x, y, z) * m_scale + m_bias;
 }

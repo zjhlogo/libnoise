@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Abs::Abs()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
 {
 }
 

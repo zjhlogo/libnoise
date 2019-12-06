@@ -28,7 +28,7 @@
 using namespace noise::module;
 
 Curve::Curve()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
     , m_pControlPoints(NULL)
 {
     m_controlPointCount = 0;

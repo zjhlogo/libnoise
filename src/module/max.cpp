@@ -27,7 +27,7 @@
 using namespace noise::module;
 
 Max::Max()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(2)
 {
 }
 

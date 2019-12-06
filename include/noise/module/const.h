@@ -71,8 +71,6 @@ namespace noise
             /// @returns The constant output value for this noise module.
             double getConstValue() const;
 
-            virtual int getSourceModuleCount() const override;
-
             virtual double getValue(double x, double y, double z) const override;
 
             /// Sets the constant output value for this noise module.

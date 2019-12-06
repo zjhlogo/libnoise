@@ -98,11 +98,6 @@ namespace noise
                 return *(m_pSourceModule[2]);
             }
 
-            virtual int getSourceModuleCount() const
-            {
-                return 3;
-            }
-
             virtual double getValue(double x, double y, double z) const;
 
             /// Sets the control module.

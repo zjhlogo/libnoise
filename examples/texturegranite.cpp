@@ -73,8 +73,8 @@ int main()
     // negative scaling factor to produce bumps instead.
     module::ScaleBias scaledGrains;
     scaledGrains.setSourceModule(0, baseGrains);
-    scaledGrains.SetScale(-0.5);
-    scaledGrains.SetBias(0.0);
+    scaledGrains.setScale(-0.5);
+    scaledGrains.setBias(0.0);
 
     // Combine the primary granite texture with the small grain texture.
     module::Add combinedGranite;
@@ -84,10 +84,10 @@ int main()
     // Finally, perturb the granite texture to add realism.
     module::Turbulence finalGranite;
     finalGranite.setSourceModule(0, combinedGranite);
-    finalGranite.SetSeed(2);
-    finalGranite.SetFrequency(4.0);
-    finalGranite.SetPower(1.0 / 8.0);
-    finalGranite.SetRoughness(6);
+    finalGranite.setSeed(2);
+    finalGranite.setFrequency(4.0);
+    finalGranite.setPower(1.0 / 8.0);
+    finalGranite.setRoughness(6);
 
     // Given the granite noise module, create a non-seamless texture map, a
     // seamless texture map, and a spherical texture map.

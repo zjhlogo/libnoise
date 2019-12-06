@@ -24,7 +24,7 @@
 using namespace noise::module;
 
 Power::Power()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(2)
 {
 }
 

@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Add::Add()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(2)
 {
 }
 

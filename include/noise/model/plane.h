@@ -44,7 +44,7 @@ namespace noise
         /// @a z ) plane.
         ///
         /// To generate an output value, pass the ( @a x, @a z ) coordinates of
-        /// an input value to the GetValue() method.
+        /// an input value to the getValue() method.
         ///
         /// This model is useful for creating:
         /// - two-dimensional textures

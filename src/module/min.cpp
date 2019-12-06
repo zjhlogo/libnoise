@@ -27,7 +27,7 @@
 using namespace noise::module;
 
 Min::Min()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(2)
 {
 }
 

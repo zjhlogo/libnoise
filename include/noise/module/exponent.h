@@ -77,11 +77,6 @@ namespace noise
                 return m_exponent;
             }
 
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
-            }
-
             virtual double getValue(double x, double y, double z) const;
 
             /// Sets the exponent value to apply to the output value from the

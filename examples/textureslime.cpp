@@ -72,8 +72,8 @@ int main()
     // Scale and lower the small slime bubble values.
     module::ScaleBias smallSlime;
     smallSlime.setSourceModule(0, smallSlimeBase);
-    smallSlime.SetScale(0.5);
-    smallSlime.SetBias(-0.5);
+    smallSlime.setScale(0.5);
+    smallSlime.setBias(-0.5);
 
     // Create a map that specifies where the large and small slime bubble
     // textures will appear in the final texture map.
@@ -89,20 +89,17 @@ int main()
     // texture if the slime map value is within a narrow range of values,
     // otherwise choose the large slime bubble texture.  The edge falloff is
     // non-zero so that there is a smooth transition between the two textures.
-    module::Select slimeChooser;
-    slimeChooser.setSourceModule(0, largeSlime);
-    slimeChooser.setSourceModule(1, smallSlime);
-    slimeChooser.setControlModule(slimeMap);
+    module::Select slimeChooser(largeSlime, smallSlime, slimeMap);
     slimeChooser.setBounds(-0.375, 0.375);
     slimeChooser.setEdgeFalloff(0.5);
 
     // Finally, perturb the slime texture to add realism.
     module::Turbulence finalSlime;
     finalSlime.setSourceModule(0, slimeChooser);
-    finalSlime.SetSeed(2);
-    finalSlime.SetFrequency(8.0);
-    finalSlime.SetPower(1.0 / 32.0);
-    finalSlime.SetRoughness(2);
+    finalSlime.setSeed(2);
+    finalSlime.setFrequency(8.0);
+    finalSlime.setPower(1.0 / 32.0);
+    finalSlime.setRoughness(2);
 
     // Given the slime noise module, create a non-seamless texture map, a
     // seamless texture map, and a spherical texture map.

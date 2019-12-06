@@ -26,19 +26,22 @@
 
 using namespace noise::module;
 
-Select::Select()
-    : ModuleBase(getSourceModuleCount())
+Select::Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule)
+    : ModuleBase(3)
     , m_edgeFalloff(DEFAULT_SELECT_EDGE_FALLOFF)
     , m_lowerBound(DEFAULT_SELECT_LOWER_BOUND)
     , m_upperBound(DEFAULT_SELECT_UPPER_BOUND)
 {
+    m_pSourceModule[0] = &lowModule;
+    m_pSourceModule[1] = &highModule;
+    m_pSourceModule[2] = &controlModule;
 }
 
-Select::Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double edgeFalloff)
-    : ModuleBase(getSourceModuleCount())
+Select::Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double lowerBound, double upperBound, double edgeFalloff)
+    : ModuleBase(3)
     , m_edgeFalloff(edgeFalloff)
-    , m_lowerBound(DEFAULT_SELECT_LOWER_BOUND)
-    , m_upperBound(DEFAULT_SELECT_UPPER_BOUND)
+    , m_lowerBound(lowerBound)
+    , m_upperBound(upperBound)
 {
     m_pSourceModule[0] = &lowModule;
     m_pSourceModule[1] = &highModule;
@@ -62,7 +65,7 @@ const ModuleBase& Select::getControlModule() const
 
 void Select::setBounds(double lowerBound, double upperBound)
 {
-    assert(lowerBound < upperBound);
+    assert(lowerBound <= upperBound);
 
     m_lowerBound = lowerBound;
     m_upperBound = upperBound;
@@ -91,11 +94,6 @@ void Select::setEdgeFalloff(double edgeFalloff)
 double Select::getEdgeFalloff() const
 {
     return m_edgeFalloff;
-}
-
-int Select::getSourceModuleCount() const
-{
-    return 3;
 }
 
 double Select::getValue(double x, double y, double z) const

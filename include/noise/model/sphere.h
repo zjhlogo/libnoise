@@ -47,7 +47,7 @@ namespace noise
         /// coordinates of an input value located on the surface of a sphere.
         ///
         /// To generate an output value, pass the (latitude, longitude)
-        /// coordinates of an input value to the GetValue() method.
+        /// coordinates of an input value to the getValue() method.
         ///
         /// This model is useful for creating:
         /// - seamless textures that can be mapped onto a sphere

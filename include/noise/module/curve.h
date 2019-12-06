@@ -71,7 +71,7 @@ namespace noise
         ///
         /// Since this curve is a cubic spline, an application must add a minimum
         /// of four control points to the curve.  If this is not done, the
-        /// GetValue() method fails.  Each control point can have any input and
+        /// getValue() method fails.  Each control point can have any input and
         /// output value, although no two control points can have the same input
         /// value.  There is no limit to the number of control points that can be
         /// added to the curve.
@@ -126,11 +126,6 @@ namespace noise
             int GetControlPointCount() const
             {
                 return m_controlPointCount;
-            }
-
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
             }
 
             virtual double getValue(double x, double y, double z) const;

@@ -91,11 +91,6 @@ namespace noise
                 return m_lowerBound;
             }
 
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
-            }
-
             /// Returns the upper bound of the clamping range.
             ///
             /// @returns The upper bound.

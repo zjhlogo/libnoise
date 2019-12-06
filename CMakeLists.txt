@@ -66,13 +66,13 @@ set(
 	${INC_DIR}/noise/module/perlin.h
 	${INC_DIR}/noise/module/power.h
 	${INC_DIR}/noise/module/ridgedmulti.h
-	${INC_DIR}/noise/module/rotatepoint.h
+	${INC_DIR}/noise/module/rotatedomain.h
 	${INC_DIR}/noise/module/scalebias.h
-	${INC_DIR}/noise/module/scalepoint.h
+	${INC_DIR}/noise/module/scaledomain.h
 	${INC_DIR}/noise/module/select.h
 	${INC_DIR}/noise/module/spheres.h
 	${INC_DIR}/noise/module/terrace.h
-	${INC_DIR}/noise/module/translatepoint.h
+	${INC_DIR}/noise/module/translatedomain.h
 	${INC_DIR}/noise/module/turbulence.h
 	${INC_DIR}/noise/module/voronoi.h
 	${SRC_DIR}/latlon.cpp
@@ -102,13 +102,13 @@ set(
 	${SRC_DIR}/module/perlin.cpp
 	${SRC_DIR}/module/power.cpp
 	${SRC_DIR}/module/ridgedmulti.cpp
-	${SRC_DIR}/module/rotatepoint.cpp
+	${SRC_DIR}/module/rotatedomain.cpp
 	${SRC_DIR}/module/scalebias.cpp
-	${SRC_DIR}/module/scalepoint.cpp
+	${SRC_DIR}/module/scaledomain.cpp
 	${SRC_DIR}/module/select.cpp
 	${SRC_DIR}/module/spheres.cpp
 	${SRC_DIR}/module/terrace.cpp
-	${SRC_DIR}/module/translatepoint.cpp
+	${SRC_DIR}/module/translatedomain.cpp
 	${SRC_DIR}/module/turbulence.cpp
 	${SRC_DIR}/module/voronoi.cpp
 )

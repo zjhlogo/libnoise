@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Clamp::Clamp()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
     , m_lowerBound(DEFAULT_CLAMP_LOWER_BOUND)
     , m_upperBound(DEFAULT_CLAMP_UPPER_BOUND)
 {

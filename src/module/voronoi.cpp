@@ -27,7 +27,7 @@
 using namespace noise::module;
 
 Voronoi::Voronoi()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_displacement(DEFAULT_VORONOI_DISPLACEMENT)
     , m_enableDistance(false)
     , m_frequency(DEFAULT_VORONOI_FREQUENCY)

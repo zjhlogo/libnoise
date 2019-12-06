@@ -50,7 +50,7 @@ namespace noise
         /// coordinates of an input value located on the surface of a cylinder.
         ///
         /// To generate an output value, pass the (angle, height) coordinates of
-        /// an input value to the GetValue() method.
+        /// an input value to the getValue() method.
         ///
         /// This model is useful for creating:
         /// - seamless textures that can be mapped onto a cylinder
