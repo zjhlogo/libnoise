@@ -144,11 +144,6 @@ namespace noise
                 return m_frequency;
             }
 
-            virtual int getSourceModuleCount() const
-            {
-                return 0;
-            }
-
             /// Returns the seed value used by the Voronoi cells
             ///
             /// @returns The seed value.

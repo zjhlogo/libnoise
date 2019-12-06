@@ -90,11 +90,6 @@ namespace noise
                 return m_frequency;
             }
 
-            virtual int getSourceModuleCount() const
-            {
-                return 0;
-            }
-
             virtual double getValue(double x, double y, double z) const;
 
             /// Sets the frequenct of the concentric cylinders.

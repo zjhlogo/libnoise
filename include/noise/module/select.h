@@ -92,9 +92,8 @@ namespace noise
             ///
             /// The default upper bound of the selection range is set to
             /// noise::module::DEFAULT_SELECT_UPPER_BOUND.
-            Select();
-
-            Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double edgeFalloff);
+            Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule);
+            Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double lowerBound, double upperBound, double edgeFalloff);
 
             /// Sets the control module.
             ///
@@ -102,7 +101,7 @@ namespace noise
             ///
             /// The control module determines the output value to select.  If the
             /// output value from the control module is within a range of values
-            /// known as the <i>selection range</i>, the GetValue() method outputs
+            /// known as the <i>selection range</i>, the getValue() method outputs
             /// the value from the source module with an index value of 1.
             /// Otherwise, this method outputs the value from the source module
             /// with an index value of 0.
@@ -129,7 +128,7 @@ namespace noise
             ///
             /// The control module determines the output value to select.  If the
             /// output value from the control module is within a range of values
-            /// known as the <i>selection range</i>, the GetValue() method outputs
+            /// known as the <i>selection range</i>, the getValue() method outputs
             /// the value from the source module with an index value of 1.
             /// Otherwise, this method outputs the value from the source module
             /// with an index value of 0.
@@ -143,11 +142,8 @@ namespace noise
             /// @pre The lower bound must be less than or equal to the upper
             /// bound.
             ///
-            /// @throw noise::ExceptionInvalidParam An invalid parameter was
-            /// specified; see the preconditions for more information.
-            ///
             /// If the output value from the control module is within the
-            /// selection range, the GetValue() method outputs the value from the
+            /// selection range, the getValue() method outputs the value from the
             /// source module with an index value of 1.  Otherwise, this method
             /// outputs the value from the source module with an index value of 0.
             void setBounds(double lowerBound, double upperBound);
@@ -157,7 +153,7 @@ namespace noise
             /// @returns The lower bound of the selection range.
             ///
             /// If the output value from the control module is within the
-            /// selection range, the GetValue() method outputs the value from the
+            /// selection range, the getValue() method outputs the value from the
             /// source module with an index value of 1.  Otherwise, this method
             /// outputs the value from the source module with an index value of 0.
             double getLowerBound() const;
@@ -167,7 +163,7 @@ namespace noise
             /// @returns The upper bound of the selection range.
             ///
             /// If the output value from the control module is within the
-            /// selection range, the GetValue() method outputs the value from the
+            /// selection range, the getValue() method outputs the value from the
             /// source module with an index value of 1.  Otherwise, this method
             /// outputs the value from the source module with an index value of 0.
             double getUpperBound() const;
@@ -183,7 +179,7 @@ namespace noise
             /// the two source modules at the boundaries of the selection range.
             ///
             /// For example, if the selection range is 0.5 to 0.8, and the edge
-            /// falloff value is 0.1, then the GetValue() method outputs:
+            /// falloff value is 0.1, then the getValue() method outputs:
             /// - the output value from the source module with an index value of 0
             ///   if the output value from the control module is less than 0.4
             ///   ( = 0.5 - 0.1).
@@ -213,7 +209,6 @@ namespace noise
             /// boundary.
             double getEdgeFalloff() const;
 
-            virtual int getSourceModuleCount() const override;
             virtual double getValue(double x, double y, double z) const override;
 
         protected:

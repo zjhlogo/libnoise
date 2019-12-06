@@ -25,13 +25,13 @@
 using namespace noise::module;
 
 Const::Const()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_constValue(DEFAULT_CONST_VALUE)
 {
 }
 
 Const::Const(double value)
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_constValue(value)
 {
 }
@@ -39,11 +39,6 @@ Const::Const(double value)
 double Const::getConstValue() const
 {
     return m_constValue;
-}
-
-int Const::getSourceModuleCount() const
-{
-    return 0;
 }
 
 double Const::getValue(double x, double y, double z) const

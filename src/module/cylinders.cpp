@@ -27,7 +27,7 @@
 using namespace noise::module;
 
 Cylinders::Cylinders()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(DEFAULT_CYLINDERS_FREQUENCY)
 {
 }

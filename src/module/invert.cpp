@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Invert::Invert()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
 {
 }
 

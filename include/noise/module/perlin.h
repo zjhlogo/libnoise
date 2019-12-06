@@ -280,7 +280,6 @@ namespace noise
             /// @returns The seed value.
             int getSeed() const;
 
-            virtual int getSourceModuleCount() const override;
             virtual double getValue(double x, double y, double z) const override;
 
         protected:

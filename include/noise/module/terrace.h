@@ -57,7 +57,7 @@ namespace noise
         /// AddControlPoint() method.
         ///
         /// An application must add a minimum of two control points to the curve.
-        /// If this is not done, the GetValue() method fails.  The control points
+        /// If this is not done, the getValue() method fails.  The control points
         /// can have any value, although no two control points can have the same
         /// value.  There is no limit to the number of control points that can be
         /// added to the curve.
@@ -129,11 +129,6 @@ namespace noise
             int GetControlPointCount() const
             {
                 return m_controlPointCount;
-            }
-
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
             }
 
             /// Enables or disables the inversion of the terrace-forming curve

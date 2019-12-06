@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 RidgedMulti::RidgedMulti()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(DEFAULT_RIDGED_FREQUENCY)
     , m_lacunarity(DEFAULT_RIDGED_LACUNARITY)
     , m_noiseQuality(DEFAULT_RIDGED_QUALITY)

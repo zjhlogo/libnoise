@@ -68,7 +68,7 @@ int main()
 
     // Stretch the Perlin noise in the same direction as the center of the
     // log.  This produces a nice wood-grain texture.
-    module::ScalePoint scaledBaseWoodGrain;
+    module::ScaleDomain scaledBaseWoodGrain;
     scaledBaseWoodGrain.setSourceModule(0, woodGrainNoise);
     scaledBaseWoodGrain.SetYScale(0.25);
 
@@ -76,8 +76,8 @@ int main()
     // texture.
     module::ScaleBias woodGrain;
     woodGrain.setSourceModule(0, scaledBaseWoodGrain);
-    woodGrain.SetScale(0.25);
-    woodGrain.SetBias(0.125);
+    woodGrain.setScale(0.25);
+    woodGrain.setBias(0.125);
 
     // Add the wood grain texture to the base wood texture.
     module::Add combinedWood;
@@ -87,29 +87,29 @@ int main()
     // Slightly perturb the wood texture for more realism.
     module::Turbulence perturbedWood;
     perturbedWood.setSourceModule(0, combinedWood);
-    perturbedWood.SetSeed(1);
-    perturbedWood.SetFrequency(4.0);
-    perturbedWood.SetPower(1.0 / 256.0);
-    perturbedWood.SetRoughness(4);
+    perturbedWood.setSeed(1);
+    perturbedWood.setFrequency(4.0);
+    perturbedWood.setPower(1.0 / 256.0);
+    perturbedWood.setRoughness(4);
 
     // Cut the wood texture a small distance from the center of the "log".
-    module::TranslatePoint translatedWood;
+    module::TranslateDomain translatedWood;
     translatedWood.setSourceModule(0, perturbedWood);
     translatedWood.SetZTranslation(1.48);
 
     // Cut the wood texture on an angle to produce a more interesting wood
     // texture.
-    module::RotatePoint rotatedWood;
+    module::RotateDomain rotatedWood;
     rotatedWood.setSourceModule(0, translatedWood);
-    rotatedWood.SetAngles(84.0, 0.0, 0.0);
+    rotatedWood.setAngles(84.0, 0.0, 0.0);
 
     // Finally, perturb the wood texture to produce the final texture.
     module::Turbulence finalWood;
     finalWood.setSourceModule(0, rotatedWood);
-    finalWood.SetSeed(2);
-    finalWood.SetFrequency(2.0);
-    finalWood.SetPower(1.0 / 64.0);
-    finalWood.SetRoughness(4);
+    finalWood.setSeed(2);
+    finalWood.setFrequency(2.0);
+    finalWood.setPower(1.0 / 64.0);
+    finalWood.setRoughness(4);
 
     // Given the wood noise module, create a non-seamless texture map, a
     // seamless texture map, and a spherical texture map.

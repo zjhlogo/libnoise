@@ -27,7 +27,7 @@
 using namespace noise::module;
 
 Spheres::Spheres()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
     , m_frequency(DEFAULT_SPHERES_FREQUENCY)
 {
 }

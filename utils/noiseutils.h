@@ -308,7 +308,7 @@ namespace noise
         /// The size (width and height) of the noise map can be specified during
         /// object construction or at any other time.
         ///
-        /// The GetValue() and SetValue() methods can be used to access individual
+        /// The getValue() and setValue() methods can be used to access individual
         /// values stored in the noise map.
         ///
         /// This class manages its own memory.  If you copy a noise map object
@@ -327,7 +327,7 @@ namespace noise
         ///
         /// To set the border value, call the SetBorderValue() method.
         ///
-        /// The GetValue() method returns the border value if the specified value
+        /// The getValue() method returns the border value if the specified value
         /// lies outside of the noise map.
         ///
         /// <b>Internal Noise Map Structure</b>
@@ -701,7 +701,7 @@ namespace noise
         /// The size (width and height) of the image can be specified during
         /// object construction or at any other time.
         ///
-        /// The GetValue() and SetValue() methods can be used to access individual
+        /// The getValue() and setValue() methods can be used to access individual
         /// color values stored in the image.
         ///
         /// This class manages its own memory.  If you copy an image object into
@@ -719,7 +719,7 @@ namespace noise
         ///
         /// To set the border value, call the SetBorderValue() method.
         ///
-        /// The GetValue() method returns the border value if the specified
+        /// The getValue() method returns the border value if the specified
         /// position lies outside of the image.
         ///
         /// <b>Internal Image Structure</b>

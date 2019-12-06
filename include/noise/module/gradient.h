@@ -68,7 +68,6 @@ namespace noise
             /// the 3D case.
             void setGradient(double x1, double x2, double y1, double y2, double z1 = 0.0, double z2 = 0.0);
 
-            virtual int getSourceModuleCount() const override;
             virtual double getValue(double x, double y, double z) const override;
 
         protected:

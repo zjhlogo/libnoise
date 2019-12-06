@@ -24,23 +24,77 @@
 
 using namespace noise::module;
 
-Turbulence::Turbulence()
-    : ModuleBase(getSourceModuleCount())
+Turbulence::Turbulence(const ModuleBase& source)
+    : ModuleBase(1)
     , m_power(DEFAULT_TURBULENCE_POWER)
 {
-    SetSeed(DEFAULT_TURBULENCE_SEED);
-    SetFrequency(DEFAULT_TURBULENCE_FREQUENCY);
-    SetRoughness(DEFAULT_TURBULENCE_ROUGHNESS);
+    setSeed(DEFAULT_TURBULENCE_SEED);
+    setFrequency(DEFAULT_TURBULENCE_FREQUENCY);
+    setRoughness(DEFAULT_TURBULENCE_ROUGHNESS);
+
+    m_pSourceModule[0] = &source;
 }
 
-double Turbulence::GetFrequency() const
+Turbulence::Turbulence(const ModuleBase& source, double frequency, double power, int roughness)
+    : ModuleBase(1)
+    , m_power(power)
+{
+    setSeed(DEFAULT_TURBULENCE_SEED);
+    setFrequency(frequency);
+    setRoughness(roughness);
+
+    m_pSourceModule[0] = &source;
+}
+
+void Turbulence::setFrequency(double frequency)
+{
+    // Set the frequency of each Perlin-noise module.
+    m_xDistortModule.setFrequency(frequency);
+    m_yDistortModule.setFrequency(frequency);
+    m_zDistortModule.setFrequency(frequency);
+}
+
+double Turbulence::getFrequency() const
 {
     // Since each noise::module::Perlin noise module has the same frequency, it
     // does not matter which module we use to retrieve the frequency.
     return m_xDistortModule.getFrequency();
 }
 
-int Turbulence::GetSeed() const
+void Turbulence::setPower(double power)
+{
+    m_power = power;
+}
+
+double Turbulence::getPower() const
+{
+    return m_power;
+}
+
+void Turbulence::setRoughness(int roughness)
+{
+    // Set the octave count for each Perlin-noise module.
+    m_xDistortModule.setOctaveCount(roughness);
+    m_yDistortModule.setOctaveCount(roughness);
+    m_zDistortModule.setOctaveCount(roughness);
+}
+
+int Turbulence::getRoughness() const
+{
+    return m_xDistortModule.getOctaveCount();
+}
+
+void Turbulence::setSeed(int seed)
+{
+    // Set the seed of each noise::module::Perlin noise modules.  To prevent any
+    // sort of weird artifacting, use a slightly different seed for each noise
+    // module.
+    m_xDistortModule.setSeed(seed);
+    m_yDistortModule.setSeed(seed + 1);
+    m_zDistortModule.setSeed(seed + 2);
+}
+
+int Turbulence::getSeed() const
 {
     return m_xDistortModule.getSeed();
 }
@@ -75,14 +129,4 @@ double Turbulence::getValue(double x, double y, double z) const
     // Retrieve the output value at the offsetted input value instead of the
     // original input value.
     return m_pSourceModule[0]->getValue(xDistort, yDistort, zDistort);
-}
-
-void Turbulence::SetSeed(int seed)
-{
-    // Set the seed of each noise::module::Perlin noise modules.  To prevent any
-    // sort of weird artifacting, use a slightly different seed for each noise
-    // module.
-    m_xDistortModule.setSeed(seed);
-    m_yDistortModule.setSeed(seed + 1);
-    m_zDistortModule.setSeed(seed + 2);
 }

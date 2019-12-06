@@ -68,7 +68,7 @@ set(
 	${INC_DIR}/noise/module/ridgedmulti.h
 	${INC_DIR}/noise/module/rotatepoint.h
 	${INC_DIR}/noise/module/scalebias.h
-	${INC_DIR}/noise/module/scalepoint.h
+	${INC_DIR}/noise/module/scaledomain.h
 	${INC_DIR}/noise/module/select.h
 	${INC_DIR}/noise/module/spheres.h
 	${INC_DIR}/noise/module/terrace.h
@@ -104,7 +104,7 @@ set(
 	${SRC_DIR}/module/ridgedmulti.cpp
 	${SRC_DIR}/module/rotatepoint.cpp
 	${SRC_DIR}/module/scalebias.cpp
-	${SRC_DIR}/module/scalepoint.cpp
+	${SRC_DIR}/module/scaledomain.cpp
 	${SRC_DIR}/module/select.cpp
 	${SRC_DIR}/module/spheres.cpp
 	${SRC_DIR}/module/terrace.cpp

@@ -54,11 +54,6 @@ namespace noise
             /// Constructor.
             Abs();
 
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
-            }
-
             virtual double getValue(double x, double y, double z) const;
         };
 

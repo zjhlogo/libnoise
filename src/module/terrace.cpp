@@ -30,7 +30,7 @@ using namespace noise::module;
 using namespace noise;
 
 Terrace::Terrace()
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(1)
     , m_controlPointCount(0)
     , m_invertTerraces(false)
     , m_pControlPoints(NULL)

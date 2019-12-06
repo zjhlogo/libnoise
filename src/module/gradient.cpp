@@ -25,7 +25,7 @@
 using namespace noise::module;
 
 Gradient::Gradient(double x1, double x2, double y1, double y2, double z1 /*= 0.0*/, double z2 /*= 0.0*/)
-    : ModuleBase(getSourceModuleCount())
+    : ModuleBase(0)
 {
     setGradient(x1, x2, y1, y2, z1, z2);
 }
@@ -41,11 +41,6 @@ void Gradient::setGradient(double x1, double x2, double y1, double y2, double z1
     m_z = z2 - z1;
 
     m_vlen = (m_x * m_x + m_y * m_y + m_z * m_z);
-}
-
-int Gradient::getSourceModuleCount() const
-{
-    return 0;
 }
 
 double Gradient::getValue(double x, double y, double z) const

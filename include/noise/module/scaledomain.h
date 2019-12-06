@@ -20,8 +20,8 @@
 // off every 'zig'.)
 //
 
-#ifndef NOISE_MODULE_SCALEPOINT_H
-#define NOISE_MODULE_SCALEPOINT_H
+#ifndef NOISE_MODULE_SCALEDOMAIN_H
+#define NOISE_MODULE_SCALEDOMAIN_H
 
 #include "modulebase.h"
 
@@ -57,7 +57,7 @@ namespace noise
         ///
         /// @image html modulescalepoint.png
         ///
-        /// The GetValue() method multiplies the ( @a x, @a y, @a z ) coordinates
+        /// The getValue() method multiplies the ( @a x, @a y, @a z ) coordinates
         /// of the input value with a scaling factor before returning the output
         /// value from the source module.  To set the scaling factor, call the
         /// SetScale() method.  To set the scaling factor to apply to the
@@ -65,7 +65,7 @@ namespace noise
         /// SetYScale() or SetZScale() methods, respectively.
         ///
         /// This noise module requires one source module.
-        class ScalePoint : public ModuleBase
+        class ScaleDomain : public ModuleBase
         {
 
         public:
@@ -79,55 +79,66 @@ namespace noise
             ///
             /// The default scaling factor applied to the @a z coordinate is set
             /// to noise::module::DEFAULT_SCALE_POINT_Z.
-            ScalePoint();
+            ScaleDomain(const ModuleBase& source);
+            ScaleDomain(const ModuleBase& source, double scale);
+            ScaleDomain(const ModuleBase& source, double xScale, double yScale, double zScale);
 
-            virtual int getSourceModuleCount() const
-            {
-                return 1;
-            }
-
-            virtual double getValue(double x, double y, double z) const;
+            /// Sets the scaling factor to apply to the @a x coordinate of the
+            /// input value.
+            ///
+            /// @param xScale The scaling factor to apply to the @a x coordinate.
+            ///
+            /// The getValue() method multiplies the ( @a x, @a y, @a z )
+            /// coordinates of the input value with a scaling factor before
+            /// returning the output value from the source module.
+            void SetXScale(double xScale);
 
             /// Returns the scaling factor applied to the @a x coordinate of the
             /// input value.
             ///
             /// @returns The scaling factor applied to the @a x coordinate.
-            double GetXScale() const
-            {
-                return m_xScale;
-            }
+            double GetXScale() const;
+
+            /// Sets the scaling factor to apply to the @a y coordinate of the
+            /// input value.
+            ///
+            /// @param yScale The scaling factor to apply to the @a y coordinate.
+            ///
+            /// The getValue() method multiplies the ( @a x, @a y, @a z )
+            /// coordinates of the input value with a scaling factor before
+            /// returning the output value from the source module.
+            void SetYScale(double yScale);
 
             /// Returns the scaling factor applied to the @a y coordinate of the
             /// input value.
             ///
             /// @returns The scaling factor applied to the @a y coordinate.
-            double GetYScale() const
-            {
-                return m_yScale;
-            }
+            double GetYScale() const;
+
+            /// Sets the scaling factor to apply to the @a z coordinate of the
+            /// input value.
+            ///
+            /// @param zScale The scaling factor to apply to the @a z coordinate.
+            ///
+            /// The getValue() method multiplies the ( @a x, @a y, @a z )
+            /// coordinates of the input value with a scaling factor before
+            /// returning the output value from the source module.
+            void SetZScale(double zScale);
 
             /// Returns the scaling factor applied to the @a z coordinate of the
             /// input value.
             ///
             /// @returns The scaling factor applied to the @a z coordinate.
-            double GetZScale() const
-            {
-                return m_zScale;
-            }
+            double GetZScale() const;
 
             /// Sets the scaling factor to apply to the input value.
             ///
             /// @param scale The scaling factor to apply.
             ///
-            /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+            /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetScale(double scale)
-            {
-                m_xScale = scale;
-                m_yScale = scale;
-                m_zScale = scale;
-            }
+            void SetScale(double scale);
 
             /// Sets the scaling factor to apply to the ( @a x, @a y, @a z )
             /// coordinates of the input value.
@@ -136,54 +147,12 @@ namespace noise
             /// @param yScale The scaling factor to apply to the @a y coordinate.
             /// @param zScale The scaling factor to apply to the @a z coordinate.
             ///
-            /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+            /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetScale(double xScale, double yScale, double zScale)
-            {
-                m_xScale = xScale;
-                m_yScale = yScale;
-                m_zScale = zScale;
-            }
+            void SetScale(double xScale, double yScale, double zScale);
 
-            /// Sets the scaling factor to apply to the @a x coordinate of the
-            /// input value.
-            ///
-            /// @param xScale The scaling factor to apply to the @a x coordinate.
-            ///
-            /// The GetValue() method multiplies the ( @a x, @a y, @a z )
-            /// coordinates of the input value with a scaling factor before
-            /// returning the output value from the source module.
-            void SetXScale(double xScale)
-            {
-                m_xScale = xScale;
-            }
-
-            /// Sets the scaling factor to apply to the @a y coordinate of the
-            /// input value.
-            ///
-            /// @param yScale The scaling factor to apply to the @a y coordinate.
-            ///
-            /// The GetValue() method multiplies the ( @a x, @a y, @a z )
-            /// coordinates of the input value with a scaling factor before
-            /// returning the output value from the source module.
-            void SetYScale(double yScale)
-            {
-                m_yScale = yScale;
-            }
-
-            /// Sets the scaling factor to apply to the @a z coordinate of the
-            /// input value.
-            ///
-            /// @param zScale The scaling factor to apply to the @a z coordinate.
-            ///
-            /// The GetValue() method multiplies the ( @a x, @a y, @a z )
-            /// coordinates of the input value with a scaling factor before
-            /// returning the output value from the source module.
-            void SetZScale(double zScale)
-            {
-                m_zScale = zScale;
-            }
+            virtual double getValue(double x, double y, double z) const override;
 
         protected:
             /// Scaling factor applied to the @a x coordinate of the input value.
