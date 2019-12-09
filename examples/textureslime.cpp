@@ -70,8 +70,7 @@ int main()
     smallSlimeBase.SetNoiseQuality(QUALITY_BEST);
 
     // Scale and lower the small slime bubble values.
-    module::ScaleBias smallSlime;
-    smallSlime.setSourceModule(0, smallSlimeBase);
+    module::ScaleBias smallSlime(smallSlimeBase);
     smallSlime.setScale(0.5);
     smallSlime.setBias(-0.5);
 
@@ -94,8 +93,7 @@ int main()
     slimeChooser.setEdgeFalloff(0.5);
 
     // Finally, perturb the slime texture to add realism.
-    module::Turbulence finalSlime;
-    finalSlime.setSourceModule(0, slimeChooser);
+    module::Turbulence finalSlime(slimeChooser);
     finalSlime.setSeed(2);
     finalSlime.setFrequency(8.0);
     finalSlime.setPower(1.0 / 32.0);

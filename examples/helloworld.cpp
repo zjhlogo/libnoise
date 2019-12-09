@@ -14,15 +14,15 @@ using namespace noise::module;
 
 int main(int argc, char** argv)
 {
-    Const low(-1.0);
-    Const high(1.0);
+    Gradient gradient(0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
     Perlin perlin;
-    ScaleDomain scaleDomain(perlin, 1.0, 1.0, 0.0);
+    ScaleBias scaleBias(perlin, 0.5, 0.0);
+    ScaleDomain scaleDomain(scaleBias, 1.0, 1.0, 0.0);
+    TranslateDomain transDomain(gradient, 0.0, 0.0, scaleDomain);
 
-    Gradient gradient(0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    Turbulence turbulence(gradient, 1.0, 1.0, 6);
-    Select select(low, high, scaleDomain, -0.5, 0.5, 0.0);
+    // Turbulence turbulence(gradient, 1.0, 1.0, 6);
+    Select select(-1.0, 1.0, transDomain, 0.0, 1.0, 0.0);
 
     utils::NoiseMap heightMap;
 

@@ -80,9 +80,8 @@ namespace noise
             ///
             /// The default translation amount to apply to the @a z coordinate is
             /// set to noise::module::DEFAULT_TRANSLATE_POINT_Z.
-            TranslateDomain();
-
-            TranslateDomain(double xTranslation, double yTranslation, double zTranslation);
+            TranslateDomain(const noise::ScalarParameter& src);
+            TranslateDomain(const noise::ScalarParameter& src, const noise::ScalarParameter& xTranslation, const noise::ScalarParameter& yTranslation, const noise::ScalarParameter& zTranslation);
 
             /// Sets the translation amount to apply to the @a x coordinate of the
             /// input value.
@@ -93,13 +92,13 @@ namespace noise
             /// The getValue() method moves the ( @a x, @a y, @a z ) coordinates
             /// of the input value by a translation amount before returning the
             /// output value from the source module
-            void SetXTranslation(double xTranslation);
+            void SetXTranslation(const noise::ScalarParameter& xTranslation);
 
             /// Returns the translation amount to apply to the @a x coordinate of
             /// the input value.
             ///
             /// @returns The translation amount to apply to the @a x coordinate.
-            double GetXTranslation() const;
+            const noise::ScalarParameter& GetXTranslation() const;
 
             /// Sets the translation amount to apply to the @a y coordinate of the
             /// input value.
@@ -110,13 +109,13 @@ namespace noise
             /// The getValue() method moves the ( @a x, @a y, @a z ) coordinates
             /// of the input value by a translation amount before returning the
             /// output value from the source module
-            void SetYTranslation(double yTranslation);
+            void SetYTranslation(const noise::ScalarParameter& yTranslation);
 
             /// Returns the translation amount to apply to the @a y coordinate of
             /// the input value.
             ///
             /// @returns The translation amount to apply to the @a y coordinate.
-            double GetYTranslation() const;
+            const noise::ScalarParameter& GetYTranslation() const;
 
             /// Sets the translation amount to apply to the @a z coordinate of the
             /// input value.
@@ -127,13 +126,13 @@ namespace noise
             /// The getValue() method moves the ( @a x, @a y, @a z ) coordinates
             /// of the input value by a translation amount before returning the
             /// output value from the source module
-            void SetZTranslation(double zTranslation);
+            void SetZTranslation(const noise::ScalarParameter& zTranslation);
 
             /// Returns the translation amount to apply to the @a z coordinate of
             /// the input value.
             ///
             /// @returns The translation amount to apply to the @a z coordinate.
-            double GetZTranslation() const;
+            const noise::ScalarParameter& GetZTranslation() const;
 
             /// Sets the translation amounts to apply to the ( @a x, @a y, @a z )
             /// coordinates of the input value.
@@ -148,22 +147,24 @@ namespace noise
             /// The getValue() method moves the ( @a x, @a y, @a z ) coordinates
             /// of the input value by a translation amount before returning the
             /// output value from the source module
-            void SetTranslation(double xTranslation, double yTranslation, double zTranslation);
+            void SetTranslation(const noise::ScalarParameter& xTranslation, const noise::ScalarParameter& yTranslation, const noise::ScalarParameter& zTranslation);
 
             virtual double getValue(double x, double y, double z) const override;
 
         protected:
+            noise::ScalarParameter m_source;
+
             /// Translation amount applied to the @a x coordinate of the input
             /// value.
-            double m_xTranslation;
+            noise::ScalarParameter m_xTranslation;
 
             /// Translation amount applied to the @a y coordinate of the input
             /// value.
-            double m_yTranslation;
+            noise::ScalarParameter m_yTranslation;
 
             /// Translation amount applied to the @a z coordinate of the input
             /// value.
-            double m_zTranslation;
+            noise::ScalarParameter m_zTranslation;
         };
 
         /// @}

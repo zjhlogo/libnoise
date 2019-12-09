@@ -72,13 +72,11 @@ int main()
     baseWater.SetDisplacement(0.0);
 
     // Stretch the waves along the z axis.
-    module::ScaleDomain baseStretchedWater;
-    baseStretchedWater.setSourceModule(0, baseWater);
+    module::ScaleDomain baseStretchedWater(baseWater);
     baseStretchedWater.SetScale(1.0, 1.0, 3.0);
 
     // Smoothly perturb the water texture for more realism.
-    module::Turbulence finalWater;
-    finalWater.setSourceModule(0, baseStretchedWater);
+    module::Turbulence finalWater(baseStretchedWater);
     finalWater.setSeed(1);
     finalWater.setFrequency(8.0);
     finalWater.setPower(1.0 / 32.0);
@@ -98,8 +96,7 @@ int main()
     cloudBase.SetNoiseQuality(QUALITY_BEST);
 
     // Perturb the cloud texture for more realism.
-    module::Turbulence finalClouds;
-    finalClouds.setSourceModule(0, cloudBase);
+    module::Turbulence finalClouds(cloudBase);
     finalClouds.setSeed(3);
     finalClouds.setFrequency(16.0);
     finalClouds.setPower(1.0 / 64.0);

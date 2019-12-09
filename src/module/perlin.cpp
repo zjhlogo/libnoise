@@ -25,8 +25,7 @@
 using namespace noise::module;
 
 Perlin::Perlin()
-    : ModuleBase(0)
-    , m_frequency(DEFAULT_PERLIN_FREQUENCY)
+    : m_frequency(DEFAULT_PERLIN_FREQUENCY)
     , m_lacunarity(DEFAULT_PERLIN_LACUNARITY)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
     , m_octaveCount(DEFAULT_PERLIN_OCTAVE_COUNT)
@@ -36,8 +35,7 @@ Perlin::Perlin()
 }
 
 Perlin::Perlin(int octaveCount, double frequency)
-    : ModuleBase(0)
-    , m_frequency(frequency)
+    : m_frequency(frequency)
     , m_lacunarity(DEFAULT_PERLIN_LACUNARITY)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
     , m_octaveCount(octaveCount)
@@ -47,8 +45,7 @@ Perlin::Perlin(int octaveCount, double frequency)
 }
 
 Perlin::Perlin(int octaveCount, double frequency, double persistence)
-    : ModuleBase(0)
-    , m_frequency(frequency)
+    : m_frequency(frequency)
     , m_lacunarity(DEFAULT_PERLIN_LACUNARITY)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
     , m_octaveCount(octaveCount)
@@ -58,8 +55,7 @@ Perlin::Perlin(int octaveCount, double frequency, double persistence)
 }
 
 Perlin::Perlin(int octaveCount, double frequency, double persistence, double lacunarity)
-    : ModuleBase(0)
-    , m_frequency(frequency)
+    : m_frequency(frequency)
     , m_lacunarity(lacunarity)
     , m_noiseQuality(DEFAULT_PERLIN_QUALITY)
     , m_octaveCount(octaveCount)

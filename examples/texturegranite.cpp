@@ -71,8 +71,7 @@ int main()
     // Scale the small grain values so that they may be added to the base
     // granite texture.  Voronoi polygons normally generate pits, so apply a
     // negative scaling factor to produce bumps instead.
-    module::ScaleBias scaledGrains;
-    scaledGrains.setSourceModule(0, baseGrains);
+    module::ScaleBias scaledGrains(baseGrains);
     scaledGrains.setScale(-0.5);
     scaledGrains.setBias(0.0);
 
@@ -82,8 +81,7 @@ int main()
     combinedGranite.setSourceModule(1, scaledGrains);
 
     // Finally, perturb the granite texture to add realism.
-    module::Turbulence finalGranite;
-    finalGranite.setSourceModule(0, combinedGranite);
+    module::Turbulence finalGranite(combinedGranite);
     finalGranite.setSeed(2);
     finalGranite.setFrequency(4.0);
     finalGranite.setPower(1.0 / 8.0);

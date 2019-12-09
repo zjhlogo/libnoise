@@ -24,43 +24,41 @@
 
 using namespace noise::module;
 
-ScaleBias::ScaleBias()
-    : ModuleBase(1)
+ScaleBias::ScaleBias(const noise::ScalarParameter& src)
+    : m_source(src)
     , m_scale(DEFAULT_SCALE)
     , m_bias(DEFAULT_BIAS)
 {
 }
 
-ScaleBias::ScaleBias(double scale, double bias)
-    : ModuleBase(1)
-    , m_scale(bias)
-    , m_bias(scale)
+ScaleBias::ScaleBias(const noise::ScalarParameter& src, const noise::ScalarParameter& scale, const noise::ScalarParameter& bias)
+    : m_source(src)
+    , m_scale(scale)
+    , m_bias(bias)
 {
 }
 
-void ScaleBias::setScale(double scale)
+void ScaleBias::setScale(const noise::ScalarParameter& scale)
 {
     m_scale = scale;
 }
 
-double ScaleBias::getScale() const
+const noise::ScalarParameter& ScaleBias::getScale() const
 {
     return m_scale;
 }
 
-void ScaleBias::setBias(double bias)
+void ScaleBias::setBias(const noise::ScalarParameter& bias)
 {
     m_bias = bias;
 }
 
-double ScaleBias::getBias() const
+const noise::ScalarParameter& ScaleBias::getBias() const
 {
     return m_bias;
 }
 
 double ScaleBias::getValue(double x, double y, double z) const
 {
-    assert(m_pSourceModule[0] != nullptr);
-
-    return m_pSourceModule[0]->getValue(x, y, z) * m_scale + m_bias;
+    return m_source.getValue(x, y, z) * m_scale.getValue(x, y, z) + m_bias.getValue(x, y, z);
 }

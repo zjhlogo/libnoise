@@ -68,14 +68,12 @@ int main()
 
     // Stretch the Perlin noise in the same direction as the center of the
     // log.  This produces a nice wood-grain texture.
-    module::ScaleDomain scaledBaseWoodGrain;
-    scaledBaseWoodGrain.setSourceModule(0, woodGrainNoise);
+    module::ScaleDomain scaledBaseWoodGrain(woodGrainNoise);
     scaledBaseWoodGrain.SetYScale(0.25);
 
     // Scale the wood-grain values so that they may be added to the base wood
     // texture.
-    module::ScaleBias woodGrain;
-    woodGrain.setSourceModule(0, scaledBaseWoodGrain);
+    module::ScaleBias woodGrain(scaledBaseWoodGrain);
     woodGrain.setScale(0.25);
     woodGrain.setBias(0.125);
 
@@ -85,16 +83,14 @@ int main()
     combinedWood.setSourceModule(1, woodGrain);
 
     // Slightly perturb the wood texture for more realism.
-    module::Turbulence perturbedWood;
-    perturbedWood.setSourceModule(0, combinedWood);
+    module::Turbulence perturbedWood(combinedWood);
     perturbedWood.setSeed(1);
     perturbedWood.setFrequency(4.0);
     perturbedWood.setPower(1.0 / 256.0);
     perturbedWood.setRoughness(4);
 
     // Cut the wood texture a small distance from the center of the "log".
-    module::TranslateDomain translatedWood;
-    translatedWood.setSourceModule(0, perturbedWood);
+    module::TranslateDomain translatedWood(perturbedWood);
     translatedWood.SetZTranslation(1.48);
 
     // Cut the wood texture on an angle to produce a more interesting wood
@@ -104,8 +100,7 @@ int main()
     rotatedWood.setAngles(84.0, 0.0, 0.0);
 
     // Finally, perturb the wood texture to produce the final texture.
-    module::Turbulence finalWood;
-    finalWood.setSourceModule(0, rotatedWood);
+    module::Turbulence finalWood(rotatedWood);
     finalWood.setSeed(2);
     finalWood.setFrequency(2.0);
     finalWood.setPower(1.0 / 64.0);

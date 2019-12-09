@@ -92,8 +92,14 @@ namespace noise
             ///
             /// The default upper bound of the selection range is set to
             /// noise::module::DEFAULT_SELECT_UPPER_BOUND.
-            Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule);
-            Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double lowerBound, double upperBound, double edgeFalloff);
+            Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control);
+            Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control, double lowerBound, double upperBound, double edgeFalloff);
+
+            void setLowModule(const noise::ScalarParameter& low);
+            const noise::ScalarParameter& getLowModule() const;
+
+            void setHighModule(const noise::ScalarParameter& high);
+            const noise::ScalarParameter& getHighModule() const;
 
             /// Sets the control module.
             ///
@@ -114,7 +120,7 @@ namespace noise
             /// This control module must exist throughout the lifetime of this
             /// noise module unless another control module replaces that control
             /// module.
-            void setControlModule(const ModuleBase& controlModule);
+            void setControlModule(const noise::ScalarParameter& control);
 
             /// Returns the control module.
             ///
@@ -132,7 +138,7 @@ namespace noise
             /// the value from the source module with an index value of 1.
             /// Otherwise, this method outputs the value from the source module
             /// with an index value of 0.
-            const ModuleBase& getControlModule() const;
+            const noise::ScalarParameter& getControlModule() const;
 
             /// Sets the lower and upper bounds of the selection range.
             ///
@@ -212,6 +218,10 @@ namespace noise
             virtual double getValue(double x, double y, double z) const override;
 
         protected:
+            noise::ScalarParameter m_low;
+            noise::ScalarParameter m_high;
+            noise::ScalarParameter m_control;
+
             /// Edge-falloff value.
             double m_edgeFalloff;
 

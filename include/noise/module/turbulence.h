@@ -112,7 +112,6 @@ namespace noise
         /// This noise module requires one source module.
         class Turbulence : public ModuleBase
         {
-
         public:
             /// Constructor.
             ///
@@ -127,8 +126,8 @@ namespace noise
             ///
             /// The default seed value is set to
             /// noise::module::DEFAULT_TURBULENCE_SEED.
-            Turbulence(const ModuleBase& source);
-            Turbulence(const ModuleBase& source, double frequency, double power, int roughness);
+            Turbulence(const noise::ScalarParameter& src);
+            Turbulence(const noise::ScalarParameter& src, double frequency, double power, int roughness);
 
             /// Sets the frequency of the turbulence.
             ///
@@ -215,6 +214,8 @@ namespace noise
             virtual double getValue(double x, double y, double z) const override;
 
         protected:
+            noise::ScalarParameter m_source;
+
             /// The power (scale) of the displacement.
             double m_power;
 

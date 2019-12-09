@@ -1,4 +1,7 @@
 cmake_minimum_required( VERSION 2.8 )
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
+
 project( libnoise )
 
 # Turn on the ability to create folders to organize projects (.vcproj)
@@ -28,94 +31,96 @@ endif()
 set( SRC_DIR "src" )
 set( INC_DIR "include" )
 
-set(
-	SOURCES
-	${INC_DIR}/noise/basictypes.h
-	${INC_DIR}/noise/exception.h
-	${INC_DIR}/noise/interp.h
-	${INC_DIR}/noise/latlon.h
-	${INC_DIR}/noise/mathconsts.h
-	${INC_DIR}/noise/misc.h
-	${INC_DIR}/noise/noise.h
-	${INC_DIR}/noise/noisegen.h
-	${INC_DIR}/noise/vectortable.h
-	${INC_DIR}/noise/model/cylinder.h
-	${INC_DIR}/noise/model/line.h
-	${INC_DIR}/noise/model/model.h
-	${INC_DIR}/noise/model/plane.h
-	${INC_DIR}/noise/model/sphere.h
-	${INC_DIR}/noise/module/abs.h
-	${INC_DIR}/noise/module/add.h
-	${INC_DIR}/noise/module/billow.h
-	${INC_DIR}/noise/module/blend.h
-	${INC_DIR}/noise/module/cache.h
-	${INC_DIR}/noise/module/checkerboard.h
-	${INC_DIR}/noise/module/clamp.h
-	${INC_DIR}/noise/module/const.h
-	${INC_DIR}/noise/module/curve.h
-	${INC_DIR}/noise/module/cylinders.h
-	${INC_DIR}/noise/module/displace.h
-	${INC_DIR}/noise/module/exponent.h
-	${INC_DIR}/noise/module/gradient.h
-	${INC_DIR}/noise/module/invert.h
-	${INC_DIR}/noise/module/max.h
-	${INC_DIR}/noise/module/min.h
-	${INC_DIR}/noise/module/module.h
-	${INC_DIR}/noise/module/modulebase.h
-	${INC_DIR}/noise/module/multiply.h
-	${INC_DIR}/noise/module/perlin.h
-	${INC_DIR}/noise/module/power.h
-	${INC_DIR}/noise/module/ridgedmulti.h
-	${INC_DIR}/noise/module/rotatedomain.h
-	${INC_DIR}/noise/module/scalebias.h
-	${INC_DIR}/noise/module/scaledomain.h
-	${INC_DIR}/noise/module/select.h
-	${INC_DIR}/noise/module/spheres.h
-	${INC_DIR}/noise/module/terrace.h
-	${INC_DIR}/noise/module/translatedomain.h
-	${INC_DIR}/noise/module/turbulence.h
-	${INC_DIR}/noise/module/voronoi.h
-	${SRC_DIR}/latlon.cpp
-	${SRC_DIR}/noisegen.cpp
-	${SRC_DIR}/model/cylinder.cpp
-	${SRC_DIR}/model/line.cpp
-	${SRC_DIR}/model/plane.cpp
-	${SRC_DIR}/model/sphere.cpp
-	${SRC_DIR}/module/abs.cpp
-	${SRC_DIR}/module/add.cpp
-	${SRC_DIR}/module/billow.cpp
-	${SRC_DIR}/module/blend.cpp
-	${SRC_DIR}/module/cache.cpp
-	${SRC_DIR}/module/checkerboard.cpp
-	${SRC_DIR}/module/clamp.cpp
-	${SRC_DIR}/module/const.cpp
-	${SRC_DIR}/module/curve.cpp
-	${SRC_DIR}/module/cylinders.cpp
-	${SRC_DIR}/module/displace.cpp
-	${SRC_DIR}/module/exponent.cpp
-	${SRC_DIR}/module/gradient.cpp
-	${SRC_DIR}/module/invert.cpp
-	${SRC_DIR}/module/max.cpp
-	${SRC_DIR}/module/min.cpp
-	${SRC_DIR}/module/modulebase.cpp
-	${SRC_DIR}/module/multiply.cpp
-	${SRC_DIR}/module/perlin.cpp
-	${SRC_DIR}/module/power.cpp
-	${SRC_DIR}/module/ridgedmulti.cpp
-	${SRC_DIR}/module/rotatedomain.cpp
-	${SRC_DIR}/module/scalebias.cpp
-	${SRC_DIR}/module/scaledomain.cpp
-	${SRC_DIR}/module/select.cpp
-	${SRC_DIR}/module/spheres.cpp
-	${SRC_DIR}/module/terrace.cpp
-	${SRC_DIR}/module/translatedomain.cpp
-	${SRC_DIR}/module/turbulence.cpp
-	${SRC_DIR}/module/voronoi.cpp
+set( SOURCES
+include/noise/basictypes.h
+include/noise/exception.h
+include/noise/interp.h
+include/noise/latlon.h
+include/noise/mathconsts.h
+include/noise/misc.h
+include/noise/noise.h
+include/noise/noisegen.h
+include/noise/scalarparameter.h
+include/noise/vectortable.h
+include/noise/model/cylinder.h
+include/noise/model/line.h
+include/noise/model/model.h
+include/noise/model/plane.h
+include/noise/model/sphere.h
+include/noise/module/abs.h
+include/noise/module/add.h
+include/noise/module/billow.h
+include/noise/module/blend.h
+include/noise/module/cache.h
+include/noise/module/checkerboard.h
+include/noise/module/clamp.h
+include/noise/module/const.h
+include/noise/module/curve.h
+include/noise/module/cylinders.h
+include/noise/module/displace.h
+include/noise/module/exponent.h
+include/noise/module/gradient.h
+include/noise/module/invert.h
+include/noise/module/max.h
+include/noise/module/min.h
+include/noise/module/module.h
+include/noise/module/modulebase.h
+include/noise/module/multiply.h
+include/noise/module/perlin.h
+include/noise/module/power.h
+include/noise/module/ridgedmulti.h
+include/noise/module/rotatedomain.h
+include/noise/module/scalebias.h
+include/noise/module/scaledomain.h
+include/noise/module/select.h
+include/noise/module/spheres.h
+include/noise/module/terrace.h
+include/noise/module/translatedomain.h
+include/noise/module/turbulence.h
+include/noise/module/voronoi.h
+src/latlon.cpp
+src/noisegen.cpp
+src/scalarparameter.cpp
+src/model/cylinder.cpp
+src/model/line.cpp
+src/model/plane.cpp
+src/model/sphere.cpp
+src/module/abs.cpp
+src/module/add.cpp
+src/module/billow.cpp
+src/module/blend.cpp
+src/module/cache.cpp
+src/module/checkerboard.cpp
+src/module/clamp.cpp
+src/module/const.cpp
+src/module/curve.cpp
+src/module/cylinders.cpp
+src/module/displace.cpp
+src/module/exponent.cpp
+src/module/gradient.cpp
+src/module/invert.cpp
+src/module/max.cpp
+src/module/min.cpp
+src/module/modulebase.cpp
+src/module/multiply.cpp
+src/module/perlin.cpp
+src/module/power.cpp
+src/module/ridgedmulti.cpp
+src/module/rotatedomain.cpp
+src/module/scalebias.cpp
+src/module/scaledomain.cpp
+src/module/select.cpp
+src/module/spheres.cpp
+src/module/terrace.cpp
+src/module/translatedomain.cpp
+src/module/turbulence.cpp
+src/module/voronoi.cpp
 )
 
-include_directories( ${INC_DIR}/noise )
+group_sources("${SOURCES}")
 
 add_library( libnoise ${LIB_TYPE} ${SOURCES} )
+
 target_include_directories(libnoise PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/noise>
 	$<INSTALL_INTERFACE:include>

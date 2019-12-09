@@ -143,94 +143,7 @@ namespace noise
             /// The default seed value is set to
             /// noise::module::DEFAULT_RIDGED_SEED.
             RidgedMulti();
-
-            /// Returns the frequency of the first octave.
-            ///
-            /// @returns The frequency of the first octave.
-            double GetFrequency() const
-            {
-                return m_frequency;
-            }
-
-            /// Returns the lacunarity of the ridged-multifractal noise.
-            ///
-            /// @returns The lacunarity of the ridged-multifractal noise.
-            ///
-            /// The lacunarity is the frequency multiplier between successive
-            /// octaves.
-            double GetLacunarity() const
-            {
-                return m_lacunarity;
-            }
-
-            /// Returns the quality of the ridged-multifractal noise.
-            ///
-            /// @returns The quality of the ridged-multifractal noise.
-            ///
-            /// See noise::NoiseQuality for definitions of the various
-            /// coherent-noise qualities.
-            noise::NoiseQuality GetNoiseQuality() const
-            {
-                return m_noiseQuality;
-            }
-
-            /// Returns the number of octaves that generate the
-            /// ridged-multifractal noise.
-            ///
-            /// @returns The number of octaves that generate the
-            /// ridged-multifractal noise.
-            ///
-            /// The number of octaves controls the amount of detail in the
-            /// ridged-multifractal noise.
-            int GetOctaveCount() const
-            {
-                return m_octaveCount;
-            }
-
-            /// Returns the seed value used by the ridged-multifractal-noise
-            /// function.
-            ///
-            /// @returns The seed value.
-            int GetSeed() const
-            {
-                return m_seed;
-            }
-
-            virtual double getValue(double x, double y, double z) const;
-
-            /// Sets the frequency of the first octave.
-            ///
-            /// @param frequency The frequency of the first octave.
-            void SetFrequency(double frequency)
-            {
-                m_frequency = frequency;
-            }
-
-            /// Sets the lacunarity of the ridged-multifractal noise.
-            ///
-            /// @param lacunarity The lacunarity of the ridged-multifractal noise.
-            ///
-            /// The lacunarity is the frequency multiplier between successive
-            /// octaves.
-            ///
-            /// For best results, set the lacunarity to a number between 1.5 and
-            /// 3.5.
-            void SetLacunarity(double lacunarity)
-            {
-                m_lacunarity = lacunarity;
-                CalcSpectralWeights();
-            }
-
-            /// Sets the quality of the ridged-multifractal noise.
-            ///
-            /// @param noiseQuality The quality of the ridged-multifractal noise.
-            ///
-            /// See noise::NoiseQuality for definitions of the various
-            /// coherent-noise qualities.
-            void SetNoiseQuality(noise::NoiseQuality noiseQuality)
-            {
-                m_noiseQuality = noiseQuality;
-            }
+            RidgedMulti(int  octaveCount, double frequency, double lacunarity);
 
             /// Sets the number of octaves that generate the ridged-multifractal
             /// noise.
@@ -249,13 +162,74 @@ namespace noise
             ///
             /// The larger the number of octaves, the more time required to
             /// calculate the ridged-multifractal-noise value.
-            void SetOctaveCount(int octaveCount)
+            void SetOctaveCount(int octaveCount);
+
+            /// Returns the number of octaves that generate the
+            /// ridged-multifractal noise.
+            ///
+            /// @returns The number of octaves that generate the
+            /// ridged-multifractal noise.
+            ///
+            /// The number of octaves controls the amount of detail in the
+            /// ridged-multifractal noise.
+            int GetOctaveCount() const;
+
+            /// Sets the frequency of the first octave.
+            ///
+            /// @param frequency The frequency of the first octave.
+            void SetFrequency(double frequency);
+
+            /// Returns the frequency of the first octave.
+            ///
+            /// @returns The frequency of the first octave.
+            double GetFrequency() const;
+
+            /// Sets the lacunarity of the ridged-multifractal noise.
+            ///
+            /// @param lacunarity The lacunarity of the ridged-multifractal noise.
+            ///
+            /// The lacunarity is the frequency multiplier between successive
+            /// octaves.
+            ///
+            /// For best results, set the lacunarity to a number between 1.5 and
+            /// 3.5.
+            void SetLacunarity(double lacunarity)
             {
-                if (octaveCount > RIDGED_MAX_OCTAVE)
-                {
-                    throw noise::ExceptionInvalidParam();
-                }
-                m_octaveCount = octaveCount;
+                m_lacunarity = lacunarity;
+                CalcSpectralWeights();
+            }
+
+            /// Returns the lacunarity of the ridged-multifractal noise.
+            ///
+            /// @returns The lacunarity of the ridged-multifractal noise.
+            ///
+            /// The lacunarity is the frequency multiplier between successive
+            /// octaves.
+            double GetLacunarity() const
+            {
+                return m_lacunarity;
+            }
+
+            /// Sets the quality of the ridged-multifractal noise.
+            ///
+            /// @param noiseQuality The quality of the ridged-multifractal noise.
+            ///
+            /// See noise::NoiseQuality for definitions of the various
+            /// coherent-noise qualities.
+            void SetNoiseQuality(noise::NoiseQuality noiseQuality)
+            {
+                m_noiseQuality = noiseQuality;
+            }
+
+            /// Returns the quality of the ridged-multifractal noise.
+            ///
+            /// @returns The quality of the ridged-multifractal noise.
+            ///
+            /// See noise::NoiseQuality for definitions of the various
+            /// coherent-noise qualities.
+            noise::NoiseQuality GetNoiseQuality() const
+            {
+                return m_noiseQuality;
             }
 
             /// Sets the seed value used by the ridged-multifractal-noise
@@ -267,11 +241,26 @@ namespace noise
                 m_seed = seed;
             }
 
+            /// Returns the seed value used by the ridged-multifractal-noise
+            /// function.
+            ///
+            /// @returns The seed value.
+            int GetSeed() const
+            {
+                return m_seed;
+            }
+
+            virtual double getValue(double x, double y, double z) const;
+
         protected:
             /// Calculates the spectral weights for each octave.
             ///
             /// This method is called when the lacunarity changes.
             void CalcSpectralWeights();
+
+            /// Total number of octaves that generate the ridged-multifractal
+            /// noise.
+            int m_octaveCount;
 
             /// Frequency of the first octave.
             double m_frequency;
@@ -282,15 +271,11 @@ namespace noise
             /// Quality of the ridged-multifractal noise.
             noise::NoiseQuality m_noiseQuality;
 
-            /// Total number of octaves that generate the ridged-multifractal
-            /// noise.
-            int m_octaveCount;
+            /// Seed value used by the ridged-multfractal-noise function.
+            int m_seed;
 
             /// Contains the spectral weights for each octave.
             double m_pSpectralWeights[RIDGED_MAX_OCTAVE];
-
-            /// Seed value used by the ridged-multfractal-noise function.
-            int m_seed;
         };
 
         /// @}

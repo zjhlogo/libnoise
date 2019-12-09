@@ -58,16 +58,14 @@ namespace noise
         /// This noise module requires one source module.
         class ScaleBias : public ModuleBase
         {
-
         public:
             /// Constructor.
             ///
             /// The default bias is set to noise::module::DEFAULT_BIAS.
             ///
             /// The default scaling factor is set to noise::module::DEFAULT_SCALE.
-            ScaleBias();
-
-            ScaleBias(double scale, double bias);
+            ScaleBias(const noise::ScalarParameter& src);
+            ScaleBias(const noise::ScalarParameter& src, const noise::ScalarParameter& scale, const noise::ScalarParameter& bias);
 
             /// Sets the scaling factor to apply to the output value from the
             /// source module.
@@ -77,7 +75,7 @@ namespace noise
             /// The getValue() method retrieves the output value from the source
             /// module, multiplies it with the scaling factor, adds the bias to
             /// it, then outputs the value.
-            void setScale(double scale);
+            void setScale(const noise::ScalarParameter& scale);
 
             /// Returns the scaling factor to apply to the output value from the
             /// source module.
@@ -87,7 +85,7 @@ namespace noise
             /// The getValue() method retrieves the output value from the source
             /// module, multiplies it with the scaling factor, adds the bias to
             /// it, then outputs the value.
-            double getScale() const;
+            const noise::ScalarParameter& getScale() const;
 
             /// Sets the bias to apply to the scaled output value from the source
             /// module.
@@ -97,7 +95,7 @@ namespace noise
             /// The getValue() method retrieves the output value from the source
             /// module, multiplies it with the scaling factor, adds the bias to
             /// it, then outputs the value.
-            void setBias(double bias);
+            void setBias(const noise::ScalarParameter& bias);
 
             /// Returns the bias to apply to the scaled output value from the
             /// source module.
@@ -107,17 +105,19 @@ namespace noise
             /// The getValue() method retrieves the output value from the source
             /// module, multiplies it with the scaling factor, adds the bias to
             /// it, then outputs the value.
-            double getBias() const;
+            const noise::ScalarParameter& getBias() const;
 
             virtual double getValue(double x, double y, double z) const override;
 
         protected:
+            noise::ScalarParameter m_source;
+
             /// Scaling factor to apply to the output value from the source
             /// module.
-            double m_scale;
+            noise::ScalarParameter m_scale;
 
             /// Bias to apply to the scaled output value from the source module.
-            double m_bias;
+            noise::ScalarParameter m_bias;
         };
 
         /// @}

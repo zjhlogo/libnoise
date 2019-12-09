@@ -21,46 +21,60 @@
 //
 
 #include "module/select.h"
+#include "scalarparameter.h"
 
 #include "interp.h"
 
 using namespace noise::module;
 
-Select::Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule)
-    : ModuleBase(3)
-    , m_edgeFalloff(DEFAULT_SELECT_EDGE_FALLOFF)
+Select::Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control)
+    : m_edgeFalloff(DEFAULT_SELECT_EDGE_FALLOFF)
     , m_lowerBound(DEFAULT_SELECT_LOWER_BOUND)
     , m_upperBound(DEFAULT_SELECT_UPPER_BOUND)
+    , m_low(low)
+    , m_high(high)
+    , m_control(control)
 {
-    m_pSourceModule[0] = &lowModule;
-    m_pSourceModule[1] = &highModule;
-    m_pSourceModule[2] = &controlModule;
 }
 
-Select::Select(const ModuleBase& lowModule, const ModuleBase& highModule, const ModuleBase& controlModule, double lowerBound, double upperBound, double edgeFalloff)
-    : ModuleBase(3)
-    , m_edgeFalloff(edgeFalloff)
+Select::Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control, double lowerBound, double upperBound, double edgeFalloff)
+    : m_edgeFalloff(edgeFalloff)
     , m_lowerBound(lowerBound)
     , m_upperBound(upperBound)
+    , m_low(low)
+    , m_high(high)
+    , m_control(control)
 {
-    m_pSourceModule[0] = &lowModule;
-    m_pSourceModule[1] = &highModule;
-    m_pSourceModule[2] = &controlModule;
 }
 
-void Select::setControlModule(const ModuleBase& controlModule)
+void Select::setLowModule(const noise::ScalarParameter& low)
 {
-    assert(m_pSourceModule != NULL);
-    m_pSourceModule[2] = &controlModule;
+    m_low = low;
 }
 
-const ModuleBase& Select::getControlModule() const
+const noise::ScalarParameter& Select::getLowModule() const
 {
-    if (m_pSourceModule == NULL || m_pSourceModule[2] == NULL)
-    {
-        throw noise::ExceptionNoModule();
-    }
-    return *(m_pSourceModule[2]);
+    return m_low;
+}
+
+void Select::setHighModule(const noise::ScalarParameter& high)
+{
+    m_high = high;
+}
+
+const noise::ScalarParameter& Select::getHighModule() const
+{
+    return m_high;
+}
+
+void Select::setControlModule(const noise::ScalarParameter& control)
+{
+    m_control = control;
+}
+
+const noise::ScalarParameter& Select::getControlModule() const
+{
+    return m_control;
 }
 
 void Select::setBounds(double lowerBound, double upperBound)
@@ -98,11 +112,7 @@ double Select::getEdgeFalloff() const
 
 double Select::getValue(double x, double y, double z) const
 {
-    assert(m_pSourceModule[0] != NULL);
-    assert(m_pSourceModule[1] != NULL);
-    assert(m_pSourceModule[2] != NULL);
-
-    double controlValue = m_pSourceModule[2]->getValue(x, y, z);
+    double controlValue = m_control.getValue(x, y, z);
     double alpha;
     if (m_edgeFalloff > 0.0)
     {
@@ -120,13 +130,13 @@ double Select::getValue(double x, double y, double z) const
             double lowerCurve = (m_lowerBound - m_edgeFalloff);
             double upperCurve = (m_lowerBound + m_edgeFalloff);
             alpha = SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
-            return LinearInterp(m_pSourceModule[0]->getValue(x, y, z), m_pSourceModule[1]->getValue(x, y, z), alpha);
+            return LinearInterp(m_low.getValue(x, y, z), m_high.getValue(x, y, z), alpha);
         }
         else if (controlValue < (m_upperBound - m_edgeFalloff))
         {
             // The output value from the control module is within the selector
             // threshold; return the output value from the second source module.
-            return m_pSourceModule[1]->getValue(x, y, z);
+            return m_high.getValue(x, y, z);
         }
         else if (controlValue < (m_upperBound + m_edgeFalloff))
         {
@@ -136,24 +146,24 @@ double Select::getValue(double x, double y, double z) const
             double lowerCurve = (m_upperBound - m_edgeFalloff);
             double upperCurve = (m_upperBound + m_edgeFalloff);
             alpha = SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
-            return LinearInterp(m_pSourceModule[1]->getValue(x, y, z), m_pSourceModule[0]->getValue(x, y, z), alpha);
+            return LinearInterp(m_high.getValue(x, y, z), m_low.getValue(x, y, z), alpha);
         }
         else
         {
             // Output value from the control module is above the selector threshold;
             // return the output value from the first source module.
-            return m_pSourceModule[0]->getValue(x, y, z);
+            return m_low.getValue(x, y, z);
         }
     }
     else
     {
         if (controlValue < m_lowerBound || controlValue > m_upperBound)
         {
-            return m_pSourceModule[0]->getValue(x, y, z);
+            return m_low.getValue(x, y, z);
         }
         else
         {
-            return m_pSourceModule[1]->getValue(x, y, z);
+            return m_high.getValue(x, y, z);
         }
     }
 }

@@ -79,9 +79,9 @@ namespace noise
             ///
             /// The default scaling factor applied to the @a z coordinate is set
             /// to noise::module::DEFAULT_SCALE_POINT_Z.
-            ScaleDomain(const ModuleBase& source);
-            ScaleDomain(const ModuleBase& source, double scale);
-            ScaleDomain(const ModuleBase& source, double xScale, double yScale, double zScale);
+            ScaleDomain(const noise::ScalarParameter& src);
+            ScaleDomain(const noise::ScalarParameter& src, const noise::ScalarParameter& scale);
+            ScaleDomain(const noise::ScalarParameter& src, const noise::ScalarParameter& xScale, const noise::ScalarParameter& yScale, const noise::ScalarParameter& zScale);
 
             /// Sets the scaling factor to apply to the @a x coordinate of the
             /// input value.
@@ -91,13 +91,13 @@ namespace noise
             /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetXScale(double xScale);
+            void SetXScale(const noise::ScalarParameter& xScale);
 
             /// Returns the scaling factor applied to the @a x coordinate of the
             /// input value.
             ///
             /// @returns The scaling factor applied to the @a x coordinate.
-            double GetXScale() const;
+            const noise::ScalarParameter& GetXScale() const;
 
             /// Sets the scaling factor to apply to the @a y coordinate of the
             /// input value.
@@ -107,13 +107,13 @@ namespace noise
             /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetYScale(double yScale);
+            void SetYScale(const noise::ScalarParameter& yScale);
 
             /// Returns the scaling factor applied to the @a y coordinate of the
             /// input value.
             ///
             /// @returns The scaling factor applied to the @a y coordinate.
-            double GetYScale() const;
+            const noise::ScalarParameter& GetYScale() const;
 
             /// Sets the scaling factor to apply to the @a z coordinate of the
             /// input value.
@@ -123,13 +123,13 @@ namespace noise
             /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetZScale(double zScale);
+            void SetZScale(const noise::ScalarParameter& zScale);
 
             /// Returns the scaling factor applied to the @a z coordinate of the
             /// input value.
             ///
             /// @returns The scaling factor applied to the @a z coordinate.
-            double GetZScale() const;
+            const noise::ScalarParameter& GetZScale() const;
 
             /// Sets the scaling factor to apply to the input value.
             ///
@@ -138,7 +138,7 @@ namespace noise
             /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetScale(double scale);
+            void SetScale(const noise::ScalarParameter& scale);
 
             /// Sets the scaling factor to apply to the ( @a x, @a y, @a z )
             /// coordinates of the input value.
@@ -150,19 +150,21 @@ namespace noise
             /// The getValue() method multiplies the ( @a x, @a y, @a z )
             /// coordinates of the input value with a scaling factor before
             /// returning the output value from the source module.
-            void SetScale(double xScale, double yScale, double zScale);
+            void SetScale(const noise::ScalarParameter& xScale, const noise::ScalarParameter& yScale, const noise::ScalarParameter& zScale);
 
             virtual double getValue(double x, double y, double z) const override;
 
         protected:
+            noise::ScalarParameter m_source;
+
             /// Scaling factor applied to the @a x coordinate of the input value.
-            double m_xScale;
+            noise::ScalarParameter m_xScale;
 
             /// Scaling factor applied to the @a y coordinate of the input value.
-            double m_yScale;
+            noise::ScalarParameter m_yScale;
 
             /// Scaling factor applied to the @a z coordinate of the input value.
-            double m_zScale;
+            noise::ScalarParameter m_zScale;
         };
 
         /// @}

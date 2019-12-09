@@ -24,80 +24,79 @@
 
 using namespace noise::module;
 
-ScaleDomain::ScaleDomain(const ModuleBase& source)
-    : ModuleBase(1)
+ScaleDomain::ScaleDomain(const noise::ScalarParameter& src)
+    : m_source(src)
     , m_xScale(DEFAULT_SCALE_POINT_X)
     , m_yScale(DEFAULT_SCALE_POINT_Y)
     , m_zScale(DEFAULT_SCALE_POINT_Z)
 {
-    m_pSourceModule[0] = &source;
 }
 
-ScaleDomain::ScaleDomain(const ModuleBase& source, double scale)
-    : ModuleBase(1)
+ScaleDomain::ScaleDomain(const noise::ScalarParameter& src, const noise::ScalarParameter& scale)
+    : m_source(src)
     , m_xScale(scale)
     , m_yScale(scale)
     , m_zScale(scale)
 {
-    m_pSourceModule[0] = &source;
 }
 
-ScaleDomain::ScaleDomain(const ModuleBase& source, double xScale, double yScale, double zScale)
-    : ModuleBase(1)
+ScaleDomain::ScaleDomain(const noise::ScalarParameter& src, const noise::ScalarParameter& xScale, const noise::ScalarParameter& yScale, const noise::ScalarParameter& zScale)
+    : m_source(src)
     , m_xScale(xScale)
     , m_yScale(yScale)
     , m_zScale(zScale)
 {
-    m_pSourceModule[0] = &source;
 }
 
-double ScaleDomain::getValue(double x, double y, double z) const
-{
-    assert(m_pSourceModule[0] != nullptr);
-
-    return m_pSourceModule[0]->getValue(x * m_xScale, y * m_yScale, z * m_zScale);
-}
-
-void ScaleDomain::SetXScale(double xScale)
+void ScaleDomain::SetXScale(const noise::ScalarParameter& xScale)
 {
     m_xScale = xScale;
 }
 
-double ScaleDomain::GetXScale() const
+const noise::ScalarParameter& ScaleDomain::GetXScale() const
 {
     return m_xScale;
 }
 
-void ScaleDomain::SetYScale(double yScale)
+void ScaleDomain::SetYScale(const noise::ScalarParameter& yScale)
 {
     m_yScale = yScale;
 }
 
-double ScaleDomain::GetYScale() const
+const noise::ScalarParameter& ScaleDomain::GetYScale() const
 {
     return m_yScale;
 }
 
-void ScaleDomain::SetZScale(double zScale)
+void ScaleDomain::SetZScale(const noise::ScalarParameter& zScale)
 {
     m_zScale = zScale;
 }
 
-double ScaleDomain::GetZScale() const
+const noise::ScalarParameter& ScaleDomain::GetZScale() const
 {
     return m_zScale;
 }
 
-void ScaleDomain::SetScale(double scale)
+void ScaleDomain::SetScale(const noise::ScalarParameter& scale)
 {
     m_xScale = scale;
     m_yScale = scale;
     m_zScale = scale;
 }
 
-void ScaleDomain::SetScale(double xScale, double yScale, double zScale)
+void ScaleDomain::SetScale(const noise::ScalarParameter& xScale, const noise::ScalarParameter& yScale, const noise::ScalarParameter& zScale)
 {
     m_xScale = xScale;
     m_yScale = yScale;
     m_zScale = zScale;
+}
+
+double ScaleDomain::getValue(double x, double y, double z) const
+{
+    double finalX = x * m_xScale.getValue(x, y, z);
+    double finalY = y * m_yScale.getValue(x, y, z);
+    double finalZ = z * m_zScale.getValue(x, y, z);
+
+    return m_source.getValue(finalX, finalY, finalZ);
 }

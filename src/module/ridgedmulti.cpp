@@ -116,3 +116,24 @@ double RidgedMulti::getValue(double x, double y, double z) const
 
     return (value * 1.25) - 1.0;
 }
+
+void noise::module::RidgedMulti::SetOctaveCount(int octaveCount)
+{
+    assert(octaveCount <= RIDGED_MAX_OCTAVE);
+    m_octaveCount = octaveCount;
+}
+
+int noise::module::RidgedMulti::GetOctaveCount() const
+{
+    return m_octaveCount;
+}
+
+void noise::module::RidgedMulti::SetFrequency(double frequency)
+{
+    m_frequency = frequency;
+}
+
+double noise::module::RidgedMulti::GetFrequency() const
+{
+    return m_frequency;
+}

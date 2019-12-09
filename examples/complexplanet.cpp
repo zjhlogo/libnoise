@@ -298,8 +298,7 @@ int main()
     // 4: [Scaled-carver module]: This scale/bias module scales the output
     //    value from the carver module such that it is usually near 1.0.  This
     //    is required for step 5.
-    module::ScaleBias baseContinentDef_sb;
-    baseContinentDef_sb.setSourceModule(0, baseContinentDef_pe1);
+    module::ScaleBias baseContinentDef_sb(baseContinentDef_pe1);
     baseContinentDef_sb.setScale(0.375);
     baseContinentDef_sb.setBias(0.625);
 
@@ -346,8 +345,7 @@ int main()
     // 1: [Coarse-turbulence module]: This turbulence module warps the output
     //    value from the base-continent-definition subgroup, adding some coarse
     //    detail to it.
-    module::Turbulence continentDef_tu0;
-    continentDef_tu0.setSourceModule(0, baseContinentDef);
+    module::Turbulence continentDef_tu0(baseContinentDef);
     continentDef_tu0.setSeed(CUR_SEED + 10);
     continentDef_tu0.setFrequency(CONTINENT_FREQUENCY * 15.25);
     continentDef_tu0.setPower(CONTINENT_FREQUENCY / 113.75);
@@ -357,8 +355,7 @@ int main()
     //    output value from the coarse-turbulence module.  This turbulence has
     //    a higher frequency, but lower power, than the coarse-turbulence
     //    module, adding some intermediate detail to it.
-    module::Turbulence continentDef_tu1;
-    continentDef_tu1.setSourceModule(0, continentDef_tu0);
+    module::Turbulence continentDef_tu1(continentDef_tu0);
     continentDef_tu1.setSeed(CUR_SEED + 11);
     continentDef_tu1.setFrequency(CONTINENT_FREQUENCY * 47.25);
     continentDef_tu1.setPower(CONTINENT_FREQUENCY / 433.75);
@@ -368,8 +365,7 @@ int main()
     //    warps the output value from the intermediate-turbulence module.  This
     //    turbulence has a higher frequency, but lower power, than the
     //    intermediate-turbulence module, adding some fine detail to it.
-    module::Turbulence continentDef_tu2;
-    continentDef_tu2.setSourceModule(0, continentDef_tu1);
+    module::Turbulence continentDef_tu2(continentDef_tu1);
     continentDef_tu2.setSeed(CUR_SEED + 12);
     continentDef_tu2.setFrequency(CONTINENT_FREQUENCY * 95.25);
     continentDef_tu2.setPower(CONTINENT_FREQUENCY / 1019.75);
@@ -420,8 +416,7 @@ int main()
     //    rougher terrain from appearing exclusively at higher elevations.
     //    Rough areas may now appear in the the ocean, creating rocky islands
     //    and fjords.
-    module::Turbulence terrainTypeDef_tu;
-    terrainTypeDef_tu.setSourceModule(0, continentDef);
+    module::Turbulence terrainTypeDef_tu(continentDef);
     terrainTypeDef_tu.setSeed(CUR_SEED + 20);
     terrainTypeDef_tu.setFrequency(CONTINENT_FREQUENCY * 18.125);
     terrainTypeDef_tu.setPower(CONTINENT_FREQUENCY / 20.59375 * TERRAIN_OFFSET);
@@ -471,8 +466,7 @@ int main()
     //    output value from the mountain-ridge module so that its ridges are not
     //    too high.  The reason for this is that another subgroup adds actual
     //    mountainous terrain to these ridges.
-    module::ScaleBias mountainBaseDef_sb0;
-    mountainBaseDef_sb0.setSourceModule(0, mountainBaseDef_rm0);
+    module::ScaleBias mountainBaseDef_sb0(mountainBaseDef_rm0);
     mountainBaseDef_sb0.setScale(0.5);
     mountainBaseDef_sb0.setBias(0.375);
 
@@ -496,8 +490,7 @@ int main()
     //    than multiple-octave ridged-multifractal noise.  The negative scaling
     //    factor inverts the range of the output value, turning the ridges from
     //    the river-valley module into valleys.
-    module::ScaleBias mountainBaseDef_sb1;
-    mountainBaseDef_sb1.setSourceModule(0, mountainBaseDef_rm1);
+    module::ScaleBias mountainBaseDef_sb1(mountainBaseDef_rm1);
     mountainBaseDef_sb1.setScale(-2.0);
     mountainBaseDef_sb1.setBias(-0.5);
 
@@ -521,8 +514,7 @@ int main()
     // 7: [Coarse-turbulence module]: This turbulence module warps the output
     //    value from the mountain-and-valleys module, adding some coarse detail
     //    to it.
-    module::Turbulence mountainBaseDef_tu0;
-    mountainBaseDef_tu0.setSourceModule(0, mountainBaseDef_bl);
+    module::Turbulence mountainBaseDef_tu0(mountainBaseDef_bl);
     mountainBaseDef_tu0.setSeed(CUR_SEED + 32);
     mountainBaseDef_tu0.setFrequency(1337.0);
     mountainBaseDef_tu0.setPower(1.0 / 6730.0 * MOUNTAINS_TWIST);
@@ -532,8 +524,7 @@ int main()
     //    the output value from the coarse-turbulence module.  This turbulence
     //    has a higher frequency, but lower power, than the coarse-turbulence
     //    module, adding some fine detail to it.
-    module::Turbulence mountainBaseDef_tu1;
-    mountainBaseDef_tu1.setSourceModule(0, mountainBaseDef_tu0);
+    module::Turbulence mountainBaseDef_tu1(mountainBaseDef_tu0);
     mountainBaseDef_tu1.setSeed(CUR_SEED + 33);
     mountainBaseDef_tu1.setFrequency(21221.0);
     mountainBaseDef_tu1.setPower(1.0 / 120157.0 * MOUNTAINS_TWIST);
@@ -585,8 +576,7 @@ int main()
 
     // 4: [Warped-high-mountains module]: This turbulence module warps the
     //    output value from the high-mountains module, adding some detail to it.
-    module::Turbulence mountainousHigh_tu;
-    mountainousHigh_tu.setSourceModule(0, mountainousHigh_ma);
+    module::Turbulence mountainousHigh_tu(mountainousHigh_ma);
     mountainousHigh_tu.setSeed(CUR_SEED + 42);
     mountainousHigh_tu.setFrequency(31511.0);
     mountainousHigh_tu.setPower(1.0 / 180371.0 * MOUNTAINS_TWIST);
@@ -662,8 +652,7 @@ int main()
     //    mountainous areas becoming more-or-less flat with little variation.
     //    This will also result in the low mountainous areas appearing at the
     //    lowest elevations in this subgroup.
-    module::ScaleBias mountainousTerrain_sb0;
-    mountainousTerrain_sb0.setSourceModule(0, mountainousLow);
+    module::ScaleBias mountainousTerrain_sb0(mountainousLow);
     mountainousTerrain_sb0.setScale(0.03125);
     mountainousTerrain_sb0.setBias(-0.96875);
 
@@ -671,8 +660,7 @@ int main()
     //    scales the output value from the high-mountainous-terrain subgroup to
     //    1/4 of its initial value and biases it so that its output value is
     //    usually positive.
-    module::ScaleBias mountainousTerrain_sb1;
-    mountainousTerrain_sb1.setSourceModule(0, mountainousHigh);
+    module::ScaleBias mountainousTerrain_sb1(mountainousHigh);
     mountainousTerrain_sb1.setScale(0.25);
     mountainousTerrain_sb1.setBias(0.25);
 
@@ -702,8 +690,7 @@ int main()
     // 5: [Scaled-mountainous-terrain-module]: This scale/bias module slightly
     //    reduces the range of the output value from the combined-mountainous-
     //    terrain module, decreasing the heights of the mountain peaks.
-    module::ScaleBias mountainousTerrain_sb2;
-    mountainousTerrain_sb2.setSourceModule(0, mountainousTerrain_se);
+    module::ScaleBias mountainousTerrain_sb2(mountainousTerrain_se);
     mountainousTerrain_sb2.setScale(0.8);
     mountainousTerrain_sb2.setBias(0.0);
 
@@ -749,8 +736,7 @@ int main()
     //    value from the hills module so that its hilltops are not too high.
     //    The reason for this is that these hills are eventually added to the
     //    river valleys (see below.)
-    module::ScaleBias hillyTerrain_sb0;
-    hillyTerrain_sb0.setSourceModule(0, hillyTerrain_bi);
+    module::ScaleBias hillyTerrain_sb0(hillyTerrain_bi);
     hillyTerrain_sb0.setScale(0.5);
     hillyTerrain_sb0.setBias(0.5);
 
@@ -773,8 +759,7 @@ int main()
     //    than multiple-octave ridged-multifractal noise.  The negative scaling
     //    factor inverts the range of the output value, turning the ridges from
     //    the river-valley module into valleys.
-    module::ScaleBias hillyTerrain_sb1;
-    hillyTerrain_sb1.setSourceModule(0, hillyTerrain_rm);
+    module::ScaleBias hillyTerrain_sb1(hillyTerrain_rm);
     hillyTerrain_sb1.setScale(-2.0);
     hillyTerrain_sb1.setBias(-0.5);
 
@@ -797,8 +782,7 @@ int main()
     // 7: [Scaled-hills-and-valleys module]: This scale/bias module slightly
     //    reduces the range of the output value from the hills-and-valleys
     //    module, decreasing the heights of the hilltops.
-    module::ScaleBias hillyTerrain_sb2;
-    hillyTerrain_sb2.setSourceModule(0, hillyTerrain_bl);
+    module::ScaleBias hillyTerrain_sb2(hillyTerrain_bl);
     hillyTerrain_sb2.setScale(0.75);
     hillyTerrain_sb2.setBias(-0.25);
 
@@ -814,8 +798,7 @@ int main()
     // 9: [Coarse-turbulence module]: This turbulence module warps the output
     //    value from the increased-slope-hilly-terrain module, adding some
     //    coarse detail to it.
-    module::Turbulence hillyTerrain_tu0;
-    hillyTerrain_tu0.setSourceModule(0, hillyTerrain_ex);
+    module::Turbulence hillyTerrain_tu0(hillyTerrain_ex);
     hillyTerrain_tu0.setSeed(CUR_SEED + 62);
     hillyTerrain_tu0.setFrequency(1531.0);
     hillyTerrain_tu0.setPower(1.0 / 16921.0 * HILLS_TWIST);
@@ -825,8 +808,7 @@ int main()
     //     output value from the coarse-turbulence module.  This turbulence has
     //     a higher frequency, but lower power, than the coarse-turbulence
     //     module, adding some fine detail to it.
-    module::Turbulence hillyTerrain_tu1;
-    hillyTerrain_tu1.setSourceModule(0, hillyTerrain_tu0);
+    module::Turbulence hillyTerrain_tu1(hillyTerrain_tu0);
     hillyTerrain_tu1.setSeed(CUR_SEED + 63);
     hillyTerrain_tu1.setFrequency(21617.0);
     hillyTerrain_tu1.setPower(1.0 / 117529.0 * HILLS_TWIST);
@@ -869,8 +851,7 @@ int main()
     //    output value from the plains-basis-0 module positive since this output
     //    value will be multiplied together with the positive-plains-basis-1
     //    module.
-    module::ScaleBias plainsTerrain_sb0;
-    plainsTerrain_sb0.setSourceModule(0, plainsTerrain_bi0);
+    module::ScaleBias plainsTerrain_sb0(plainsTerrain_bi0);
     plainsTerrain_sb0.setScale(0.5);
     plainsTerrain_sb0.setBias(0.5);
 
@@ -888,8 +869,7 @@ int main()
     //    output value from the plains-basis-1 module positive since this output
     //    value will be multiplied together with the positive-plains-basis-0
     //    module.
-    module::ScaleBias plainsTerrain_sb1;
-    plainsTerrain_sb1.setSourceModule(0, plainsTerrain_bi1);
+    module::ScaleBias plainsTerrain_sb1(plainsTerrain_bi1);
     plainsTerrain_sb1.setScale(0.5);
     plainsTerrain_sb1.setBias(0.5);
 
@@ -902,8 +882,7 @@ int main()
     // 6: [Rescaled-plains-basis module]: This scale/bias module maps the output
     //    value that ranges from 0.0 to 1.0 back to a value that ranges from
     //    -1.0 to +1.0.
-    module::ScaleBias plainsTerrain_sb2;
-    plainsTerrain_sb2.setSourceModule(0, plainsTerrain_mu);
+    module::ScaleBias plainsTerrain_sb2(plainsTerrain_mu);
     plainsTerrain_sb2.setScale(2.0);
     plainsTerrain_sb2.setBias(-1.0);
 
@@ -939,8 +918,7 @@ int main()
     // 2: [Scaled-sand-dunes module]: This scale/bias module shrinks the dune
     //    heights by a small amount.  This is necessary so that the subsequent
     //    noise modules in this subgroup can add some detail to the dunes.
-    module::ScaleBias badlandsSand_sb0;
-    badlandsSand_sb0.setSourceModule(0, badlandsSand_rm);
+    module::ScaleBias badlandsSand_sb0(badlandsSand_rm);
     badlandsSand_sb0.setScale(0.875);
     badlandsSand_sb0.setBias(0.0);
 
@@ -958,8 +936,7 @@ int main()
     //    details by a large amount.  This is necessary so that the subsequent
     //    noise modules in this subgroup can add this detail to the sand-dunes
     //    module.
-    module::ScaleBias badlandsSand_sb1;
-    badlandsSand_sb1.setSourceModule(0, badlandsSand_vo);
+    module::ScaleBias badlandsSand_sb1(badlandsSand_vo);
     badlandsSand_sb1.setScale(0.25);
     badlandsSand_sb1.setBias(0.25);
 
@@ -1030,9 +1007,8 @@ int main()
     // 5: [Coarse-turbulence module]: This turbulence module warps the output
     //    value from the terraced-cliffs module, adding some coarse detail to
     //    it.
-    module::Turbulence badlandsCliffs_tu0;
+    module::Turbulence badlandsCliffs_tu0(badlandsCliffs_te);
     badlandsCliffs_tu0.setSeed(CUR_SEED + 91);
-    badlandsCliffs_tu0.setSourceModule(0, badlandsCliffs_te);
     badlandsCliffs_tu0.setFrequency(16111.0);
     badlandsCliffs_tu0.setPower(1.0 / 141539.0 * BADLANDS_TWIST);
     badlandsCliffs_tu0.setRoughness(3);
@@ -1041,9 +1017,8 @@ int main()
     //    from the coarse-turbulence module.  This turbulence has a higher
     //    frequency, but lower power, than the coarse-turbulence module, adding
     //    some fine detail to it.
-    module::Turbulence badlandsCliffs_tu1;
+    module::Turbulence badlandsCliffs_tu1(badlandsCliffs_tu0);
     badlandsCliffs_tu1.setSeed(CUR_SEED + 92);
-    badlandsCliffs_tu1.setSourceModule(0, badlandsCliffs_tu0);
     badlandsCliffs_tu1.setFrequency(36107.0);
     badlandsCliffs_tu1.setPower(1.0 / 211543.0 * BADLANDS_TWIST);
     badlandsCliffs_tu1.setRoughness(3);
@@ -1071,8 +1046,7 @@ int main()
     // 1: [Scaled-sand-dunes module]: This scale/bias module considerably
     //    flattens the output value from the badlands-sands subgroup and lowers
     //    this value to near -1.0.
-    module::ScaleBias badlandsTerrain_sb;
-    badlandsTerrain_sb.setSourceModule(0, badlandsSand);
+    module::ScaleBias badlandsTerrain_sb(badlandsSand);
     badlandsTerrain_sb.setScale(0.25);
     badlandsTerrain_sb.setBias(-0.75);
 
@@ -1160,8 +1134,7 @@ int main()
     // 6: [Warped-rivers module]: This turbulence module warps the output value
     //    from the combined-rivers module, which twists the rivers.  The high
     //    roughness produces less-smooth rivers.
-    module::Turbulence riverPositions_tu;
-    riverPositions_tu.setSourceModule(0, riverPositions_mi);
+    module::Turbulence riverPositions_tu(riverPositions_mi);
     riverPositions_tu.setSeed(CUR_SEED + 102);
     riverPositions_tu.setFrequency(9.25);
     riverPositions_tu.setPower(1.0 / 57.75);
@@ -1197,8 +1170,7 @@ int main()
     // 1: [Base-scaled-mountainous-terrain module]: This scale/bias module
     //    scales the output value from the mountainous-terrain group so that the
     //    output value is measured in planetary elevation units.
-    module::ScaleBias scaledMountainousTerrain_sb0;
-    scaledMountainousTerrain_sb0.setSourceModule(0, mountainousTerrain);
+    module::ScaleBias scaledMountainousTerrain_sb0(mountainousTerrain);
     scaledMountainousTerrain_sb0.setScale(0.125);
     scaledMountainousTerrain_sb0.setBias(0.125);
 
@@ -1228,8 +1200,7 @@ int main()
     //    range of the output value from the peak-modulation module so that it
     //    can be used as the modulator for the peak-height-multiplier module.
     //    It is important that this output value is not much lower than 1.0.
-    module::ScaleBias scaledMountainousTerrain_sb1;
-    scaledMountainousTerrain_sb1.setSourceModule(0, scaledMountainousTerrain_ex);
+    module::ScaleBias scaledMountainousTerrain_sb1(scaledMountainousTerrain_ex);
     scaledMountainousTerrain_sb1.setScale(0.25);
     scaledMountainousTerrain_sb1.setBias(1.0);
 
@@ -1271,8 +1242,7 @@ int main()
     // 1: [Base-scaled-hilly-terrain module]: This scale/bias module scales the
     //    output value from the hilly-terrain group so that this output value is
     //    measured in planetary elevation units
-    module::ScaleBias scaledHillyTerrain_sb0;
-    scaledHillyTerrain_sb0.setSourceModule(0, hillyTerrain);
+    module::ScaleBias scaledHillyTerrain_sb0(hillyTerrain);
     scaledHillyTerrain_sb0.setScale(0.0625);
     scaledHillyTerrain_sb0.setBias(0.0625);
 
@@ -1303,8 +1273,7 @@ int main()
     //    that it can be used as the modulator for the hilltop-height-multiplier
     //    module.  It is important that this output value is not much lower than
     //    1.0.
-    module::ScaleBias scaledHillyTerrain_sb1;
-    scaledHillyTerrain_sb1.setSourceModule(0, scaledHillyTerrain_ex);
+    module::ScaleBias scaledHillyTerrain_sb1(scaledHillyTerrain_ex);
     scaledHillyTerrain_sb1.setScale(0.5);
     scaledHillyTerrain_sb1.setBias(1.5);
 
@@ -1345,8 +1314,7 @@ int main()
     // 1: [Scaled-plains-terrain module]: This scale/bias module greatly
     //    flattens the output value from the plains terrain.  This output value
     //    is measured in planetary elevation units
-    module::ScaleBias scaledPlainsTerrain_sb;
-    scaledPlainsTerrain_sb.setSourceModule(0, plainsTerrain);
+    module::ScaleBias scaledPlainsTerrain_sb(plainsTerrain);
     scaledPlainsTerrain_sb.setScale(0.00390625);
     scaledPlainsTerrain_sb.setBias(0.0078125);
 
@@ -1380,8 +1348,7 @@ int main()
     // 1: [Scaled-badlands-terrain module]: This scale/bias module scales the
     //    output value from the badlands-terrain group so that it is measured
     //    in planetary elevation units
-    module::ScaleBias scaledBadlandsTerrain_sb;
-    scaledBadlandsTerrain_sb.setSourceModule(0, badlandsTerrain);
+    module::ScaleBias scaledBadlandsTerrain_sb(badlandsTerrain);
     scaledBadlandsTerrain_sb.setScale(0.0625);
     scaledBadlandsTerrain_sb.setBias(0.0625);
 
@@ -1433,8 +1400,7 @@ int main()
     //    from the oceanic-trench-basis-module so that the ridges become
     //    trenches.  This noise module also reduces the depth of the trenches so
     //    that their depths are measured in planetary elevation units.
-    module::ScaleBias continentalShelf_sb;
-    continentalShelf_sb.setSourceModule(0, continentalShelf_rm);
+    module::ScaleBias continentalShelf_sb(continentalShelf_rm);
     continentalShelf_sb.setScale(-0.125);
     continentalShelf_sb.setBias(-0.125);
 
@@ -1471,8 +1437,7 @@ int main()
     // 1: [Base-scaled-continent-elevations module]: This scale/bias module
     //    scales the output value from the continent-definition group so that it
     //    is measured in planetary elevation units
-    module::ScaleBias baseContinentElev_sb;
-    baseContinentElev_sb.setSourceModule(0, continentDef);
+    module::ScaleBias baseContinentElev_sb(continentDef);
     baseContinentElev_sb.setScale(CONTINENT_HEIGHT_SCALE);
     baseContinentElev_sb.setBias(0.0);
 
@@ -1674,8 +1639,7 @@ int main()
     // 1: [Scaled-rivers module]: This scale/bias module scales the output value
     //    from the river-positions group so that it is measured in planetary
     //    elevation units and is negative; this is required for step 2.
-    module::ScaleBias continentsWithRivers_sb;
-    continentsWithRivers_sb.setSourceModule(0, riverPositions);
+    module::ScaleBias continentsWithRivers_sb(riverPositions);
     continentsWithRivers_sb.setScale(RIVER_DEPTH / 2.0);
     continentsWithRivers_sb.setBias(-RIVER_DEPTH / 2.0);
 
@@ -1725,8 +1689,7 @@ int main()
     // 1: [Final-planet-in-meters module]: This scale/bias module scales the
     //    output value from the unscaled-final-planet subgroup so that its
     //    output value is measured in meters.
-    module::ScaleBias finalPlanet_sb;
-    finalPlanet_sb.setSourceModule(0, unscaledFinalPlanet);
+    module::ScaleBias finalPlanet_sb(unscaledFinalPlanet);
     finalPlanet_sb.setScale((MAX_ELEV - MIN_ELEV) / 2.0);
     finalPlanet_sb.setBias(MIN_ELEV + ((MAX_ELEV - MIN_ELEV) / 2.0));
 

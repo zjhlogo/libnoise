@@ -24,26 +24,22 @@
 
 using namespace noise::module;
 
-Turbulence::Turbulence(const ModuleBase& source)
-    : ModuleBase(1)
+Turbulence::Turbulence(const noise::ScalarParameter& src)
+    : m_source(src)
     , m_power(DEFAULT_TURBULENCE_POWER)
 {
     setSeed(DEFAULT_TURBULENCE_SEED);
     setFrequency(DEFAULT_TURBULENCE_FREQUENCY);
     setRoughness(DEFAULT_TURBULENCE_ROUGHNESS);
-
-    m_pSourceModule[0] = &source;
 }
 
-Turbulence::Turbulence(const ModuleBase& source, double frequency, double power, int roughness)
-    : ModuleBase(1)
+Turbulence::Turbulence(const noise::ScalarParameter& src, double frequency, double power, int roughness)
+    : m_source(src)
     , m_power(power)
 {
     setSeed(DEFAULT_TURBULENCE_SEED);
     setFrequency(frequency);
     setRoughness(roughness);
-
-    m_pSourceModule[0] = &source;
 }
 
 void Turbulence::setFrequency(double frequency)
@@ -101,8 +97,6 @@ int Turbulence::getSeed() const
 
 double Turbulence::getValue(double x, double y, double z) const
 {
-    assert(m_pSourceModule[0] != NULL);
-
     // Get the values from the three noise::module::Perlin noise modules and
     // add each value to each coordinate of the input value.  There are also
     // some offsets added to the coordinates of the input values.  This prevents
@@ -128,5 +122,5 @@ double Turbulence::getValue(double x, double y, double z) const
 
     // Retrieve the output value at the offsetted input value instead of the
     // original input value.
-    return m_pSourceModule[0]->getValue(xDistort, yDistort, zDistort);
+    return m_source.getValue(xDistort, yDistort, zDistort);
 }

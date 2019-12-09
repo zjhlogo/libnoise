@@ -74,8 +74,7 @@ int main()
     rotatedBaseSecondaryJade.setAngles(90.0, 25.0, 5.0);
 
     // Slightly perturb the secondary jade texture for more realism.
-    module::Turbulence perturbedBaseSecondaryJade;
-    perturbedBaseSecondaryJade.setSourceModule(0, rotatedBaseSecondaryJade);
+    module::Turbulence perturbedBaseSecondaryJade(rotatedBaseSecondaryJade);
     perturbedBaseSecondaryJade.setSeed(1);
     perturbedBaseSecondaryJade.setFrequency(4.0);
     perturbedBaseSecondaryJade.setPower(1.0 / 4.0);
@@ -83,8 +82,7 @@ int main()
 
     // Scale the secondary jade texture so it contributes a small part to the
     // final jade texture.
-    module::ScaleBias secondaryJade;
-    secondaryJade.setSourceModule(0, perturbedBaseSecondaryJade);
+    module::ScaleBias secondaryJade(perturbedBaseSecondaryJade);
     secondaryJade.setScale(0.25);
     secondaryJade.setBias(0.0);
 
@@ -97,8 +95,7 @@ int main()
 
     // Finally, perturb the combined jade textures to produce the final jade
     // texture.  A low roughness produces nice veins.
-    module::Turbulence finalJade;
-    finalJade.setSourceModule(0, combinedJade);
+    module::Turbulence finalJade(combinedJade);
     finalJade.setSeed(2);
     finalJade.setFrequency(4.0);
     finalJade.setPower(1.0 / 16.0);

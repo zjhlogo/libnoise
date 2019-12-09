@@ -24,53 +24,53 @@
 
 using namespace noise::module;
 
-TranslateDomain::TranslateDomain()
-    : ModuleBase(1)
+TranslateDomain::TranslateDomain(const noise::ScalarParameter& src)
+    : m_source(src)
     , m_xTranslation(DEFAULT_TRANSLATE_POINT_X)
     , m_yTranslation(DEFAULT_TRANSLATE_POINT_Y)
     , m_zTranslation(DEFAULT_TRANSLATE_POINT_Z)
 {
 }
 
-TranslateDomain::TranslateDomain(double xTranslation, double yTranslation, double zTranslation)
-    : ModuleBase(1)
+TranslateDomain::TranslateDomain(const noise::ScalarParameter& src, const noise::ScalarParameter& xTranslation, const noise::ScalarParameter& yTranslation, const noise::ScalarParameter& zTranslation)
+    : m_source(src)
     , m_xTranslation(xTranslation)
     , m_yTranslation(yTranslation)
     , m_zTranslation(zTranslation)
 {
 }
 
-void TranslateDomain::SetXTranslation(double xTranslation)
+void TranslateDomain::SetXTranslation(const noise::ScalarParameter& xTranslation)
 {
     m_xTranslation = xTranslation;
 }
 
-double TranslateDomain::GetXTranslation() const
+const noise::ScalarParameter& TranslateDomain::GetXTranslation() const
 {
     return m_xTranslation;
 }
 
-void TranslateDomain::SetYTranslation(double yTranslation)
+void TranslateDomain::SetYTranslation(const noise::ScalarParameter& yTranslation)
 {
     m_yTranslation = yTranslation;
 }
 
-double TranslateDomain::GetYTranslation() const
+const noise::ScalarParameter& TranslateDomain::GetYTranslation() const
 {
     return m_yTranslation;
 }
 
-void TranslateDomain::SetZTranslation(double zTranslation)
+void TranslateDomain::SetZTranslation(const noise::ScalarParameter& zTranslation)
 {
     m_zTranslation = zTranslation;
 }
 
-double TranslateDomain::GetZTranslation() const
+const noise::ScalarParameter& TranslateDomain::GetZTranslation() const
 {
     return m_zTranslation;
 }
 
-void TranslateDomain::SetTranslation(double xTranslation, double yTranslation, double zTranslation)
+void TranslateDomain::SetTranslation(const noise::ScalarParameter& xTranslation, const noise::ScalarParameter& yTranslation, const noise::ScalarParameter& zTranslation)
 {
     m_xTranslation = xTranslation;
     m_yTranslation = yTranslation;
@@ -79,7 +79,9 @@ void TranslateDomain::SetTranslation(double xTranslation, double yTranslation, d
 
 double TranslateDomain::getValue(double x, double y, double z) const
 {
-    assert(m_pSourceModule[0] != NULL);
+    double finalX = x + m_xTranslation.getValue(x, y, z);
+    double finalY = y + m_yTranslation.getValue(x, y, z);
+    double finalZ = z + m_zTranslation.getValue(x, y, z);
 
-    return m_pSourceModule[0]->getValue(x + m_xTranslation, y + m_yTranslation, z + m_zTranslation);
+    return m_source.getValue(finalX, finalY, finalZ);
 }

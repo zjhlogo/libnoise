@@ -26,6 +26,7 @@
 #include "../basictypes.h"
 #include "../exception.h"
 #include "../noisegen.h"
+#include "../scalarparameter.h"
 
 #include <assert.h>
 #include <math.h>
@@ -223,6 +224,7 @@ namespace noise
         {
         public:
             /// Constructor.
+            ModuleBase() {};
             ModuleBase(int sourceModuleCount);
 
             /// Destructor.
