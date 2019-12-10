@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 2.8 )
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/utils.cmake)
+
 set(RUNTIME_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../bin")
 
 # setup helloworld project
@@ -8,12 +10,13 @@ project( helloworld )
 set( SOURCES
 helloworld.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -32,12 +35,13 @@ project( complexplanet )
 set( SOURCES
 complexplanet.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -56,12 +60,13 @@ project( texturegranite )
 set( SOURCES
 texturegranite.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -80,12 +85,13 @@ project( texturejade )
 set( SOURCES
 texturejade.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -104,12 +110,13 @@ project( texturesky )
 set( SOURCES
 texturesky.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -128,12 +135,13 @@ project( textureslime )
 set( SOURCES
 textureslime.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -152,12 +160,13 @@ project( texturewood )
 set( SOURCES
 texturewood.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 
@@ -176,12 +185,13 @@ project( worms )
 set( SOURCES
 worms.cpp
 )
+group_sources("${SOURCES}")
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "examples")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-${CMAKE_CURRENT_SOURCE_DIR}/../include
+${CMAKE_CURRENT_SOURCE_DIR}/../source
 ${CMAKE_CURRENT_SOURCE_DIR}/../utils
 )
 

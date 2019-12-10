@@ -16,18 +16,20 @@ int main(int argc, char** argv)
 {
     Gradient gradient(0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    Perlin perlin;
-    ScaleBias scaleBias(perlin, 0.5, 0.0);
+    Perlin perlin(6, 0.5);
+    ScaleBias scaleBias(perlin, 0.5, -0.2);
     ScaleDomain scaleDomain(scaleBias, 1.0, 1.0, 0.0);
     TranslateDomain transDomain(gradient, 0.0, 0.0, scaleDomain);
-
     // Turbulence turbulence(gradient, 1.0, 1.0, 6);
-    Select select(-1.0, 1.0, transDomain, 0.0, 1.0, 0.0);
+    Select select(-1.0, 1.0, transDomain, 0.0, 3.0, 0.0);
+
+    Perlin perlin2(6, 8);
+    Select select2(-1.0, 1.0, perlin2, 0.0, 1.0, 0.0);
 
     utils::NoiseMap heightMap;
 
     utils::NoiseMapBuilderPlane heightMapBuilder;
-    heightMapBuilder.SetSourceModule(select);
+    heightMapBuilder.SetSourceModule(transDomain);
     heightMapBuilder.SetDestNoiseMap(heightMap);
     heightMapBuilder.SetDestSize(512, 128);
     heightMapBuilder.SetBounds(0.0, 4.0, 0.0, 1.0);
