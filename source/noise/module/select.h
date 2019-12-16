@@ -38,16 +38,12 @@ namespace noise
         /// @addtogroup selectormodules
         /// @{
 
+        /// Default threshold of the selection for the
+        /// noise::module::Select noise module.
+        const double DEFAULT_SELECT_THRESHOLD = 1.0;
+
         /// Default edge-falloff value for the noise::module::Select noise module.
         const double DEFAULT_SELECT_EDGE_FALLOFF = 0.0;
-
-        /// Default lower bound of the selection range for the
-        /// noise::module::Select noise module.
-        const double DEFAULT_SELECT_LOWER_BOUND = -1.0;
-
-        /// Default upper bound of the selection range for the
-        /// noise::module::Select noise module.
-        const double DEFAULT_SELECT_UPPER_BOUND = 1.0;
 
         /// Noise module that outputs the value selected from one of two source
         /// modules chosen by the output value from a control module.
@@ -84,16 +80,13 @@ namespace noise
         public:
             /// Constructor.
             ///
+            /// The default threshold of the selection is set to
+            /// noise::module::DEFAULT_SELECT_THRESHOLD.
+            ///
             /// The default falloff value at the edge transition is set to
             /// noise::module::DEFAULT_SELECT_EDGE_FALLOFF.
-            ///
-            /// The default lower bound of the selection range is set to
-            /// noise::module::DEFAULT_SELECT_LOWER_BOUND.
-            ///
-            /// The default upper bound of the selection range is set to
-            /// noise::module::DEFAULT_SELECT_UPPER_BOUND.
             Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control);
-            Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control, double lowerBound, double upperBound, double edgeFalloff);
+            Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control, const noise::ScalarParameter& threshold, const noise::ScalarParameter& edgeFalloff);
 
             void setLowModule(const noise::ScalarParameter& low);
             const noise::ScalarParameter& getLowModule() const;
@@ -142,17 +135,13 @@ namespace noise
 
             /// Sets the lower and upper bounds of the selection range.
             ///
-            /// @param lowerBound The lower bound.
-            /// @param upperBound The upper bound.
+            /// @param threshold The lower bound.
             ///
-            /// @pre The lower bound must be less than or equal to the upper
-            /// bound.
-            ///
-            /// If the output value from the control module is within the
-            /// selection range, the getValue() method outputs the value from the
-            /// source module with an index value of 1.  Otherwise, this method
-            /// outputs the value from the source module with an index value of 0.
-            void setBounds(double lowerBound, double upperBound);
+            /// If the output value from the control module is less then the
+            /// threshold, the getValue() method outputs the value from the
+            /// low module. Otherwise, this method outputs the value from the high
+            /// module.
+            void setThreshold(const noise::ScalarParameter& threshold);
 
             /// Returns the lower bound of the selection range.
             ///
@@ -162,17 +151,7 @@ namespace noise
             /// selection range, the getValue() method outputs the value from the
             /// source module with an index value of 1.  Otherwise, this method
             /// outputs the value from the source module with an index value of 0.
-            double getLowerBound() const;
-
-            /// Returns the upper bound of the selection range.
-            ///
-            /// @returns The upper bound of the selection range.
-            ///
-            /// If the output value from the control module is within the
-            /// selection range, the getValue() method outputs the value from the
-            /// source module with an index value of 1.  Otherwise, this method
-            /// outputs the value from the source module with an index value of 0.
-            double getUpperBound() const;
+            const noise::ScalarParameter& getThreshold() const;
 
             /// Sets the falloff value at the edge transition.
             ///
@@ -201,7 +180,7 @@ namespace noise
             /// - the output value from the source module with an index value of 0
             ///   if the output value from the control module is greater than 0.9
             ///   ( = 0.8 + 0.1).
-            void setEdgeFalloff(double edgeFalloff);
+            void setEdgeFalloff(const noise::ScalarParameter& edgeFalloff);
 
             /// Returns the falloff value at the edge transition.
             ///
@@ -213,7 +192,7 @@ namespace noise
             /// By default, there is an abrupt transition between the output
             /// values from the two source modules at the selection-range
             /// boundary.
-            double getEdgeFalloff() const;
+            const noise::ScalarParameter& getEdgeFalloff() const;
 
             virtual double getValue(double x, double y, double z) const override;
 
@@ -222,14 +201,11 @@ namespace noise
             noise::ScalarParameter m_high;
             noise::ScalarParameter m_control;
 
+            /// threshold of the selection
+            noise::ScalarParameter m_threshold;
+
             /// Edge-falloff value.
-            double m_edgeFalloff;
-
-            /// Lower bound of the selection range.
-            double m_lowerBound;
-
-            /// Upper bound of the selection range.
-            double m_upperBound;
+            noise::ScalarParameter m_edgeFalloff;
         };
 
         /// @}

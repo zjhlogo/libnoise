@@ -28,18 +28,16 @@ using namespace noise::module;
 
 Select::Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control)
     : m_edgeFalloff(DEFAULT_SELECT_EDGE_FALLOFF)
-    , m_lowerBound(DEFAULT_SELECT_LOWER_BOUND)
-    , m_upperBound(DEFAULT_SELECT_UPPER_BOUND)
+    , m_threshold(DEFAULT_SELECT_THRESHOLD)
     , m_low(low)
     , m_high(high)
     , m_control(control)
 {
 }
 
-Select::Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control, double lowerBound, double upperBound, double edgeFalloff)
+Select::Select(const noise::ScalarParameter& low, const noise::ScalarParameter& high, const noise::ScalarParameter& control, const noise::ScalarParameter& threshold, const noise::ScalarParameter& edgeFalloff)
     : m_edgeFalloff(edgeFalloff)
-    , m_lowerBound(lowerBound)
-    , m_upperBound(upperBound)
+    , m_threshold(threshold)
     , m_low(low)
     , m_high(high)
     , m_control(control)
@@ -76,35 +74,22 @@ const noise::ScalarParameter& Select::getControlModule() const
     return m_control;
 }
 
-void Select::setBounds(double lowerBound, double upperBound)
+void Select::setThreshold(const noise::ScalarParameter& threshold)
 {
-    assert(lowerBound <= upperBound);
-
-    m_lowerBound = lowerBound;
-    m_upperBound = upperBound;
-
-    // Make sure that the edge falloff curves do not overlap.
-    setEdgeFalloff(m_edgeFalloff);
+    m_threshold = threshold;
 }
 
-double Select::getLowerBound() const
+const noise::ScalarParameter& Select::getThreshold() const
 {
-    return m_lowerBound;
+    return m_threshold;
 }
 
-double Select::getUpperBound() const
+void Select::setEdgeFalloff(const noise::ScalarParameter& edgeFalloff)
 {
-    return m_upperBound;
+    m_edgeFalloff = edgeFalloff;
 }
 
-void Select::setEdgeFalloff(double edgeFalloff)
-{
-    // Make sure that the edge falloff curves do not overlap.
-    double boundSize = m_upperBound - m_lowerBound;
-    m_edgeFalloff = (edgeFalloff > boundSize / 2) ? boundSize / 2 : edgeFalloff;
-}
-
-double Select::getEdgeFalloff() const
+const noise::ScalarParameter& Select::getEdgeFalloff() const
 {
     return m_edgeFalloff;
 }
@@ -112,51 +97,35 @@ double Select::getEdgeFalloff() const
 double Select::getValue(double x, double y, double z) const
 {
     double controlValue = m_control.getValue(x, y, z);
-    double alpha;
-    if (m_edgeFalloff > 0.0)
+    double fallOffValue = m_edgeFalloff.getValue(x, y, z);
+    double threshold = m_threshold.getValue(x, y, z);
+
+    if (fallOffValue > 0.0)
     {
-        if (controlValue < (m_lowerBound - m_edgeFalloff))
+        if (controlValue < (threshold - fallOffValue))
         {
             // The output value from the control module is below the selector
             // threshold; return the output value from the first source module.
-            return m_pSourceModule[0]->getValue(x, y, z);
+            return m_low.getValue(x, y, z);
         }
-        else if (controlValue < (m_lowerBound + m_edgeFalloff))
+        else if (controlValue > (threshold + fallOffValue))
+        {
+            return m_high.getValue(x, y, z);
+        }
+        else
         {
             // The output value from the control module is near the lower end of the
             // selector threshold and within the smooth curve. Interpolate between
             // the output values from the first and second source modules.
-            double lowerCurve = (m_lowerBound - m_edgeFalloff);
-            double upperCurve = (m_lowerBound + m_edgeFalloff);
-            alpha = SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
+            double lowerCurve = (threshold - fallOffValue);
+            double upperCurve = (threshold + fallOffValue);
+            double alpha = SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
             return LinearInterp(m_low.getValue(x, y, z), m_high.getValue(x, y, z), alpha);
-        }
-        else if (controlValue < (m_upperBound - m_edgeFalloff))
-        {
-            // The output value from the control module is within the selector
-            // threshold; return the output value from the second source module.
-            return m_high.getValue(x, y, z);
-        }
-        else if (controlValue < (m_upperBound + m_edgeFalloff))
-        {
-            // The output value from the control module is near the upper end of the
-            // selector threshold and within the smooth curve. Interpolate between
-            // the output values from the first and second source modules.
-            double lowerCurve = (m_upperBound - m_edgeFalloff);
-            double upperCurve = (m_upperBound + m_edgeFalloff);
-            alpha = SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
-            return LinearInterp(m_high.getValue(x, y, z), m_low.getValue(x, y, z), alpha);
-        }
-        else
-        {
-            // Output value from the control module is above the selector threshold;
-            // return the output value from the first source module.
-            return m_low.getValue(x, y, z);
         }
     }
     else
     {
-        if (controlValue < m_lowerBound || controlValue > m_upperBound)
+        if (controlValue < threshold)
         {
             return m_low.getValue(x, y, z);
         }
